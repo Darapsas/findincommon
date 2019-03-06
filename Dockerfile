@@ -1,7 +1,7 @@
 FROM openjdk:11.0.2-jdk-stretch as helper
 WORKDIR /workspace/app
 COPY . .
-RUN ./gradlew build
+RUN ./gradlew --gradle-user-home=./.cache build --build-cache -x test
 RUN mkdir -p build/dependency && (cd build/dependency; jar -xf ../libs/*.jar)
 
 
