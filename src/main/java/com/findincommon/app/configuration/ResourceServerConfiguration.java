@@ -7,10 +7,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 
-@Configuration
-@EnableResourceServer
+//@Configuration
+//@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-
+/*
     private static final String RESOURCE_ID = "resource_id";
 
     @Override
@@ -23,8 +23,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api").authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
-
+*/
 }

@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-    private static final String CLIENT_ID = "my-client";
+    /*private static final String CLIENT_ID = "my-client";
     private static final String CLIENT_SECRET = "{noop}my-secret";
     private static final String GRANT_TYPE_PASSWORD = "password";
     private static final String AUTHORIZATION_CODE = "authorization_code";
@@ -50,5 +50,5 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints.tokenStore(tokenStore())
                 .authenticationManager(authManager);
     }
-
+*/
 }
