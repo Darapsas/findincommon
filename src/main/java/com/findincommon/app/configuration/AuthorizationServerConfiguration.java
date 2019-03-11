@@ -10,39 +10,30 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-@Configuration
-@EnableAuthorizationServer
+//@Configuration
+//@EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
-
-    /*private static final String CLIENT_ID = "my-client";
-    private static final String CLIENT_SECRET = "{noop}my-secret";
-    private static final String GRANT_TYPE_PASSWORD = "password";
-    private static final String AUTHORIZATION_CODE = "authorization_code";
-    private static final String REFRESH_TOKEN = "refresh_token";
-    private static final String SCOPE_READ = "read";
-    private static final String SCOPE_WRITE = "write";
-    private static final String TRUST = "trust";
-    private static final int VALID_FOREVER = -1;
-
+/*
     @Autowired
     private AuthenticationManager authManager;
 
     @Bean
     public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
+        return new JwtTokenStore();
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
                 .inMemory()
-                .withClient(CLIENT_ID)
-                .secret(CLIENT_SECRET)
-                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN)
-                .scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
-                .accessTokenValiditySeconds(VALID_FOREVER)
-                .refreshTokenValiditySeconds(VALID_FOREVER);
+                .withClient("client-example")
+                .secret("{noop}secret")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+                .scopes("write", "read", "trust")
+                .accessTokenValiditySeconds(-1)
+                .refreshTokenValiditySeconds(-1);
     }
 
     @Override
