@@ -1,17 +1,27 @@
 version: "3"
 
 services:
-  webapp:
-    build: .
-    image: findincommon
+  springboot:
+    build: ./backend
+    image: findincommon_backend
     environment:
       - NODE_ENV=development
     ports:
       - "8080:8080"
-    links:
-      - mongodb
     depends_on:
       - mongodb
+    networks:
+      - webnet
+  react:
+    build: ./frontend
+    image: findincommon_frontend
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+      - springboot
     networks:
       - webnet
   mongodb:

@@ -1,6 +1,5 @@
 package com.findincommon.app.services;
 
-
 import com.findincommon.app.models.Event;
 import com.findincommon.app.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
