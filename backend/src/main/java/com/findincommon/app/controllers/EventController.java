@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
@@ -16,7 +17,9 @@ public class EventController {
 
     @PostMapping
     public void createEvent(@RequestBody Event event) {
-        eventService.save(event);
+        System.out.println(event.toString());
+        System.out.println("FUUUUUUUUUUUUUUUUUUUUUUUCK YYYYYYYYYYYYYYYYYYYYYOOOOOOOOOOOOOOOOOUUUUUUUUU");
+        //eventService.save(event);
     }
 
     @GetMapping

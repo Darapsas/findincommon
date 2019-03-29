@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReminderRepository extends MongoRepository<Reminder, String> {
+    Reminder findByName(String name);
 }
