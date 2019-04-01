@@ -1,18 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 //import Footer from "./components/Footer";
 //import Header from "./components/Header";
 //import LearnFormik from "./components/LearnFormik";
+import Events from "./components/Events";
+import Main from "./components/Main";
 import EventForm from "./components/EventForm";
 //import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <EventForm formName="Create New Event" action="Submit form" />
-      </div>
-    );
-  }
-}
-
-export default App;
+export default () => {
+  return (
+    <React.Fragment>
+      <Router>
+        <React.Fragment>
+          <Route path="/" exact component={Main} />
+          <Route path="/Events" component={Events} />
+        </React.Fragment>
+      </Router>
+    </React.Fragment>
+  );
+};

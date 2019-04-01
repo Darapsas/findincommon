@@ -1,17 +1,17 @@
 package com.findincommon.app.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
 @Document(collection = "groups")
 public class Group {
     private String id;
     private String name;
+
+    public Group(String name) {
+        this.name = name;
+    }
 }

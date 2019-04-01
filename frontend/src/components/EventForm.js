@@ -3,8 +3,8 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 
 const eventSchema = Yup.object().shape({
-  name: Yup.string().required("This is a required field"),
-  description: Yup.string().max(
+  name: Yup.string().required("This is a required field")
+  /*description: Yup.string().max(
     250,
     "Description must be at most 250 characters long."
   ),
@@ -13,7 +13,7 @@ const eventSchema = Yup.object().shape({
     .required("Start date and time are required"),
   endDate: Yup.date()
     .min(new Date(), "You cannot create an event for the past.")
-    .required("End date and time are required")
+    .required("End date and time are required")*/
 });
 
 export default props => {
@@ -48,7 +48,6 @@ export default props => {
             "Content-Type": "application/json"
           }
         })
-          .then(response => response.json())
           .then(response => console.log("Success", JSON.stringify(response)))
           .catch(error => console.error("Error:", error));
 
@@ -124,20 +123,18 @@ export default props => {
             <FieldArray
               name="reminders"
               render={arrayHelpers =>
-                reminderTypes.map(reminder => (
-                  <div key={reminder.id}>
+                reminderTypes.map((reminder, index) => (
+                  <div key={index}>
                     <label>
                       <input
-                        name="reminders"
+                        name={`reminder-${index}`}
                         type="checkbox"
-                        value={reminder.id}
-                        checked={values.reminders.includes(reminder.id)}
                         onChange={e => {
                           if (e.target.checked) {
-                            arrayHelpers.push(reminder.id);
+                            arrayHelpers.push(reminder);
                           } else {
                             arrayHelpers.remove(
-                              values.reminders.indexOf(reminder.id)
+                              values.reminders.indexOf(reminder)
                             );
                           }
                         }}

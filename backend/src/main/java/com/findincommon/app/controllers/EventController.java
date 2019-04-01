@@ -17,9 +17,15 @@ public class EventController {
 
     @PostMapping
     public void createEvent(@RequestBody Event event) {
-        System.out.println(event.toString());
-        System.out.println("FUUUUUUUUUUUUUUUUUUUUUUUCK YYYYYYYYYYYYYYYYYYYYYOOOOOOOOOOOOOOOOOUUUUUUUUU");
-        //eventService.save(event);
+        eventService.save(
+                Event
+                        .builder()
+                        .reminders(event.getReminders())
+                        .name(event.getName())
+                        .description(event.getDescription())
+                        .startDate(event.getStartDate())
+                        .endDate(event.getEndDate())
+                        .build());
     }
 
     @GetMapping
@@ -34,7 +40,15 @@ public class EventController {
 
     @PutMapping(value = "/{id}")
     public void updateEvent(@PathVariable String id, @RequestBody Event event) {
-        eventService.save(event);
+        eventService.save(
+                Event
+                        .builder()
+                        .reminders(event.getReminders())
+                        .name(event.getName())
+                        .description(event.getDescription())
+                        .startDate(event.getStartDate())
+                        .endDate(event.getEndDate())
+                        .build());
     }
 
     @DeleteMapping(value = "/{id}")

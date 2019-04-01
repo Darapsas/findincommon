@@ -17,7 +17,12 @@ public class ReminderController {
 
     @PostMapping
     public void createReminder(@RequestBody Reminder reminder) {
-        reminderService.save(reminder);
+        reminderService.save(
+                Reminder
+                        .builder()
+                        .name(reminder.getName())
+                        .timeInSeconds(reminder.getTimeInSeconds())
+                        .build());
     }
 
     @GetMapping

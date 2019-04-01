@@ -1,6 +1,7 @@
 package com.findincommon.app.models;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 @Document(collection = "events")
 public class Event {
     @Id
@@ -19,12 +21,4 @@ public class Event {
     private String description;
     private Date startDate;
     private Date endDate;
-
-    public Event(List<Reminder> reminders, String name, String description, Date startDate, Date endDate) {
-        this.reminders = reminders;
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
 }
