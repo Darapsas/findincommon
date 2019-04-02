@@ -3,8 +3,8 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 
 const eventSchema = Yup.object().shape({
-  name: Yup.string().required("This is a required field")
-  /*description: Yup.string().max(
+  name: Yup.string().required("This is a required field"),
+  description: Yup.string().max(
     250,
     "Description must be at most 250 characters long."
   ),
@@ -13,7 +13,7 @@ const eventSchema = Yup.object().shape({
     .required("Start date and time are required"),
   endDate: Yup.date()
     .min(new Date(), "You cannot create an event for the past.")
-    .required("End date and time are required")*/
+    .required("End date and time are required")
 });
 
 export default props => {
@@ -29,36 +29,63 @@ export default props => {
       });
   }, []);
 
+  useEffect(prevProps => {});
+
   return (
     <Formik
       initialValues={{
-        name: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-        reminders: []
+        id: props.location.state.event ? props.location.state.event.id : "",
+        name: props.location.state.event ? props.location.state.event.name : "",
+        description: props.location.state.event
+          ? props.location.state.event.description
+          : "",
+        startDate: props.location.state.event
+          ? props.location.state.event.startDate.slice(0, 16)
+          : "",
+        endDate: props.location.state.event
+          ? props.location.state.event.endDate.slice(0, 16)
+          : "",
+        reminders: props.location.state.event
+          ? props.location.state.event.reminders
+          : []
       }}
       validationSchema={eventSchema}
       //  validate={}
       onSubmit={(values, actions) => {
-        fetch(`http://192.168.99.100:8080/api/events`, {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-          .then(response => console.log("Success", JSON.stringify(response)))
-          .catch(error => console.error("Error:", error));
-
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 1000);
+        props.location.state.event
+          ? fetch(
+              `http://192.168.99.100:8080/api/events/${
+                props.location.state.event.id
+              }`,
+              {
+                method: "PUT",
+                body: JSON.stringify(values),
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }
+            )
+              .then(response => {
+                console.log("Successfully edited", JSON.stringify(response));
+                props.history.goBack();
+              })
+              .catch(error => console.error("Error:", error))
+          : fetch(`http://192.168.99.100:8080/api/events`, {
+              method: "POST",
+              body: JSON.stringify(values),
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(response => {
+                console.log("Successfully created", JSON.stringify(response));
+                props.history.goBack();
+              })
+              .catch(error => console.error("Error:", error));
       }}
       render={({ errors, touched, isSubmitting, values }) => (
         <Form>
-          <h2>{props.formName}</h2>
+          <h2>{props.location.state.formName || "Event form"}</h2>
           <div className="form-group">
             <label>Name</label>
             <Field
@@ -129,6 +156,9 @@ export default props => {
                       <input
                         name={`reminder-${index}`}
                         type="checkbox"
+                        checked={values.reminders
+                          .map(r => r.id)
+                          .includes(reminder.id)}
                         onChange={e => {
                           if (e.target.checked) {
                             arrayHelpers.push(reminder);
@@ -152,12 +182,13 @@ export default props => {
             type="submit"
             disabled={isSubmitting}
           >
-            {props.action}
+            {props.location.state.action || "Submit"}
           </button>
           <button
             className="btn btn-danger"
             type="button"
             disabled={isSubmitting}
+            onClick={() => props.history.goBack()}
           >
             Cancel
           </button>

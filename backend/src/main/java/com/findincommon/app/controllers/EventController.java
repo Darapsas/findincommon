@@ -43,6 +43,7 @@ public class EventController {
         eventService.save(
                 Event
                         .builder()
+                        .id(event.getId())
                         .reminders(event.getReminders())
                         .name(event.getName())
                         .description(event.getDescription())
