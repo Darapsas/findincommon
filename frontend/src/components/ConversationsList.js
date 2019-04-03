@@ -3,26 +3,26 @@ import { Link } from "react-router-dom";
 
 let _isMounted;
 export default props => {
-  const [events, setEvents] = useState([]);
+  const [conversations, setConversations] = useState([]);
   useEffect(() => {
     _isMounted = true;
 
-    fetch(`http://192.168.99.100:8080/api/events`, {
+    fetch(`http://192.168.99.100:8080/api/conversations`, {
       method: "GET"
     })
       .then(response => response.json())
       .then(data => {
         if (_isMounted) {
-          setEvents(data);
+          setConversations(data);
         }
       });
     return () => {
       _isMounted = false;
     };
-  }, [events]);
+  }, [conversations]);
 
-  const deleteEvent = id => {
-    fetch(`http://192.168.99.100:8080/api/events/${id}`, {
+  const deleteConversation = id => {
+    fetch(`http://192.168.99.100:8080/api/conversations/${id}`, {
       method: "DELETE"
     })
       .then(response => console.log("Success", JSON.stringify(response)))
@@ -35,38 +35,30 @@ export default props => {
         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
-          <th scope="col">Start date</th>
-          <th scope="col">End date</th>
           <th scope="col" />
           <th scope="col" />
         </tr>
       </thead>
       <tbody>
-        {events.map((event, index) => (
-          <tr key={event.id}>
+        {conversations.map((conversation, index) => (
+          <tr key={conversation.id}>
             <th scope="col">{index + 1}</th>
             <th className="font-weight-normal" scope="col">
-              {event.name}
-            </th>
-            <th className="font-weight-normal" scope="col">
-              {new Date(event.startDate).toUTCString()}
-            </th>
-            <th className="font-weight-normal" scope="col">
-              {new Date(event.endDate).toUTCString()}
+              {conversation.name}
             </th>
             <th scope="col">
               <Link
                 to={{
-                  pathname: `/event_edit/${event.id}`,
+                  pathname: `/conversation_edit/${conversation.id}`,
                   state: {
                     action: "Save Changes",
-                    formName: "Edit an Event",
-                    event: event
+                    formName: "Edit a Conversation",
+                    conversation: conversation
                   }
                 }}
               >
                 <button type="button" className="btn btn-primary float-right">
-                  Edit
+                  Show
                 </button>
               </Link>
             </th>
@@ -74,7 +66,7 @@ export default props => {
               <button
                 type="button"
                 className="btn btn-danger float-right"
-                onClick={() => deleteEvent(event.id)}
+                onClick={() => deleteConversation(conversation.id)}
               >
                 Delete
               </button>
@@ -82,12 +74,12 @@ export default props => {
           </tr>
         ))}
         <tr>
-          <td colSpan="4" />
+          <td colSpan="2" />
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/event_create/",
-                state: { action: "Create", formName: "Create new Event" }
+                pathname: "/conversation_create/",
+                state: { action: "Create", formName: "Create new Conversation" }
               }}
             >
               <button className="btn btn-success float-right" type="button">

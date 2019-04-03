@@ -37,7 +37,13 @@ public class ReminderController {
 
     @PutMapping(value = "/{id}")
     public void updateReminder(@PathVariable String id, @RequestBody Reminder reminder) {
-        reminderService.save(reminder);
+        reminderService.save(
+                Reminder
+                        .builder()
+                        .id(id)
+                        .name(reminder.getName())
+                        .timeInSeconds(reminder.getTimeInSeconds())
+                        .build());
     }
 
     @DeleteMapping(value = "/{id}")

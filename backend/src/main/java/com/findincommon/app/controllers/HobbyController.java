@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/hobbies")
 public class HobbyController {
@@ -16,7 +17,12 @@ public class HobbyController {
 
     @PostMapping
     public void createHobby(@RequestBody Hobby hobby) {
-        hobbyService.save(hobby);
+        hobbyService.save(
+                Hobby
+                        .builder()
+                        .name(hobby.getName())
+                        .description(hobby.getDescription())
+                        .build());
     }
 
     @GetMapping
@@ -31,7 +37,13 @@ public class HobbyController {
 
     @PutMapping(value = "/{id}")
     public void updateHobby(@PathVariable String id, @RequestBody Hobby hobby) {
-        hobbyService.save(hobby);
+        hobbyService.save(
+                Hobby
+                        .builder()
+                        .id(id)
+                        .name(hobby.getName())
+                        .description(hobby.getDescription())
+                        .build());
     }
 
     @DeleteMapping(value = "/{id}")

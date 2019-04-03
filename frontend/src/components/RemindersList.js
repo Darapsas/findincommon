@@ -3,26 +3,26 @@ import { Link } from "react-router-dom";
 
 let _isMounted;
 export default props => {
-  const [events, setEvents] = useState([]);
+  const [reminders, setReminders] = useState([]);
   useEffect(() => {
     _isMounted = true;
 
-    fetch(`http://192.168.99.100:8080/api/events`, {
+    fetch(`http://192.168.99.100:8080/api/reminders`, {
       method: "GET"
     })
       .then(response => response.json())
       .then(data => {
         if (_isMounted) {
-          setEvents(data);
+          setReminders(data);
         }
       });
     return () => {
       _isMounted = false;
     };
-  }, [events]);
+  }, [reminders]);
 
-  const deleteEvent = id => {
-    fetch(`http://192.168.99.100:8080/api/events/${id}`, {
+  const deleteReminder = id => {
+    fetch(`http://192.168.99.100:8080/api/reminders/${id}`, {
       method: "DELETE"
     })
       .then(response => console.log("Success", JSON.stringify(response)))
@@ -35,33 +35,29 @@ export default props => {
         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
-          <th scope="col">Start date</th>
-          <th scope="col">End date</th>
+          <th scope="col">Time in seconds</th>
           <th scope="col" />
           <th scope="col" />
         </tr>
       </thead>
       <tbody>
-        {events.map((event, index) => (
-          <tr key={event.id}>
+        {reminders.map((reminder, index) => (
+          <tr key={reminder.id}>
             <th scope="col">{index + 1}</th>
             <th className="font-weight-normal" scope="col">
-              {event.name}
+              {reminder.name}
             </th>
             <th className="font-weight-normal" scope="col">
-              {new Date(event.startDate).toUTCString()}
-            </th>
-            <th className="font-weight-normal" scope="col">
-              {new Date(event.endDate).toUTCString()}
+              {reminder.timeInSeconds}
             </th>
             <th scope="col">
               <Link
                 to={{
-                  pathname: `/event_edit/${event.id}`,
+                  pathname: `/reminder_edit/${reminder.id}`,
                   state: {
                     action: "Save Changes",
-                    formName: "Edit an Event",
-                    event: event
+                    formName: "Edit a Reminder",
+                    reminder: reminder
                   }
                 }}
               >
@@ -74,7 +70,7 @@ export default props => {
               <button
                 type="button"
                 className="btn btn-danger float-right"
-                onClick={() => deleteEvent(event.id)}
+                onClick={() => deleteReminder(reminder.id)}
               >
                 Delete
               </button>
@@ -86,8 +82,8 @@ export default props => {
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/event_create/",
-                state: { action: "Create", formName: "Create new Event" }
+                pathname: "/reminder_create/",
+                state: { action: "Create", formName: "Create new Reminder" }
               }}
             >
               <button className="btn btn-success float-right" type="button">

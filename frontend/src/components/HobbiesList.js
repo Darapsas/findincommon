@@ -3,26 +3,26 @@ import { Link } from "react-router-dom";
 
 let _isMounted;
 export default props => {
-  const [events, setEvents] = useState([]);
+  const [hobbies, setHobbies] = useState([]);
   useEffect(() => {
     _isMounted = true;
 
-    fetch(`http://192.168.99.100:8080/api/events`, {
+    fetch(`http://192.168.99.100:8080/api/hobbies`, {
       method: "GET"
     })
       .then(response => response.json())
       .then(data => {
         if (_isMounted) {
-          setEvents(data);
+          setHobbies(data);
         }
       });
     return () => {
       _isMounted = false;
     };
-  }, [events]);
+  }, [hobbies]);
 
-  const deleteEvent = id => {
-    fetch(`http://192.168.99.100:8080/api/events/${id}`, {
+  const deleteHobby = id => {
+    fetch(`http://192.168.99.100:8080/api/hobbies/${id}`, {
       method: "DELETE"
     })
       .then(response => console.log("Success", JSON.stringify(response)))
@@ -35,33 +35,29 @@ export default props => {
         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
-          <th scope="col">Start date</th>
-          <th scope="col">End date</th>
+          <th scope="col">Description</th>
           <th scope="col" />
           <th scope="col" />
         </tr>
       </thead>
       <tbody>
-        {events.map((event, index) => (
-          <tr key={event.id}>
+        {hobbies.map((hobby, index) => (
+          <tr key={hobby.id}>
             <th scope="col">{index + 1}</th>
             <th className="font-weight-normal" scope="col">
-              {event.name}
+              {hobby.name}
             </th>
             <th className="font-weight-normal" scope="col">
-              {new Date(event.startDate).toUTCString()}
-            </th>
-            <th className="font-weight-normal" scope="col">
-              {new Date(event.endDate).toUTCString()}
+              {hobby.description}
             </th>
             <th scope="col">
               <Link
                 to={{
-                  pathname: `/event_edit/${event.id}`,
+                  pathname: `/hobby_edit/${hobby.id}`,
                   state: {
                     action: "Save Changes",
-                    formName: "Edit an Event",
-                    event: event
+                    formName: "Edit a Hobby",
+                    hobby: hobby
                   }
                 }}
               >
@@ -74,7 +70,7 @@ export default props => {
               <button
                 type="button"
                 className="btn btn-danger float-right"
-                onClick={() => deleteEvent(event.id)}
+                onClick={() => deleteHobby(hobby.id)}
               >
                 Delete
               </button>
@@ -86,8 +82,8 @@ export default props => {
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/event_create/",
-                state: { action: "Create", formName: "Create new Event" }
+                pathname: "/hobby_create/",
+                state: { action: "Create", formName: "Create new Hobby" }
               }}
             >
               <button className="btn btn-success float-right" type="button">
