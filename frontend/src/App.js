@@ -11,6 +11,7 @@ import HobbyForm from "./components/HobbyForm";
 import Reminders from "./components/Reminders";
 import ReminderForm from "./components/ReminderForm";
 import ConversationsList from "./components/ConversationsList";
+import Conversation from "./components/Conversation";
 
 export default () => {
   return (
@@ -32,6 +33,7 @@ export default () => {
           <Route path="/reminder_edit/:id" component={ReminderForm} />
 
           <Route path="/conversations/" component={ConversationsList} />
+          <Route path="/conversation/:id" component={Conversation} />
         </React.Fragment>
       </Router>
     </React.Fragment>

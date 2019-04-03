@@ -49,7 +49,7 @@ export default props => {
             <th scope="col">
               <Link
                 to={{
-                  pathname: `/conversation_edit/${conversation.id}`,
+                  pathname: `/conversation/${conversation.id}`,
                   state: {
                     action: "Save Changes",
                     formName: "Edit a Conversation",
