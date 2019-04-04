@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Message {
     @Id
     private String id;
+    @DBRef
+    private Conversation conversation;
     private String creatorId;
     private String creatorFirstName;
     private String creatorLastName;

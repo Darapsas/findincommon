@@ -1,5 +1,6 @@
 package com.findincommon.app;
 
+import com.findincommon.app.configuration.AppProperties;
 import com.findincommon.app.models.*;
 import com.findincommon.app.repository.*;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +16,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @SpringBootApplication
+@EnableConfigurationProperties(AppProperties.class)
 public class AppApplication {
 
     private static final Logger log = LoggerFactory.getLogger(AppApplication.class);
