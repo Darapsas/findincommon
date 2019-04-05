@@ -25,5 +25,9 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String emailVerification;
     private String photo;
+    private String password;
+    private AuthProvider provider;
+    private String providerId;
 }

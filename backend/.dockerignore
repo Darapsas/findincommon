@@ -15,6 +15,12 @@ build
 
 
 
+# Fakin windows.. cannot handle long path names.. what a nightmare
+.cache/caches/modules-2/files-2.1/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure/
+
+
+
+
 # Exclude unnecessery files from cache
 
 .cache/caches/modules-2/modules-2.lock

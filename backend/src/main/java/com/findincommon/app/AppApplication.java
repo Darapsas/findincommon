@@ -153,7 +153,7 @@ public class AppApplication {
                             .email("doe@gmail.com")
                             .build());
 
-            User[] users = {
+       /*     User[] users = {
                     userRepository.findByEmail("darius562@gmail.com"),
                     userRepository.findByEmail("doe@gmail.com")
             };
@@ -218,7 +218,7 @@ public class AppApplication {
                             .messages(Arrays.asList(messages
                             ))
                             .build());
-
+*/
         };
     }
 
