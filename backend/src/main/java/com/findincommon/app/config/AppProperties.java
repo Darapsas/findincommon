@@ -1,4 +1,4 @@
-package com.findincommon.app.configuration;
+package com.findincommon.app.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

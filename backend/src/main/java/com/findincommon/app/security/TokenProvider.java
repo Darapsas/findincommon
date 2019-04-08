@@ -1,6 +1,6 @@
 package com.findincommon.app.security;
 
-import com.findincommon.app.configuration.AppProperties;
+import com.findincommon.app.config.AppProperties;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +34,12 @@ public class TokenProvider {
                 .compact();
     }
 
-    public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
+    public String getUserIdFromToken(String token) {
+        return Jwts.parser()
+                // .setBase64Codec(myBase64Codec)
                 .setSigningKey(appProperties.getAuth().getTokenSecret())
                 .parseClaimsJws(token)
-                .getBody();
-
-        return Long.parseLong(claims.getSubject());
+                .getBody().getSubject();
     }
 
     public boolean validateToken(String authToken) {

@@ -1,33 +1,37 @@
 package com.findincommon.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
 @Document(collection = "users")
 public class User {
-    @Id
+/*    @Id
     private String id;
-/*    @DBRef
-    private List<Hobby> hobbies;
-    @DBRef
-    private List<Event> events;
-    @DBRef
-    private List<Event> conversations;
-    @DBRef
-    private List<Group> groups;*/
     private String firstName;
     private String lastName;
+    private String birthdate;*/
+
+    public enum Role {USER, ADMIN, USER_MANAGER}
+
+    @Id
+    private String id;
+    private String name;
+    @Email
     private String email;
-    private String emailVerification;
-    private String photo;
+    private String imageUrl;
+    private Boolean emailVerified;
+    @JsonIgnore
     private String password;
+    @NotNull
     private AuthProvider provider;
     private String providerId;
+
 }

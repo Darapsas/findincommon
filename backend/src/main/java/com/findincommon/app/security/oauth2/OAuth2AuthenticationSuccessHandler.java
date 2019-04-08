@@ -1,6 +1,6 @@
 package com.findincommon.app.security.oauth2;
 
-import com.findincommon.app.configuration.AppProperties;
+import com.findincommon.app.config.AppProperties;
 import com.findincommon.app.exception.BadRequestException;
 import com.findincommon.app.security.TokenProvider;
 import com.findincommon.app.util.CookieUtils;
@@ -19,8 +19,8 @@ import java.util.Optional;
 
 import static com.findincommon.app.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
-@Component
 
+@Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private TokenProvider tokenProvider;

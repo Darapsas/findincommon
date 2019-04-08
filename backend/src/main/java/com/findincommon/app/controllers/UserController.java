@@ -1,4 +1,4 @@
-package com.findincommon.app.controller;
+package com.findincommon.app.controllers;
 
 import com.findincommon.app.exception.ResourceNotFoundException;
 import com.findincommon.app.models.User;

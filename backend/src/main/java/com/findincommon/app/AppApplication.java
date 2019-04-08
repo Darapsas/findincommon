@@ -1,6 +1,6 @@
 package com.findincommon.app;
 
-import com.findincommon.app.configuration.AppProperties;
+import com.findincommon.app.config.AppProperties;
 import com.findincommon.app.models.*;
 import com.findincommon.app.repository.*;
 import org.slf4j.Logger;
@@ -140,16 +140,14 @@ public class AppApplication {
             userRepository.save(
                     User
                             .builder()
-                            .firstName("Darius")
-                            .lastName("Rainys")
-                            .email("darius562@gmail.com")
+                            .name("Darius Rainys")
+                            .email("darius562@gmailll.com")
                             .build());
 
             userRepository.save(
                     User
                             .builder()
-                            .firstName("Jone")
-                            .lastName("Doe")
+                            .name("Jone Doe")
                             .email("doe@gmail.com")
                             .build());
 

@@ -1,4 +1,3 @@
-
 package com.findincommon.app.payload;
 
 public class ApiResponse {

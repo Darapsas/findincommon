@@ -1,4 +1,4 @@
-package com.findincommon.app.configuration;
+package com.findincommon.app.config;
 
 import com.findincommon.app.security.CustomUserDetailsService;
 import com.findincommon.app.security.RestAuthenticationEntryPoint;
@@ -29,7 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         jsr250Enabled = true,
         prePostEnabled = true
 )
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;

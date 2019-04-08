@@ -1,0 +1,1 @@
+// index.js is your entry opint for importing your Component. It contains nothing but an export statement that point to the topmost Component at any point in time, because the topmost Component changes often during development.

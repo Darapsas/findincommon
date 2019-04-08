@@ -1,5 +1,5 @@
 import React from "react";
-import EventsList from "./EventsList";
+import EventsList from "./events-list";
 
 export default () => {
   return <EventsList />;

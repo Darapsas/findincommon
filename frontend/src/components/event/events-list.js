@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 let _isMounted;
-export default props => {
+export default () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
     _isMounted = true;

@@ -1,5 +1,5 @@
-
 package com.findincommon.app.security;
+
 
 import com.findincommon.app.exception.ResourceNotFoundException;
 import com.findincommon.app.models.User;

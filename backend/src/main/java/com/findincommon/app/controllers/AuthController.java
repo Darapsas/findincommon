@@ -1,4 +1,4 @@
-package com.findincommon.app.controller;
+package com.findincommon.app.controllers;
 
 import com.findincommon.app.exception.BadRequestException;
 import com.findincommon.app.models.AuthProvider;
@@ -64,9 +64,8 @@ public class AuthController {
         }
 
         // Creating user's account
-        User user = User
-                .builder()
-                .firstName(signUpRequest.getName())
+        User user = User.builder()
+                .name(signUpRequest.getName())
                 .email(signUpRequest.getEmail())
                 .password(signUpRequest.getPassword())
                 .provider(AuthProvider.local)
