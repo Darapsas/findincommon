@@ -1,33 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getUserEvents, deleteEvent } from "../../helpers/requests";
 
 let _isMounted;
-export default () => {
+export default props => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
     _isMounted = true;
 
-    fetch(`http://192.168.99.100:8080/api/events`, {
-      method: "GET"
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (_isMounted) {
-          setEvents(data);
-        }
-      });
+    getUserEvents(props.currentUser.id).then(data => {
+      if (_isMounted) {
+        setEvents(data);
+      }
+    });
     return () => {
       _isMounted = false;
     };
-  }, [events]);
-
-  const deleteEvent = id => {
-    fetch(`http://192.168.99.100:8080/api/events/${id}`, {
-      method: "DELETE"
-    })
-      .then(response => console.log("Success", JSON.stringify(response)))
-      .catch(error => console.error("Error:", error));
-  };
+  }, []);
 
   return (
     <table className="table table-hover">
@@ -42,45 +31,46 @@ export default () => {
         </tr>
       </thead>
       <tbody>
-        {events.map((event, index) => (
-          <tr key={event.id}>
-            <th scope="col">{index + 1}</th>
-            <th className="font-weight-normal" scope="col">
-              {event.name}
-            </th>
-            <th className="font-weight-normal" scope="col">
-              {new Date(event.startDate).toUTCString()}
-            </th>
-            <th className="font-weight-normal" scope="col">
-              {new Date(event.endDate).toUTCString()}
-            </th>
-            <th scope="col">
-              <Link
-                to={{
-                  pathname: `/event_edit/${event.id}`,
-                  state: {
-                    action: "Save Changes",
-                    formName: "Edit an Event",
-                    event: event
-                  }
-                }}
-              >
-                <button type="button" className="btn btn-primary float-right">
-                  Edit
+        {events.length !== 0 &&
+          events.map((event, index) => (
+            <tr key={event.id}>
+              <th scope="col">{index + 1}</th>
+              <th className="font-weight-normal" scope="col">
+                {event.name}
+              </th>
+              <th className="font-weight-normal" scope="col">
+                {new Date(event.startDate).toUTCString()}
+              </th>
+              <th className="font-weight-normal" scope="col">
+                {new Date(event.endDate).toUTCString()}
+              </th>
+              <th scope="col">
+                <Link
+                  to={{
+                    pathname: `/event_edit/${event.id}`,
+                    state: {
+                      action: "Save Changes",
+                      formName: "Edit an Event",
+                      event: event
+                    }
+                  }}
+                >
+                  <button type="button" className="btn btn-primary float-right">
+                    Edit
+                  </button>
+                </Link>
+              </th>
+              <th scope="col">
+                <button
+                  type="button"
+                  className="btn btn-danger float-right"
+                  onClick={() => deleteEvent(event.id)}
+                >
+                  Delete
                 </button>
-              </Link>
-            </th>
-            <th scope="col">
-              <button
-                type="button"
-                className="btn btn-danger float-right"
-                onClick={() => deleteEvent(event.id)}
-              >
-                Delete
-              </button>
-            </th>
-          </tr>
-        ))}
+              </th>
+            </tr>
+          ))}
         <tr>
           <td colSpan="4" />
           <td colSpan="2">

@@ -1,6 +1,7 @@
 package com.findincommon.app;
 
 import com.findincommon.app.config.AppProperties;
+import com.findincommon.app.exception.ResourceNotFoundException;
 import com.findincommon.app.models.*;
 import com.findincommon.app.repository.*;
 import org.slf4j.Logger;
@@ -35,6 +36,26 @@ public class AppApplication {
             ConversationRepository conversationRepository
     ) {
         return (args) -> {
+
+            userRepository.save(
+                    User
+                            .builder()
+                            .name("Darius Rainys")
+                            .email("darius562@gmail.com")
+                            .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
+                            .provider(AuthProvider.google)
+                            .providerId("100722226320893340969")
+                            .build());
+
+            User admin = userRepository.findByEmail("darius562@gmail.com").orElseThrow();
+
+            userRepository.save(
+                    User
+                            .builder()
+                            .name("Jone Doe")
+                            .email("doe@gmail.com")
+                            .build());
+
             // create example data
             reminderRepository.save(
                     Reminder
@@ -64,6 +85,7 @@ public class AppApplication {
                                             reminderRepository.findByName("1 hour before")
                                     ))
                             .name("Flat earth is the truth")
+                            .creatorId(admin.getId())
                             .description("With this disuccion we will try to get different opinions about flat earth.")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
@@ -77,6 +99,7 @@ public class AppApplication {
                                             reminderRepository.findByName("15 min. before")
                                     ))
                             .name("Lizard people con")
+                            .creatorId(admin.getId())
                             .description("Is trump a lizard? Find out here.")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
@@ -136,20 +159,6 @@ public class AppApplication {
                                 .build());
             }
 
-
-            userRepository.save(
-                    User
-                            .builder()
-                            .name("Darius Rainys")
-                            .email("darius562@gmailll.com")
-                            .build());
-
-            userRepository.save(
-                    User
-                            .builder()
-                            .name("Jone Doe")
-                            .email("doe@gmail.com")
-                            .build());
 
        /*     User[] users = {
                     userRepository.findByEmail("darius562@gmail.com"),

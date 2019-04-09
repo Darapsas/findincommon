@@ -3,6 +3,7 @@ package com.findincommon.app.controllers;
 import com.findincommon.app.models.Reminder;
 import com.findincommon.app.services.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ReminderController {
     ReminderService reminderService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public void createReminder(@RequestBody Reminder reminder) {
         reminderService.save(
                 Reminder
@@ -36,6 +38,7 @@ public class ReminderController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void updateReminder(@PathVariable String id, @RequestBody Reminder reminder) {
         reminderService.save(
                 Reminder
@@ -47,6 +50,7 @@ public class ReminderController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteReminder(@PathVariable String id) {
         reminderService.deleteReminder(id);
     }

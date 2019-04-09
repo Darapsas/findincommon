@@ -25,21 +25,41 @@ const request = options => {
   );
 };
 
-export function getCurrentUser() {
+export const getCurrentUser = () => {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     return Promise.reject("No access token set.");
   }
 
   return request({
-    url: API_BASE_URL + "/user/me",
+    url: `${API_BASE_URL}/api/users/user/info`,
     method: "GET"
   });
-}
+};
 
-export function signin(signinRequest) {
+export const signin = signinRequest => {
   return request({
-    url: API_BASE_URL + "/auth/signin",
+    url: `${API_BASE_URL}/auth/signin`,
     method: "POST",
     body: JSON.stringify(signinRequest)
   });
-}
+};
+
+export const getUserEvents = userId => {
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    return Promise.reject("No access token set.");
+  }
+  return request({
+    url: `${API_BASE_URL}/api/events/creator/${userId}`,
+    method: "GET"
+  });
+};
+
+export const deleteEvent = eventId => {
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    return Promise.reject("No access token set.");
+  }
+  return request({
+    url: `${API_BASE_URL}/api/events/${eventId}`,
+    method: "DELETE"
+  });
+};

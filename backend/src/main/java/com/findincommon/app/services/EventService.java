@@ -21,6 +21,10 @@ public class EventService {
         return eventRepository.findAll();
     }
 
+    public List<Event> getUserEvents(String creatorId) {
+        return eventRepository.findByCreatorId(creatorId);
+    }
+
     public Event getEvent(String id) {
         return eventRepository.findById(id).get();
     }

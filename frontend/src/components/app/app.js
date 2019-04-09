@@ -108,7 +108,7 @@ export default props => {
             component={Profile}
           />
           <PrivateRoute
-            path="/myEvents"
+            path="/user/events"
             authenticated={authenticated}
             currentUser={currentUser}
             component={Events}

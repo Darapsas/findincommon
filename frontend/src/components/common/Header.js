@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 
@@ -18,7 +18,7 @@ export default props => (
                 <NavLink to="/myHobbies">Hobbies</NavLink>
               </li>
               <li>
-                <NavLink to="/myEvents">Events</NavLink>
+                <NavLink to="/user/events">Events</NavLink>
               </li>
               <li>
                 <NavLink to="/myConversations">Conversations</NavLink>
