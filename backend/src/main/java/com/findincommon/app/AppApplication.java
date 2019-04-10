@@ -36,6 +36,31 @@ public class AppApplication {
             ConversationRepository conversationRepository
     ) {
         return (args) -> {
+            String[][] hobbies = {
+                    {"astronomy", "Astronomy (from Greek: ἀστρονομία) is a natural science that studies celestial objects and phenomena."},
+                    {"baseball", "Baseball is a bat-and-ball game played between two opposing teams who take turns batting and fielding. "},
+                    {"basketball", "Basketball is a team sport in which two teams, most commonly of five players each, opposing one another on a rectangular court, compete with the primary objective of shooting a basketball (approximately 9.4 inches (24 cm) in diameter) through the defender's hoop (a basket 18 inches (46 cm) in diameter mounted 10 feet (3.048 m) high to a backboard at each end of the court) while preventing the opposing team from shooting through their own hoop."},
+                    {"beekeeping", "Beekeeping (or apiculture) is the maintenance of bee colonies, commonly in man-made hives, by humans."},
+                    {"blacksmith", "A blacksmith is a metalsmith who creates objects from wrought iron or steel by forging the metal, using tools to hammer, bend, and cut (cf. whitesmith)."},
+                    {"boardsport", "Boardsports are sports that are played with some sort of board as the primary equipment."},
+                    {"butterfly watching", "Butterfly watching (also called butterflying) is a hobby concerned with the observation and study of butterflies. It also includes the \"catch and release\" of butterflies. "},
+                    {"canyoning", "Canyoning (canyoneering in the United States, kloofing in South Africa) is travelling in canyons using a variety of techniques that may include other outdoor activities such as walking, scrambling, climbing, jumping, abseiling (rappelling), and swimming. "},
+                    {"fishing", "Fishing is the activity of trying to catch fish."},
+                    {"gunsmith", "A gunsmith is a person who repairs, modifies, designs, or builds guns."},
+                    {"homebrewing", "Homebrewing is the brewing of beer, mead, and ciders on a small scale for personal, non-commercial purposes."},
+                    {"hydroponics", "Hydroponics is a subset of hydroculture, which is a method of growing plants without soil by using mineral nutrient solutions in a water solvent."},
+                    {"ice skating", "Ice skating is the self-propulsion of a person across a sheet of ice, using metal-bladed ice skates to glide on the ice surface."},
+                    {"jigsaw puzzle", "A jigsaw puzzle is a tiling puzzle that requires the assembly of often oddly shaped interlocking and tessellating pieces."}
+            };
+
+            for (String[] hobby : hobbies) {
+                hobbyRepository.save(
+                        Hobby
+                                .builder()
+                                .name(hobby[0])
+                                .description(hobby[1])
+                                .build());
+            }
 
             userRepository.save(
                     User
@@ -45,9 +70,62 @@ public class AppApplication {
                             .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
                             .provider(AuthProvider.google)
                             .providerId("100722226320893340969")
+                            .hobbies(
+                                    Arrays
+                                            .asList(
+                                                    hobbyRepository.findByName("baseball"),
+                                                    hobbyRepository.findByName("canyoning"),
+                                                    hobbyRepository.findByName("gunsmith"),
+                                                    hobbyRepository.findByName("ice skating")
+                                            ))
+                            .build());
+            userRepository.save(
+                    User
+                            .builder()
+                            .name("Beam Jim")
+                            .email("Jim@gmail.com")
+                            .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
+                            .provider(AuthProvider.google)
+                            .providerId("100722226320893340969")
+                            .hobbies(
+                                    Arrays
+                                            .asList(
+                                                    hobbyRepository.findByName("baseball"),
+                                                    hobbyRepository.findByName("gunsmith"),
+                                                    hobbyRepository.findByName("ice skating")
+                                            ))
+                            .build());
+            userRepository.save(
+                    User
+                            .builder()
+                            .name("Go Joe")
+                            .email("go@gmail.com")
+                            .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
+                            .provider(AuthProvider.google)
+                            .providerId("100722226320893340969")
+                            .hobbies(
+                                    Arrays
+                                            .asList(
+                                                    hobbyRepository.findByName("baseball"),
+                                                    hobbyRepository.findByName("canyoning")
+                                            ))
+                            .build());
+            userRepository.save(
+                    User
+                            .builder()
+                            .name("John doe")
+                            .email("doe562@gmail.com")
+                            .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
+                            .provider(AuthProvider.google)
+                            .providerId("100722226320893340969")
+                            .hobbies(
+                                    Arrays
+                                            .asList(
+                                                    hobbyRepository.findByName("ice skating")
+                                            ))
                             .build());
 
-            User admin = userRepository.findByEmail("darius562@gmail.com").orElseThrow();
+            User simpleUser = userRepository.findByEmail("darius562@gmail.com").orElseThrow();
 
             userRepository.save(
                     User
@@ -76,6 +154,8 @@ public class AppApplication {
                             .timeInSeconds(60 * 60 * 60 * 24)
                             .build());
 
+
+
             eventRepository.save(
                     Event
                             .builder()
@@ -85,7 +165,7 @@ public class AppApplication {
                                             reminderRepository.findByName("1 hour before")
                                     ))
                             .name("Flat earth is the truth")
-                            .creatorId(admin.getId())
+                            .creatorId(simpleUser.getId())
                             .description("With this disuccion we will try to get different opinions about flat earth.")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
@@ -99,7 +179,7 @@ public class AppApplication {
                                             reminderRepository.findByName("15 min. before")
                                     ))
                             .name("Lizard people con")
-                            .creatorId(admin.getId())
+                            .creatorId(simpleUser.getId())
                             .description("Is trump a lizard? Find out here.")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
@@ -133,31 +213,6 @@ public class AppApplication {
                             .build()
             );
 
-            String[][] hobbies = {
-                    {"astronomy", "Astronomy (from Greek: ἀστρονομία) is a natural science that studies celestial objects and phenomena."},
-                    {"baseball", "Baseball is a bat-and-ball game played between two opposing teams who take turns batting and fielding. "},
-                    {"basketball", "Basketball is a team sport in which two teams, most commonly of five players each, opposing one another on a rectangular court, compete with the primary objective of shooting a basketball (approximately 9.4 inches (24 cm) in diameter) through the defender's hoop (a basket 18 inches (46 cm) in diameter mounted 10 feet (3.048 m) high to a backboard at each end of the court) while preventing the opposing team from shooting through their own hoop."},
-                    {"beekeeping", "Beekeeping (or apiculture) is the maintenance of bee colonies, commonly in man-made hives, by humans."},
-                    {"blacksmith", "A blacksmith is a metalsmith who creates objects from wrought iron or steel by forging the metal, using tools to hammer, bend, and cut (cf. whitesmith)."},
-                    {"boardsport", "Boardsports are sports that are played with some sort of board as the primary equipment."},
-                    {"butterfly watching", "Butterfly watching (also called butterflying) is a hobby concerned with the observation and study of butterflies. It also includes the \"catch and release\" of butterflies. "},
-                    {"canyoning", "Canyoning (canyoneering in the United States, kloofing in South Africa) is travelling in canyons using a variety of techniques that may include other outdoor activities such as walking, scrambling, climbing, jumping, abseiling (rappelling), and swimming. "},
-                    {"fishing", "Fishing is the activity of trying to catch fish."},
-                    {"gunsmith", "A gunsmith is a person who repairs, modifies, designs, or builds guns."},
-                    {"homebrewing", "Homebrewing is the brewing of beer, mead, and ciders on a small scale for personal, non-commercial purposes."},
-                    {"hydroponics", "Hydroponics is a subset of hydroculture, which is a method of growing plants without soil by using mineral nutrient solutions in a water solvent."},
-                    {"ice skating", "Ice skating is the self-propulsion of a person across a sheet of ice, using metal-bladed ice skates to glide on the ice surface."},
-                    {"jigsaw puzzle", "A jigsaw puzzle is a tiling puzzle that requires the assembly of often oddly shaped interlocking and tessellating pieces."}
-            };
-
-            for (String[] hobby : hobbies) {
-                hobbyRepository.save(
-                        Hobby
-                                .builder()
-                                .name(hobby[0])
-                                .description(hobby[1])
-                                .build());
-            }
 
 
        /*     User[] users = {

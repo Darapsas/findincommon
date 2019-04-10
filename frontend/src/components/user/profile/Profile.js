@@ -8,11 +8,12 @@ const Profile = props => {
       <div className="container">
         <div className="profile-info">
           <div className="profile-avatar">
-            {props.currentUser.imageUrl ? null : (
-              //<img
-              //  src={props.currentUser.imageUrl}
-              //  alt={props.currentUser.name}
-              // />
+            {props.currentUser.imageUrl ? (
+              <img
+                src={props.currentUser.imageUrl}
+                alt={props.currentUser.name}
+              />
+            ) : (
               <div className="text-avatar">
                 <span>
                   {props.currentUser.name && props.currentUser.name[0]}

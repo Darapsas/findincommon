@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @Builder
@@ -26,12 +28,15 @@ public class User {
     private String name;
     @Email
     private String email;
-    private String imageUrl;
-    private Boolean emailVerified;
     @JsonIgnore
     private String password;
+    private String imageUrl;
+    private String providerId;
+    private Boolean emailVerified;
     @NotNull
     private AuthProvider provider;
-    private String providerId;
+
+    @DBRef
+    private List<Hobby> hobbies;
 
 }

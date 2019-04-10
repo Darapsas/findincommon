@@ -1,44 +1,79 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
-import "./Header.css";
+import "./header.css";
 
 export default props => (
-  <header className="app-header">
-    <div className="container">
-      <div className="app-branding">
-        <Link to="/" className="app-title">
-          Find In Common
-        </Link>
-      </div>
-      <div className="app-options">
-        <nav className="app-nav">
-          {props.authenticated ? (
-            <ul>
-              <li>
-                <NavLink to="/myHobbies">Hobbies</NavLink>
+  <header>
+    <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <Link to="/" className="navbar-brand app-title">
+        Find In Common
+      </Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon" />
+      </button>
+      <div className="collapse navbar-collapse" id="navbarCollapse">
+        {props.authenticated ? (
+          <Fragment>
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/profile">
+                  Profile
+                </NavLink>
               </li>
-              <li>
-                <NavLink to="/user/events">Events</NavLink>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/myHobbies">
+                  Hobbies
+                </NavLink>
               </li>
-              <li>
-                <NavLink to="/myConversations">Conversations</NavLink>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/myConversations">
+                  Conversations
+                </NavLink>
               </li>
-              <li>
-                <NavLink to="/profile">Profile</NavLink>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/user/events">
+                  Events
+                </NavLink>
               </li>
-              <li>
-                <a onClick={props.onLogout}>Logout</a>
+              <li className="nav-item">
+                <a className="nav-link" onClick={props.onLogout}>
+                  Logout
+                </a>
               </li>
             </ul>
-          ) : (
-            <ul>
-              <li>
-                <NavLink to="/signin">Sign in</NavLink>
-              </li>
-            </ul>
-          )}
-        </nav>
+            <form className="form-inline mt-2 mt-md-0">
+              <input
+                className="form-control mr-sm-2"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button
+                className="btn btn-outline-success my-2 my-sm-0"
+                type="submit"
+              >
+                Search
+              </button>
+            </form>
+          </Fragment>
+        ) : (
+          <ul className="navbar-nav ml-auto">
+            <li className="flaot-right">
+              <NavLink className="nav-link" to="/signin">
+                Sign in
+              </NavLink>
+            </li>
+          </ul>
+        )}
       </div>
-    </div>
+    </nav>
   </header>
 );
