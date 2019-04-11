@@ -24,6 +24,21 @@ const Profile = props => {
           <div className="profile-name">
             <h2>{props.currentUser.name}</h2>
             <p className="profile-email">{props.currentUser.email}</p>
+            <h3 className="float-left">About you</h3>
+            <p className="profile-email">{props.currentUser.description}</p>
+            <br />
+            <br />
+            <ul className="list-group">
+              <li className="list-group-item active">
+                These are your hobbies:
+              </li>
+              {props.currentUser.hobbies.length !== 0 &&
+                props.currentUser.hobbies.map(hobby => (
+                  <li className="list-group-item" key={hobby.id}>
+                    {hobby.name}
+                  </li>
+                ))}
+            </ul>
           </div>
         </div>
       </div>

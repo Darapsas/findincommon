@@ -17,7 +17,7 @@ public class HobbyService {
         hobbyRepository.save(hobby);
     }
 
-    public List<Hobby> getAllHobbys() {
+    public List<Hobby> getAllHobbies() {
         return hobbyRepository.findAll();
     }
 

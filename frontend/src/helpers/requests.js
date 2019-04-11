@@ -13,6 +13,7 @@ const request = options => {
   const defaults = { headers: headers };
   options = Object.assign({}, defaults, options);
 
+  //  alert(JSON.stringify(options));
   switch (options.method) {
     case "PUT":
       return fetch(options.url, options);
@@ -53,6 +54,18 @@ const getMembers = () =>
     method: "GET"
   });
 
+const getHobbies = () =>
+  request({
+    url: `${API_BASE_URL}/api/hobbies`,
+    method: "GET"
+  });
+
+const getCertainHobbies = searchQuery =>
+  request({
+    url: `${API_BASE_URL}/api/hobbies/search/${searchQuery}`,
+    method: "GET"
+  });
+
 const login = loginRequest =>
   request({
     url: `${API_BASE_URL}/auth/login`,
@@ -71,6 +84,7 @@ export {
   deleteEvent,
   getUserEvents,
   getCurrentUser,
+  getCertainHobbies,
   getMembers,
   login,
   signup

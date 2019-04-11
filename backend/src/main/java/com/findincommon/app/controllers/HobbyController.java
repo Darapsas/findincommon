@@ -5,7 +5,11 @@ import com.findincommon.app.services.HobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -26,9 +30,31 @@ public class HobbyController {
     }
 
     @GetMapping
-    public List<Hobby> getHobbys() {
-        return hobbyService.getAllHobbys();
+    public List<Hobby> getHobbies() {
+        return hobbyService.getAllHobbies();
     }
+
+    @GetMapping(value = "/search/{query}")
+    public List<Hobby> getCertainHobbies(@PathVariable String query) {
+        List<Hobby> hobbies = hobbyService.getAllHobbies();
+        List<String> queryArguments = Arrays.asList(query.split(","));
+        System.out.print(query);
+
+        List<Hobby> searchedHobbies = new ArrayList<>();// = hobbies.stream().map(hobby -> return hobby.getName().contains("adsf")).collect(Collectors.toList());
+
+        for (Hobby hobby : hobbies) {
+            for (String queryArgument : queryArguments) {
+                if (hobby.getName().contains(queryArgument.trim())) {
+                    searchedHobbies.add(hobby);
+                    break;
+                }
+            }
+        }
+
+
+        return searchedHobbies;
+    }
+
 
     @GetMapping(value = "/{id}")
     public Hobby getHobby(@PathVariable String id) {

@@ -1,28 +1,45 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./home.css";
 import Fake from "../fake";
+import Member from "./member";
 import { getMembers } from "../../helpers/requests";
+import Loader from "../templates/loader";
 
 let _isMounted;
 export default props => {
+  const [loading, setLoading] = useState(true);
   const [members, setMembers] = useState([]);
   useEffect(() => {
     _isMounted = true;
-    if (props.authenticated) {
-      getMembers().then(data => {
-        if (_isMounted) {
-          console.log(data);
-          setMembers(data);
-        }
-      });
+    async function fetchData() {
+      if (props.authenticated) {
+        const response = await getMembers()
+          .then(data => {
+            if (_isMounted) {
+              setMembers(data);
+              console.log("fuck");
+            }
+          })
+          .catch(error => console.error("Error: ", error));
+      }
+      setLoading(false);
     }
+    fetchData();
     return () => {
       _isMounted = false;
     };
   }, []);
 
+  if (loading) {
+    return (
+      <main role="main" style={{ textAlign: "center" }}>
+        <Loader />
+      </main>
+    );
+  }
+
   return (
-    <main role="main">
+    <Fragment>
       <section className="jumbotron text-center">
         <div className="container">
           {props.authenticated ? (
@@ -50,68 +67,23 @@ export default props => {
 
       <div className="album py-5 bg-light">
         <div className="container">
-          <div className="row">
-            {props.authenticated ? (
-              <Fragment>
-                {members.length !== 0 &&
-                  members.map(
-                    (member, index) =>
-                      props.currentUser.id !== member.id && (
-                        <div key={member.id} className="col-md-4">
-                          <div className="card mb-4 shadow-sm">
-                            <svg
-                              className="bd-placeholder-img card-img-top"
-                              width="100%"
-                              height="225"
-                              xmlns="http://www.w3.org/2000/svg"
-                              preserveAspectRatio="xMidYMid slice"
-                              focusable="false"
-                              role="img"
-                              aria-label="Placeholder: Hulk"
-                            >
-                              <title>{member.id}</title>
-                              <image
-                                width="100%"
-                                height="100%"
-                                href={"dsafasd" + member.imageUrl}
-                              />
-                            </svg>
-                            <div className="card-body">
-                              <h6>{member.name}</h6>
-                              <p className="card-text">
-                                This is a wider card with supporting text below
-                                as a natural lead-in to additional content. This
-                                content is a little bit longer.
-                              </p>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn-group">
-                                  <button
-                                    type="button"
-                                    className="btn btn-sm btn-outline-secondary"
-                                  >
-                                    View
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="btn btn-sm btn-outline-secondary"
-                                  >
-                                    Edit
-                                  </button>
-                                </div>
-                                <small className="text-muted">9 mins</small>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                  )}
-              </Fragment>
-            ) : (
+          {props.authenticated ? (
+            <div className="row">
+              {members.length !== 0 &&
+                members.map(
+                  member =>
+                    props.currentUser.id !== member.id && (
+                      <Member key={member.id} member={member} />
+                    )
+                )}
+            </div>
+          ) : (
+            <div className="row blur">
               <Fake />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
-    </main>
+    </Fragment>
   );
 };

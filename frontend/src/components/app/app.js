@@ -1,17 +1,17 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import Header from "../common/header";
-import Footer from "../common/footer";
+import Header from "../templates/header";
+import Footer from "../templates/footer";
+import NotFound from "../templates/notFound";
+import PrivateRoute from "../templates/privateRoute";
+import RouteWithProps from "../templates/routeWithProps";
+import Loader from "../templates/loader";
 import Home from "../home/home";
 import SignIn from "../user/signin/SignIn";
 import Profile from "../user/profile/Profile";
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler";
-import NotFound from "../common/NotFound";
-import LoadingIndicator from "../common/LoadingIndicator";
 import { getCurrentUser } from "../../helpers/requests";
 import { ACCESS_TOKEN } from "../../helpers/constants";
-import PrivateRoute from "../common/privateRoute";
-import RouteWithProps from "../common/routeWithProps";
 import Alert from "react-s-alert";
 import "react-s-alert/dist/s-alert-default.css";
 import "react-s-alert/dist/s-alert-css-effects/slide.css";
@@ -49,62 +49,68 @@ export default props => {
   }, []);
 
   if (loading) {
-    return <LoadingIndicator />;
+    return (
+      <main role="main" style={{ textAlign: "center" }}>
+        <Loader />
+      </main>
+    );
   }
 
   return (
     <Fragment>
       <Header authenticated={authenticated} onLogout={handleLogout} />
-      <div className="app-body">
-        <Switch>
-          <RouteWithProps
-            exact
-            path="/"
-            authenticated={authenticated}
-            currentUser={currentUser}
-            component={Home}
-          />
-          <PrivateRoute
-            path="/profile"
-            authenticated={authenticated}
-            currentUser={currentUser}
-            component={Profile}
-          />
-          <PrivateRoute
-            path="/user/events"
-            authenticated={authenticated}
-            currentUser={currentUser}
-            component={Events}
-          />
-          <PrivateRoute
-            path="/myConversations"
-            authenticated={authenticated}
-            currentUser={currentUser}
-            component={Profile}
-          />
-          <PrivateRoute
-            path="/myHobbies"
-            authenticated={authenticated}
-            currentUser={currentUser}
-            component={Profile}
-          />
-          <Route
-            path="/signin"
-            render={props => (
-              <SignIn authenticated={authenticated} {...props} />
-            )}
-          />
-          <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
-      <Alert
-        stack={{ limit: 3 }}
-        timeout={3000}
-        position="top-right"
-        effect="slide"
-        offset={65}
-      />
+      <main role="main">
+        <div className="app-body">
+          <Switch>
+            <RouteWithProps
+              exact
+              path="/"
+              authenticated={authenticated}
+              currentUser={currentUser}
+              component={Home}
+            />
+            <PrivateRoute
+              path="/profile"
+              authenticated={authenticated}
+              currentUser={currentUser}
+              component={Profile}
+            />
+            <PrivateRoute
+              path="/user/events"
+              authenticated={authenticated}
+              currentUser={currentUser}
+              component={Events}
+            />
+            <PrivateRoute
+              path="/myConversations"
+              authenticated={authenticated}
+              currentUser={currentUser}
+              component={Profile}
+            />
+            <PrivateRoute
+              path="/myHobbies"
+              authenticated={authenticated}
+              currentUser={currentUser}
+              component={Profile}
+            />
+            <Route
+              path="/signin"
+              render={props => (
+                <SignIn authenticated={authenticated} {...props} />
+              )}
+            />
+            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+        <Alert
+          stack={{ limit: 3 }}
+          timeout={3000}
+          position="top-right"
+          effect="slide"
+          offset={65}
+        />
+      </main>
       <Footer />
     </Fragment>
   );

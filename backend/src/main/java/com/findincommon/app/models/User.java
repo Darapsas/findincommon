@@ -38,5 +38,6 @@ public class User {
 
     @DBRef
     private List<Hobby> hobbies;
+    private String description;
 
 }

@@ -21,7 +21,7 @@ const OAuth2RedirectHandler = props => {
     return (
       <Redirect
         to={{
-          pathname: "/profile",
+          pathname: "/",
           state: { from: props.location }
         }}
       />
