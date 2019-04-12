@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -36,15 +33,20 @@ public class HobbyController {
 
     @GetMapping(value = "/search/{query}")
     public List<Hobby> getCertainHobbies(@PathVariable String query) {
-        List<Hobby> hobbies = hobbyService.getAllHobbies();
-        List<String> queryArguments = Arrays.asList(query.split(","));
-        System.out.print(query);
+        List<Hobby> searchedHobbies = new ArrayList<>();
 
-        List<Hobby> searchedHobbies = new ArrayList<>();// = hobbies.stream().map(hobby -> return hobby.getName().contains("adsf")).collect(Collectors.toList());
+        List<Hobby> hobbies = hobbyService.getAllHobbies();
+        String[] queryArguments = query.split(",");
+
+        String value;
+        String test;
 
         for (Hobby hobby : hobbies) {
-            for (String queryArgument : queryArguments) {
-                if (hobby.getName().contains(queryArgument.trim())) {
+            for (int i = 0; i < queryArguments.length; i++) {
+                value = new String(hobby.getName().trim().toLowerCase());
+                test = new String(queryArguments[i].trim().replaceAll("[^a-zA-Z ]", "").toLowerCase());
+                System.out.println(value + " -> " + test);
+                if (value.indexOf(test) != -1 && !test.isEmpty()) {
                     searchedHobbies.add(hobby);
                     break;
                 }

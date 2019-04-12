@@ -1,37 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./header.css";
-import { getCertainHobbies } from "../../../helpers/requests";
 import Loader from "../../templates/loader";
 
 let _isMounted;
 export default props => {
-  const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [hobbies, setHobbies] = useState([]);
-  useEffect(() => {
-    _isMounted = true;
-    async function fetchData() {
-      if (props.authenticated) {
-        const response = await getCertainHobbies(JSON.stringify(searchQuery))
-          .then(data => {
-            if (_isMounted) {
-              setHobbies(data);
-              console.log(data);
-            }
-          })
-          .catch(error => console.error("Error: ", error));
-      }
-      setLoading(false);
-    }
-    fetchData();
-    console.log(JSON.stringify(hobbies));
-    hobbies.map(member => console.log(member));
-
-    return () => {
-      _isMounted = false;
-    };
-  }, [searchQuery]);
+  /*  const [loading, setLoading] = useState(true);
 
   if (loading) {
     return (
@@ -40,10 +14,7 @@ export default props => {
       </main>
     );
   }
-
-  const handleChange = event => {
-    setSearchQuery(event.target.value.replace(/[^a-zA-Z ,]/g, ""));
-  };
+*/
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -107,8 +78,8 @@ export default props => {
                   placeholder="skiing, training, fifa..."
                   aria-label="Search"
                   name="searchQuery"
-                  onChange={handleChange}
-                  value={searchQuery}
+                  onChange={props.handleChange}
+                  value={props.searchQuery}
                 />
                 {/*<button
                 className="btn btn-outline-success my-2 my-sm-0"
@@ -130,6 +101,7 @@ export default props => {
           )}
         </div>
       </nav>
+      <div>{JSON.stringify(props.hobbies)}</div>
     </header>
   );
 };

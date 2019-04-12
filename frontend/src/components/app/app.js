@@ -10,6 +10,7 @@ import Home from "../home/home";
 import SignIn from "../user/signin/SignIn";
 import Profile from "../user/profile/Profile";
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler";
+import { getCertainHobbies } from "../../helpers/requests";
 import { getCurrentUser } from "../../helpers/requests";
 import { ACCESS_TOKEN } from "../../helpers/constants";
 import Alert from "react-s-alert";
@@ -18,6 +19,7 @@ import "react-s-alert/dist/s-alert-css-effects/slide.css";
 import "./app.css";
 import Events from "../event";
 
+let _isMounted;
 export default props => {
   const [authenticated, setAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -48,6 +50,60 @@ export default props => {
     loadCurrentlyLoggedInUser();
   }, []);
 
+  /*
+
+
+
+
+
+
+*/
+  const [searchQuery, setSearchQuery] = useState("");
+  const [hobbies, setHobbies] = useState([]);
+  useEffect(() => {
+    _isMounted = true;
+    console.log(JSON.stringify(searchQuery));
+    async function fetchData() {
+      if (props.authenticated) {
+        const response = await getCertainHobbies(JSON.stringify(searchQuery))
+          .then(data => {
+            if (_isMounted) {
+              setHobbies(data);
+              console.log(data);
+            }
+          })
+          .catch(error => console.error("Error: ", error));
+      }
+      setLoading(false);
+    }
+    fetchData();
+    console.log(JSON.stringify(hobbies));
+    hobbies.map(member => console.log(member));
+
+    return () => {
+      _isMounted = false;
+    };
+  }, [searchQuery]);
+
+  /*
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+  const handleChange = event => {
+    setSearchQuery(event.target.value.replace(/[^a-zA-Z ,]/g, ""));
+  };
+
   if (loading) {
     return (
       <main role="main" style={{ textAlign: "center" }}>
@@ -58,7 +114,13 @@ export default props => {
 
   return (
     <Fragment>
-      <Header authenticated={authenticated} onLogout={handleLogout} />
+      <Header
+        authenticated={authenticated}
+        handleChange={handleChange}
+        searchQuery={searchQuery}
+        onLogout={handleLogout}
+        hobbies={hobbies}
+      />
       <main role="main">
         <div className="app-body">
           <Switch>

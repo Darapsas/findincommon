@@ -18,9 +18,13 @@ export default props => {
             if (_isMounted) {
               setMembers(data);
               console.log("fuck");
+              console.log(data);
             }
           })
-          .catch(error => console.error("Error: ", error));
+          .catch(error => {
+            console.error("Error: ", error);
+            console.log("log fuc");
+          });
       }
       setLoading(false);
     }

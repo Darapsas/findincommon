@@ -1,7 +1,6 @@
 package com.findincommon.app;
 
 import com.findincommon.app.config.AppProperties;
-import com.findincommon.app.exception.ResourceNotFoundException;
 import com.findincommon.app.models.*;
 import com.findincommon.app.repository.*;
 import org.slf4j.Logger;
