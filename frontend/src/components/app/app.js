@@ -52,28 +52,29 @@ export default props => {
   }, []);
 
   /*
+   * ---------------------------------------------------------------------------------
    * Lifted state from header
+   * ---------------------------------------------------------------------------------
    */
+  const [headingIsLoading, setHeadingIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [hobbies, setHobbies] = useState([]);
   useEffect(() => {
     _isMounted = true;
-    console.log(JSON.stringify(searchQuery));
+    console.log("----------------" + authenticated);
     async function fetchData() {
       if (authenticated) {
         const response = await getCertainHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
               setHobbies(data);
-              console.log(data);
             }
           })
           .catch(error => console.error("Error: ", error));
       }
-      setLoading(false);
+      setHeadingIsLoading(false);
     }
     fetchData();
-    console.log(JSON.stringify(hobbies));
     hobbies.map(member => console.log(member));
 
     return () => {
@@ -86,36 +87,36 @@ export default props => {
   };
 
   /*
+   * ---------------------------------------------------------------------------------
    * Lifted state from home
+   * ---------------------------------------------------------------------------------
    */
+  const [homeIsLoading, setHomeIsLoading] = useState(true);
   const [members, setMembers] = useState([]);
   useEffect(() => {
     _isMounted = true;
+    console.log("----------------" + authenticated);
     async function fetchData() {
       if (authenticated) {
         const response = await getMembers()
           .then(data => {
             if (_isMounted) {
+              console.log("shit");
               setMembers(data);
-              console.log("fuck");
-              console.log(data);
             }
           })
           .catch(error => {
             console.error("Error: ", error);
-            console.log("log fuc");
           });
       }
-      setLoading(false);
+      console.log("----------------");
+      setHomeIsLoading(false);
     }
-    console.log(
-      "meeeeeeeeeeeeeeeeeemeeeeeeeeeeeeeeeeeeeeeebeeeeeeeeeeeeeeeeeeeers"
-    );
     fetchData();
     return () => {
       _isMounted = false;
     };
-  }, []);
+  }, [authenticated]);
 
   if (loading) {
     return (
@@ -130,6 +131,7 @@ export default props => {
       <Header
         authenticated={authenticated}
         handleChange={handleChange}
+        loading={headingIsLoading}
         searchQuery={searchQuery}
         onLogout={handleLogout}
         hobbies={hobbies}
@@ -142,6 +144,7 @@ export default props => {
               path="/"
               authenticated={authenticated}
               currentUser={currentUser}
+              loading={homeIsLoading}
               members={members}
               component={Home}
             />

@@ -6,15 +6,13 @@ import Loader from "../templates/loader";
 
 let _isMounted;
 export default props => {
-  /*const [loading, setLoading] = useState(true);
-
-  if (loading) {
+  if (props.loading) {
     return (
       <main role="main" style={{ textAlign: "center" }}>
         <Loader />
       </main>
     );
-  }*/
+  }
 
   return (
     <Fragment>
@@ -60,6 +58,7 @@ export default props => {
               <Fake />
             </div>
           )}
+          <div>{console.log(JSON.stringify(props.members))}</div>
         </div>
       </div>
     </Fragment>

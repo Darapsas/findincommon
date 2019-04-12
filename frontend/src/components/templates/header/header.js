@@ -5,16 +5,13 @@ import Loader from "../../templates/loader";
 
 let _isMounted;
 export default props => {
-  /*  const [loading, setLoading] = useState(true);
-
-  if (loading) {
+  if (props.loading) {
     return (
       <main role="main" style={{ textAlign: "center" }}>
         <Loader />
       </main>
     );
   }
-*/
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
