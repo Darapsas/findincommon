@@ -12,6 +12,7 @@ import Profile from "../user/profile/Profile";
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler";
 import { getCertainHobbies } from "../../helpers/requests";
 import { getCurrentUser } from "../../helpers/requests";
+import { getMembers } from "../../helpers/requests";
 import { ACCESS_TOKEN } from "../../helpers/constants";
 import Alert from "react-s-alert";
 import "react-s-alert/dist/s-alert-default.css";
@@ -51,20 +52,15 @@ export default props => {
   }, []);
 
   /*
-
-
-
-
-
-
-*/
+   * Lifted state from header
+   */
   const [searchQuery, setSearchQuery] = useState("");
   const [hobbies, setHobbies] = useState([]);
   useEffect(() => {
     _isMounted = true;
     console.log(JSON.stringify(searchQuery));
     async function fetchData() {
-      if (props.authenticated) {
+      if (authenticated) {
         const response = await getCertainHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
@@ -85,24 +81,41 @@ export default props => {
     };
   }, [searchQuery]);
 
-  /*
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
   const handleChange = event => {
     setSearchQuery(event.target.value.replace(/[^a-zA-Z ,]/g, ""));
   };
+
+  /*
+   * Lifted state from home
+   */
+  const [members, setMembers] = useState([]);
+  useEffect(() => {
+    _isMounted = true;
+    async function fetchData() {
+      if (authenticated) {
+        const response = await getMembers()
+          .then(data => {
+            if (_isMounted) {
+              setMembers(data);
+              console.log("fuck");
+              console.log(data);
+            }
+          })
+          .catch(error => {
+            console.error("Error: ", error);
+            console.log("log fuc");
+          });
+      }
+      setLoading(false);
+    }
+    console.log(
+      "meeeeeeeeeeeeeeeeeemeeeeeeeeeeeeeeeeeeeeeebeeeeeeeeeeeeeeeeeeeers"
+    );
+    fetchData();
+    return () => {
+      _isMounted = false;
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -129,6 +142,7 @@ export default props => {
               path="/"
               authenticated={authenticated}
               currentUser={currentUser}
+              members={members}
               component={Home}
             />
             <PrivateRoute

@@ -101,7 +101,7 @@ export default props => {
           )}
         </div>
       </nav>
-      <div>{JSON.stringify(props.hobbies)}</div>
+      <div>{JSON.stringify(props)}</div>
     </header>
   );
 };
