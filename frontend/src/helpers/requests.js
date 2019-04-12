@@ -54,6 +54,12 @@ const getMembers = () =>
     method: "GET"
   });
 
+const getMembersByHobbies = hobbies =>
+  request({
+    url: `${API_BASE_URL}/api/users/hobbies/${hobbies}`,
+    method: "GET"
+  });
+
 const getHobbies = () =>
   request({
     url: `${API_BASE_URL}/api/hobbies`,
@@ -85,6 +91,7 @@ export {
   getUserEvents,
   getCurrentUser,
   getCertainHobbies,
+  getMembersByHobbies,
   getMembers,
   login,
   signup

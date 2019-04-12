@@ -12,7 +12,7 @@ import Profile from "../user/profile/Profile";
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler";
 import { getCertainHobbies } from "../../helpers/requests";
 import { getCurrentUser } from "../../helpers/requests";
-import { getMembers } from "../../helpers/requests";
+import { getMembersByHobbies } from "../../helpers/requests";
 import { ACCESS_TOKEN } from "../../helpers/constants";
 import Alert from "react-s-alert";
 import "react-s-alert/dist/s-alert-default.css";
@@ -98,7 +98,7 @@ export default props => {
     console.log("----------------" + authenticated);
     async function fetchData() {
       if (authenticated) {
-        const response = await getMembers()
+        const response = await getMembersByHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
               console.log("shit");
@@ -116,7 +116,7 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, [authenticated]);
+  }, [authenticated, searchQuery]);
 
   if (loading) {
     return (
