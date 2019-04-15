@@ -29,9 +29,9 @@ const request = options => {
   }
 };
 
-const getUserEvents = userId => {
+const getUserEvents = () => {
   request({
-    url: `${API_BASE_URL}/api/events/creator/${userId}`,
+    url: `${API_BASE_URL}/api/events`,
     method: "GET"
   });
 };

@@ -78,12 +78,6 @@ export default props => {
                   onChange={props.handleChange}
                   value={props.searchQuery}
                 />
-                {/*<button
-                className="btn btn-outline-success my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>*/}
               </form>
               )
             </Fragment>
@@ -98,7 +92,6 @@ export default props => {
           )}
         </div>
       </nav>
-      <div>{JSON.stringify(props)}</div>
     </header>
   );
 };

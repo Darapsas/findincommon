@@ -45,7 +45,6 @@ public class HobbyController {
             for (int i = 0; i < queryArguments.length; i++) {
                 value = new String(hobby.getName().trim().toLowerCase());
                 test = new String(queryArguments[i].trim().replaceAll("[^a-zA-Z ]", "").toLowerCase());
-                System.out.println(value + " -> " + test);
                 if (value.indexOf(test) != -1 && !test.isEmpty()) {
                     searchedHobbies.add(hobby);
                     break;

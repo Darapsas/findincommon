@@ -1,22 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUserEvents, deleteEvent } from "../../helpers/requests";
+import Loader from "../templates/loader";
 
 let _isMounted;
 export default props => {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     _isMounted = true;
+    async function fetchData() {
+      const response = await getUserEvents()
+        .then(data => {
+          if (_isMounted) {
+            setEvents(data);
+          }
+        })
+        .catch(error => console.error("Error: ", error));
+      setLoading(false);
+    }
+    fetchData();
 
-    getUserEvents(props.currentUser.id).then(data => {
-      if (_isMounted) {
-        setEvents(data);
-      }
-    });
     return () => {
       _isMounted = false;
     };
   }, []);
+
+  if (loading) {
+    return (
+      <main role="main" style={{ textAlign: "center" }}>
+        <Loader />
+      </main>
+    );
+  }
 
   return (
     <table className="table table-hover">

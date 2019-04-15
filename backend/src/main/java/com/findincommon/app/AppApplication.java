@@ -35,6 +35,115 @@ public class AppApplication {
             ConversationRepository conversationRepository
     ) {
         return (args) -> {
+
+            reminderRepository.save(
+                    Reminder
+                            .builder()
+                            .name("15 min. before")
+                            .timeInSeconds(60 * 60 * 15)
+                            .build());
+            reminderRepository.save(
+                    Reminder
+                            .builder()
+                            .name("1 hour before")
+                            .timeInSeconds(60 * 60 * 60)
+                            .build());
+            reminderRepository.save(
+                    Reminder
+                            .builder()
+                            .name("1 day before")
+                            .timeInSeconds(60 * 60 * 60 * 24)
+                            .build());
+
+
+
+            eventRepository.save(
+                    Event
+                            .builder()
+                            .reminders(
+                                    Arrays.asList(
+                                            reminderRepository.findByName("15 min. before"),
+                                            reminderRepository.findByName("1 hour before")
+                                    ))
+                            .name("Flat earth is the truth")
+                            .description("With this disuccion we will try to get different opinions about flat earth.")
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .build()
+            );
+            eventRepository.save(
+                    Event
+                            .builder()
+                            .reminders(
+                                    Arrays.asList(
+                                            reminderRepository.findByName("15 min. before")
+                                    ))
+                            .name("Lizard people con")
+                            .description("Is trump a lizard? Find out here.")
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .build()
+            );
+            eventRepository.save(
+                    Event
+                            .builder()
+                            .reminders(
+                                    Arrays.asList(
+                                            reminderRepository.findByName("15 min. before"),
+                                            reminderRepository.findByName("1 day before")
+                                    ))
+                            .name("Pyramids")
+                            .description("Pyramids were built by aliens. Or were they?")
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .build()
+            );
+            eventRepository.save(
+                    Event
+                            .builder()
+                            .reminders(
+                                    Arrays.asList(
+                                            reminderRepository.findByName("1 day before")
+                                    ))
+                            .name("Chemtrails")
+                            .description("Why you are stupid and you believe in chemtrails... Because they are real!")
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .build()
+            );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             String[][] hobbies = {
                     {"astronomy", "Astronomy (from Greek: ἀστρονομία) is a natural science that studies celestial objects and phenomena."},
                     {"baseball", "Baseball is a bat-and-ball game played between two opposing teams who take turns batting and fielding. "},
@@ -135,86 +244,6 @@ public class AppApplication {
                                             ))
                             .build());
 
-            User simpleUser = userRepository.findByEmail("darius562@gmail.com").orElseThrow();
-
-            // create example data
-            reminderRepository.save(
-                    Reminder
-                            .builder()
-                            .name("15 min. before")
-                            .timeInSeconds(60 * 60 * 15)
-                            .build());
-            reminderRepository.save(
-                    Reminder
-                            .builder()
-                            .name("1 hour before")
-                            .timeInSeconds(60 * 60 * 60)
-                            .build());
-            reminderRepository.save(
-                    Reminder
-                            .builder()
-                            .name("1 day before")
-                            .timeInSeconds(60 * 60 * 60 * 24)
-                            .build());
-
-
-
-            eventRepository.save(
-                    Event
-                            .builder()
-                            .reminders(
-                                    Arrays.asList(
-                                            reminderRepository.findByName("15 min. before"),
-                                            reminderRepository.findByName("1 hour before")
-                                    ))
-                            .name("Flat earth is the truth")
-                            .creatorId(simpleUser.getId())
-                            .description("With this disuccion we will try to get different opinions about flat earth.")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .build()
-            );
-            eventRepository.save(
-                    Event
-                            .builder()
-                            .reminders(
-                                    Arrays.asList(
-                                            reminderRepository.findByName("15 min. before")
-                                    ))
-                            .name("Lizard people con")
-                            .creatorId(simpleUser.getId())
-                            .description("Is trump a lizard? Find out here.")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .build()
-            );
-            eventRepository.save(
-                    Event
-                            .builder()
-                            .reminders(
-                                    Arrays.asList(
-                                            reminderRepository.findByName("15 min. before"),
-                                            reminderRepository.findByName("1 day before")
-                                    ))
-                            .name("Pyramids")
-                            .description("Pyramids were built by aliens. Or were they?")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .build()
-            );
-            eventRepository.save(
-                    Event
-                            .builder()
-                            .reminders(
-                                    Arrays.asList(
-                                            reminderRepository.findByName("1 day before")
-                                    ))
-                            .name("Chemtrails")
-                            .description("Why you are stupid and you believe in chemtrails... Because they are real!")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .build()
-            );
 
 
 

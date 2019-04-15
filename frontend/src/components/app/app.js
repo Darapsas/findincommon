@@ -74,7 +74,6 @@ export default props => {
       setHeadingIsLoading(false);
     }
     fetchData();
-    //hobbies.map(member => console.log(member));
 
     return () => {
       _isMounted = false;
@@ -87,21 +86,18 @@ export default props => {
 
   /*
    * ---------------------------------------------------------------------------------
-   * Lifted state from home
+   * Lifted state from home page
    * ---------------------------------------------------------------------------------
    */
   const [homeIsLoading, setHomeIsLoading] = useState(true);
   const [members, setMembers] = useState([]);
   useEffect(() => {
     _isMounted = true;
-    console.log("----------------" + authenticated);
     async function fetchData() {
       if (authenticated) {
         const response = await getMembersByHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
-              console.log("shit");
-              console.log(data);
               setMembers(data);
             }
           })
@@ -109,7 +105,6 @@ export default props => {
             console.error("Error: ", error);
           });
       }
-      console.log("----------------");
       setHomeIsLoading(false);
     }
     fetchData();
@@ -146,6 +141,7 @@ export default props => {
               currentUser={currentUser}
               loading={homeIsLoading}
               members={members}
+              hobbies={hobbies}
               component={Home}
             />
             <PrivateRoute

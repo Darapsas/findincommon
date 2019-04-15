@@ -20,7 +20,21 @@ export default props => {
         <div className="container">
           {props.authenticated ? (
             <Fragment>
-              <h1 className="jumbotron-heading">Welcome and enjoy!</h1>
+              {props.hobbies.length !== 0 ? (
+                <Fragment>
+                  <h5>
+                    You are currently searching for people who have these
+                    interests:
+                  </h5>
+                  {props.hobbies.map(hobby => (
+                    <button className="btn btn-outline-success" key={hobby.id}>
+                      {hobby.name}
+                    </button>
+                  ))}
+                </Fragment>
+              ) : (
+                <h1 className="jumbotron-heading">Welcome and enjoy!</h1>
+              )}
             </Fragment>
           ) : (
             <Fragment>
@@ -58,7 +72,6 @@ export default props => {
               <Fake />
             </div>
           )}
-          <div>{console.log(JSON.stringify(props.members))}</div>
         </div>
       </div>
     </Fragment>
