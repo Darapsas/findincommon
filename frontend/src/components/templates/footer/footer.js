@@ -7,7 +7,7 @@ export default () => (
       <p className="float-right">
         <a href="#">Back to top</a>
       </p>
-      <p>Find In Common is made and mainted by &copy; Darius Rainys 2019</p>
+      <p>Find In Common is made and maintained by &copy; Darius Rainys 2019</p>
     </div>
   </footer>
 );

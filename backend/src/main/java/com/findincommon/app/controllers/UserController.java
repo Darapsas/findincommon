@@ -44,30 +44,48 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/hobbies/{hobbies}")
+    @GetMapping("/hobbies/{query}")
     public List<User> getUsersByHobbies(@PathVariable String query) {
+        List<User> users = userService.getAllUsers();
         List<User> searchedUsers = new ArrayList<>();
 
-        for (User user : searchedUsers) {
-            List<Hobby> searchedHobbies = new ArrayList<>();
-
+        for (User user : users) {
             List<Hobby> hobbies = user.getHobbies();
+
             String[] queryArguments = query.split(",");
 
             String value;
             String test;
+            boolean[] exists = new boolean[queryArguments.length];
+            int existsCounter = 0;
 
-            outerloop:
+            for (int i = 0; i < exists.length; i++) {
+                exists[existsCounter++] = false;
+            }
+
             for (Hobby hobby : hobbies) {
+                existsCounter = 0;
                 for (int i = 0; i < queryArguments.length; i++) {
                     value = new String(hobby.getName().trim().toLowerCase());
                     test = new String(queryArguments[i].trim().replaceAll("[^a-zA-Z ]", "").toLowerCase());
-                    System.out.println(value + " -> " + test);
                     if (value.indexOf(test) != -1) {
-                        searchedUsers.add(user);
-                        break outerloop;
+                        exists[existsCounter] = true;
+                        break;
                     }
+                    existsCounter++;
                 }
+            }
+
+            existsCounter = 0;
+            boolean dropIt = true;
+            for (int i = 0; i < exists.length; i++) {
+                if (!exists[existsCounter++]) {
+                    dropIt = false;
+                }
+            }
+
+            if (dropIt) {
+                searchedUsers.add(user);
             }
         }
 

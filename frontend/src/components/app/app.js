@@ -61,7 +61,6 @@ export default props => {
   const [hobbies, setHobbies] = useState([]);
   useEffect(() => {
     _isMounted = true;
-    console.log("----------------" + authenticated);
     async function fetchData() {
       if (authenticated) {
         const response = await getCertainHobbies(JSON.stringify(searchQuery))
@@ -75,7 +74,7 @@ export default props => {
       setHeadingIsLoading(false);
     }
     fetchData();
-    hobbies.map(member => console.log(member));
+    //hobbies.map(member => console.log(member));
 
     return () => {
       _isMounted = false;
@@ -102,6 +101,7 @@ export default props => {
           .then(data => {
             if (_isMounted) {
               console.log("shit");
+              console.log(data);
               setMembers(data);
             }
           })
