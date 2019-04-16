@@ -159,33 +159,6 @@ public class AppApplication {
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .build()
             );
-            eventRepository.save(
-                    Event
-                            .builder()
-                            .reminders(
-                                    Arrays.asList(
-                                            reminderRepository.findByName("15 min. before"),
-                                            reminderRepository.findByName("1 day before")
-                                    ))
-                            .name("Pyramids")
-                            .description("Pyramids were built by aliens. Or were they?")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .build()
-            );
-            eventRepository.save(
-                    Event
-                            .builder()
-                            .reminders(
-                                    Arrays.asList(
-                                            reminderRepository.findByName("1 day before")
-                                    ))
-                            .name("Chemtrails")
-                            .description("Why you are stupid and you believe in chemtrails... Because they are real!")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .build()
-            );
 
 
             userRepository.save(
@@ -231,6 +204,41 @@ public class AppApplication {
                             .build());
 
 
+            eventRepository.save(
+                    Event
+                            .builder()
+                            .reminders(
+                                    Arrays.asList(
+                                            reminderRepository.findByName("15 min. before"),
+                                            reminderRepository.findByName("1 day before")
+                                    ))
+                            .participants(
+                                    Arrays.asList(
+                                            userRepository.findByEmail("darius562@gmail.com").get()
+                                    ))
+                            .name("Pyramids")
+                            .description("Pyramids were built by aliens. Or were they?")
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .build()
+            );
+            eventRepository.save(
+                    Event
+                            .builder()
+                            .reminders(
+                                    Arrays.asList(
+                                            reminderRepository.findByName("1 day before")
+                                    ))
+                            .participants(
+                                    Arrays.asList(
+                                            userRepository.findByEmail("darius562@gmail.com").get()
+                                    ))
+                            .name("Chemtrails")
+                            .description("Why you are stupid and you believe in chemtrails... Because they are real!")
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .build()
+            );
 
 
        /*     User[] users = {

@@ -1,11 +1,13 @@
 package com.findincommon.app.controllers;
 
 import com.findincommon.app.models.Event;
+import com.findincommon.app.models.User;
 import com.findincommon.app.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,16 +33,27 @@ public class EventController {
 
     @GetMapping
     public List<Event> getEvents() {
-        System.out.println("spitting it out");
-        //System.out.print(getEvents().toString());
         return eventService.getAllEvents();
     }
 
-    @GetMapping("/creator/{id}")
+    @GetMapping(value = "/user/{id}")
+    @PreAuthorize("hasRole('USER')")
     public List<Event> getUserEvents(@PathVariable String id) {
-//        return eventService.getUserEvents(id);
-        return eventService.getAllEvents();
+        List<Event> userEvents = new ArrayList<>();
+        List<Event> events = eventService.getAllEvents();
+
+        for (Event event : events) {
+            for (User participant: event.getParticipants()) {
+                if (participant.getId().equals(id)) {
+                    userEvents.add(event);
+                    break;
+                }
+            }
+        }
+
+        return userEvents;
     }
+
 
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasRole('USER')")

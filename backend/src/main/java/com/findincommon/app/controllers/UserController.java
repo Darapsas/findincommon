@@ -45,6 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/hobbies/{query}")
+    @PreAuthorize("hasRole('USER')")
     public List<User> getUsersByHobbies(@PathVariable String query) {
         List<User> users = userService.getAllUsers();
         List<User> searchedUsers = new ArrayList<>();

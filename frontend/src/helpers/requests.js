@@ -1,5 +1,7 @@
 import { API_BASE_URL, ACCESS_TOKEN } from "../helpers/constants";
 
+// DOOOOOOOOOOOOONNNNNNNNNNNNN'TTTTTTTT FUCKING FORGET to check method formatting
+
 const request = options => {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     return Promise.reject("No access token set.");
@@ -25,12 +27,11 @@ const request = options => {
   }
 };
 
-const getUserEvents = () => {
+const getUserEvents = userId =>
   request({
-    url: `${API_BASE_URL}/api/events`,
+    url: `${API_BASE_URL}/api/events/user/${userId}`,
     method: "GET"
   });
-};
 
 const deleteEvent = eventId =>
   request({
