@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { getUserEvents, deleteEvent, getEvents } from "../../helpers/requests";
+import { deleteEvent } from "../../helpers/requests";
+import EventInfo from "./event-info";
 
 export default props => (
   <table className="table table-hover">
@@ -65,10 +66,8 @@ export default props => (
                 <th scope="col" colSpan="2">
                   <Link
                     to={{
-                      pathname: `/event_edit/${event.id}`,
+                      pathname: `/user/events/event/info`,
                       state: {
-                        action: "Save Changes",
-                        formName: "Edit an Event",
                         event: event
                       }
                     }}

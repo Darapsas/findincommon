@@ -6,6 +6,7 @@ import NotFound from "../templates/notFound";
 import PrivateRoute from "../templates/privateRoute";
 import RouteWithProps from "../templates/routeWithProps";
 import Loader from "../templates/loader";
+import EventInfo from "../event/event-info";
 import Home from "../home/home";
 import SignIn from "../user/signin/SignIn";
 import Profile from "../user/profile/Profile";
@@ -167,6 +168,12 @@ export default props => {
               authenticated={authenticated}
               currentUser={currentUser}
               component={Profile}
+            />
+            <PrivateRoute
+              path="/user/events/event/info"
+              authenticated={authenticated}
+              currentUser={currentUser}
+              component={EventInfo}
             />
             <Route
               path="/signin"
