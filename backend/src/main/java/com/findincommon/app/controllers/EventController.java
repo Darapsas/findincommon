@@ -37,7 +37,7 @@ public class EventController {
     }
 
     @GetMapping("/creator/{id}")
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public List<Event> getUserEvents(@PathVariable String id) {
 //        return eventService.getUserEvents(id);
         return eventService.getAllEvents();

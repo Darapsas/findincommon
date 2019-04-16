@@ -10,17 +10,18 @@ export default props => {
 
   useEffect(() => {
     _isMounted = true;
-    async function fetchData() {
-      const response = await getUserEvents()
-        .then(data => {
-          if (_isMounted) {
-            setEvents(data);
-          }
-        })
-        .catch(error => console.error("Error: ", error));
-      setLoading(false);
-    }
-    fetchData();
+    // async
+    //function fetchData() {
+    //const response = await
+    getUserEvents().then(data => {
+      if (_isMounted) {
+        setEvents(data);
+      }
+    });
+    //.catch(error => console.error("Error: ", error));
+    setLoading(false);
+    // }
+    //fetchData();
 
     return () => {
       _isMounted = false;

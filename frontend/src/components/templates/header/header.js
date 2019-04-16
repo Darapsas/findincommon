@@ -1,9 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./header.css";
 import Loader from "../../templates/loader";
 
-let _isMounted;
 export default props => {
   if (props.loading) {
     return (
@@ -54,9 +53,13 @@ export default props => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" onClick={props.onLogout}>
+                  <NavLink
+                    className="nav-link"
+                    to="/signin"
+                    onClick={props.onLogout}
+                  >
                     Logout
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
               <form className="form-inline mt-2 mt-md-0">

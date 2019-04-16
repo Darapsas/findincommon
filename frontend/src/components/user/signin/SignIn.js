@@ -1,11 +1,9 @@
 import React from "react";
 import "./SignIn.css";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../../helpers/constants";
-import { signin } from "../../../helpers/requests";
 import fbLogo from "../../../assets/images/fb-logo.png";
 import googleLogo from "../../../assets/images/google-logo.png";
-import Alert from "react-s-alert";
 
 export default props => {
   if (props.authenticated) {

@@ -17,13 +17,10 @@ const request = options => {
   switch (options.method) {
     case "PUT":
       return fetch(options.url, options);
-      break;
     case "POST":
       return fetch(options.url, options);
-      break;
     case "DELETE":
       return fetch(options.url, options);
-      break;
     default:
       return fetch(options.url, options).then(response => response.json());
   }

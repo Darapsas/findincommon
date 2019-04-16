@@ -1,10 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import "./home.css";
 import Fake from "../fake";
 import Member from "./member";
 import Loader from "../templates/loader";
 
-let _isMounted;
 export default props => {
   if (props.loading) {
     return (
