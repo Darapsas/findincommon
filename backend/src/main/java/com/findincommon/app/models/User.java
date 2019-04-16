@@ -35,7 +35,8 @@ public class User {
     private Boolean emailVerified;
     @NotNull
     private AuthProvider provider;
-
+    @DBRef
+    private List<Event> events;
     @DBRef
     private List<Hobby> hobbies;
     private String description;

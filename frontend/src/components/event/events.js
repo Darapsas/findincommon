@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getUserEvents, deleteEvent } from "../../helpers/requests";
+import { getUserEvents, deleteEvent, getEvents } from "../../helpers/requests";
 import Loader from "../templates/loader";
 
 let _isMounted;
@@ -10,23 +10,23 @@ export default props => {
 
   useEffect(() => {
     _isMounted = true;
-    // async
-    //function fetchData() {
-    //const response = await
-    getUserEvents().then(data => {
-      if (_isMounted) {
-        setEvents(data);
-      }
-    });
-    //.catch(error => console.error("Error: ", error));
-    setLoading(false);
-    // }
-    //fetchData();
+    async function fetchData() {
+      const response = await getEvents()
+        .then(data => {
+          if (_isMounted) {
+            console.log("boom");
+            setEvents(data);
+          }
+        })
+        .catch(error => console.error("Error: ", error));
+      setLoading(false);
+    }
+    fetchData();
 
     return () => {
       _isMounted = false;
     };
-  }, []);
+  }, [events.length]);
 
   if (loading) {
     return (

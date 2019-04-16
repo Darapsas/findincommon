@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./home.css";
-import Fake from "../fake";
+import Fake from "./fake";
 import Member from "./member";
 import Loader from "../templates/loader";
 

@@ -13,7 +13,6 @@ const request = options => {
   const defaults = { headers: headers };
   options = Object.assign({}, defaults, options);
 
-  //  alert(JSON.stringify(options));
   switch (options.method) {
     case "PUT":
       return fetch(options.url, options);
@@ -48,6 +47,12 @@ const getCurrentUser = () =>
 const getMembers = () =>
   request({
     url: `${API_BASE_URL}/api/users`,
+    method: "GET"
+  });
+
+const getEvents = () =>
+  request({
+    url: `${API_BASE_URL}/api/events`,
     method: "GET"
   });
 
@@ -87,6 +92,8 @@ export {
   deleteEvent,
   getUserEvents,
   getCurrentUser,
+  getHobbies,
+  getEvents,
   getCertainHobbies,
   getMembersByHobbies,
   getMembers,

@@ -30,14 +30,13 @@ public class EventController {
     }
 
     @GetMapping
-   // @PreAuthorize("hasRole('USERR')")
     public List<Event> getEvents() {
-        System.out.print("spitting it out");
+        System.out.println("spitting it out");
+        //System.out.print(getEvents().toString());
         return eventService.getAllEvents();
     }
 
     @GetMapping("/creator/{id}")
-//    @PreAuthorize("hasRole('USER')")
     public List<Event> getUserEvents(@PathVariable String id) {
 //        return eventService.getUserEvents(id);
         return eventService.getAllEvents();
