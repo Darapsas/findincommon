@@ -73,6 +73,43 @@ public class AppApplication {
             userRepository.save(
                     User
                             .builder()
+                            .name("Darius Rainys")
+                            .email("darius562@gmail.com")
+                            .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
+                            .provider(AuthProvider.google)
+                            .providerId("100722226320893340969")
+                            .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                            .hobbies(
+                                    Arrays
+                                            .asList(
+                                                    hobbyRepository.findByName("baseball"),
+                                                    hobbyRepository.findByName("canyoning"),
+                                                    hobbyRepository.findByName("gunsmith"),
+                                                    hobbyRepository.findByName("ice skating")
+                                            ))
+                            .build());
+            userRepository.save(
+                    User
+                            .builder()
+                            .name("Beam Jim")
+                            .email("Jim@gmail.com")
+                            .imageUrl("https://img.buzzfeed.com/buzzfeed-static/static/2017-05/9/10/asset/buzzfeed-prod-fastlane-01/sub-buzz-17413-1494339583-8.jpg?downsize=700:*&output-format=auto&output-quality=auto")
+                            .provider(AuthProvider.google)
+                            .providerId("100722226320893340969")
+                            .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                            .hobbies(
+                                    Arrays
+                                            .asList(
+                                                    hobbyRepository.findByName("baseball"),
+                                                    hobbyRepository.findByName("gunsmith"),
+                                                    hobbyRepository.findByName("ice skating")
+                                            ))
+                            .build());
+
+
+            userRepository.save(
+                    User
+                            .builder()
                             .name("Actor")
                             .email("go@gmail.com")
                             .imageUrl("https://amp.businessinsider.com/images/562a74cbbd86ef16008c4535-750-563.jpg")
@@ -137,6 +174,7 @@ public class AppApplication {
                                             userRepository.findByEmail("go@gmail.com").get()
                                     ))
                             .name("Flat earth is the truth")
+                            .creator(userRepository.findByEmail("darius562@gmail.com").get())
                             .description("With this disuccion we will try to get different opinions about flat earth.")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
@@ -154,54 +192,12 @@ public class AppApplication {
                                             userRepository.findByEmail("go@gmail.com").get()
                                     ))
                             .name("Lizard people con")
+                            .creator(userRepository.findByEmail("darius562@gmail.com").get())
                             .description("Is trump a lizard? Find out here.")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .build()
             );
-
-
-            userRepository.save(
-                    User
-                            .builder()
-                            .name("Darius Rainys")
-                            .email("darius562@gmail.com")
-                            .imageUrl("https://lh6.googleusercontent.com/-xtCf1H18q7c/AAAAAAAAAAI/AAAAAAAAA3g/9VL5ZY4_hdo/photo.jpg")
-                            .provider(AuthProvider.google)
-                            .providerId("100722226320893340969")
-                            .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-                            .events(
-                                    Arrays.asList(
-                                            eventRepository.findByName("Flat earth is the truth"),
-                                            eventRepository.findByName("Lizard people con")
-                                    )
-                            )
-                            .hobbies(
-                                    Arrays
-                                            .asList(
-                                                    hobbyRepository.findByName("baseball"),
-                                                    hobbyRepository.findByName("canyoning"),
-                                                    hobbyRepository.findByName("gunsmith"),
-                                                    hobbyRepository.findByName("ice skating")
-                                            ))
-                            .build());
-            userRepository.save(
-                    User
-                            .builder()
-                            .name("Beam Jim")
-                            .email("Jim@gmail.com")
-                            .imageUrl("https://img.buzzfeed.com/buzzfeed-static/static/2017-05/9/10/asset/buzzfeed-prod-fastlane-01/sub-buzz-17413-1494339583-8.jpg?downsize=700:*&output-format=auto&output-quality=auto")
-                            .provider(AuthProvider.google)
-                            .providerId("100722226320893340969")
-                            .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-                            .hobbies(
-                                    Arrays
-                                            .asList(
-                                                    hobbyRepository.findByName("baseball"),
-                                                    hobbyRepository.findByName("gunsmith"),
-                                                    hobbyRepository.findByName("ice skating")
-                                            ))
-                            .build());
 
 
             eventRepository.save(
@@ -234,6 +230,7 @@ public class AppApplication {
                                             userRepository.findByEmail("darius562@gmail.com").get(),
                                             userRepository.findByEmail("Jim@gmail.com").get()
                                     ))
+                            .creator(userRepository.findByEmail("darius562@gmail.com").get())
                             .name("Chemtrails")
                             .description("Why you are stupid and you believe in chemtrails... Because they are real!")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))

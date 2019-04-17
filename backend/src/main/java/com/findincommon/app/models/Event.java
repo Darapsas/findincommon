@@ -19,6 +19,8 @@ public class Event {
     private List<Reminder> reminders;
     @DBRef
     private List<User> participants;
+    @DBRef
+    private User creator;
     private String name;
     private String description;
     private Date startDate;

@@ -15,12 +15,6 @@ import java.util.List;
 @Builder
 @Document(collection = "users")
 public class User {
-/*    @Id
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String birthdate;*/
-
     public enum Role {USER, ADMIN, USER_MANAGER}
 
     @Id
@@ -35,8 +29,6 @@ public class User {
     private Boolean emailVerified;
     @NotNull
     private AuthProvider provider;
-    @DBRef
-    private List<Event> events;
     @DBRef
     private List<Hobby> hobbies;
     private String description;

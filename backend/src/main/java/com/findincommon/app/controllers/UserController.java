@@ -45,11 +45,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/events/{query}")
-    @PreAuthorize("hasRole('USER')")
-    public List<Event> getUserEvents(@PathVariable String query) {
-        return userRepository.findById(query).get().getEvents();
-    }
+//    @GetMapping("/events/{query}")
+//    @PreAuthorize("hasRole('USER')")
+//    public List<Event> getUserEvents(@PathVariable String query) {
+//        return userRepository.findById(query).get().getEvents();
+//    }
 
     @GetMapping("/hobbies/{query}")
     @PreAuthorize("hasRole('USER')")
