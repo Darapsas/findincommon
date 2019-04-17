@@ -19,6 +19,7 @@ import "react-s-alert/dist/s-alert-default.css";
 import "react-s-alert/dist/s-alert-css-effects/slide.css";
 import "./app.css";
 import EventInfo from "../event/event-info";
+import EventForm from "../event/event-form";
 import Events from "../event";
 
 let _isMounted;
@@ -155,6 +156,22 @@ export default props => {
             authenticated={authenticated}
             currentUser={currentUser}
             component={EventInfo}
+          />
+          <PrivateRoute
+            path="/user/events/:event/edit"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            members={members}
+            hobbies={hobbies}
+            component={EventForm}
+          />
+          <PrivateRoute
+            path="/user/events/event/create"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            members={members}
+            hobbies={hobbies}
+            component={EventForm}
           />
           <PrivateRoute
             path="/user/events"

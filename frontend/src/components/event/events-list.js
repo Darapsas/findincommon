@@ -34,7 +34,7 @@ export default props => (
                 <th scope="col">
                   <Link
                     to={{
-                      pathname: `/event_edit/${event.id}`,
+                      pathname: `/user/events/${event.id}/edit/`,
                       state: {
                         action: "Save Changes",
                         formName: "Edit an Event",
@@ -94,7 +94,7 @@ export default props => (
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/event_create/",
+                pathname: "/user/events/event/create",
                 state: { action: "Create", formName: "Create new Event" }
               }}
             >

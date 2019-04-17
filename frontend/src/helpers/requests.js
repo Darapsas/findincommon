@@ -39,6 +39,12 @@ const getUserCreatedEvents = userId =>
     method: "GET"
   });
 
+const getReminderTypes = () =>
+  request({
+    url: `${API_BASE_URL}/api/reminders`,
+    method: "GET"
+  });
+
 const deleteEvent = eventId =>
   request({
     url: `${API_BASE_URL}/api/events/${eventId}`,
@@ -81,6 +87,20 @@ const getCertainHobbies = searchQuery =>
     method: "GET"
   });
 
+const createEvent = event =>
+  request({
+    url: `${API_BASE_URL}/api/events`,
+    method: "POST",
+    body: JSON.stringify(event)
+  });
+
+const updateEvent = (event, id) =>
+  request({
+    url: `${API_BASE_URL}/api/events/${id}`,
+    method: "PUT",
+    body: JSON.stringify(event)
+  });
+
 const login = loginRequest =>
   request({
     url: `${API_BASE_URL}/auth/login`,
@@ -105,6 +125,9 @@ export {
   getMembersByHobbies,
   getUserCreatedEvents,
   getMembers,
+  getReminderTypes,
+  updateEvent,
+  createEvent,
   login,
   signup
 };

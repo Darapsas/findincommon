@@ -16,6 +16,7 @@ export default props => {
       const response = await getUserEvents(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
+            console.log(data);
             setEvents(data);
           }
         })

@@ -231,7 +231,8 @@ public class AppApplication {
                                     ))
                             .participants(
                                     Arrays.asList(
-                                            userRepository.findByEmail("darius562@gmail.com").get()
+                                            userRepository.findByEmail("darius562@gmail.com").get(),
+                                            userRepository.findByEmail("Jim@gmail.com").get()
                                     ))
                             .name("Chemtrails")
                             .description("Why you are stupid and you believe in chemtrails... Because they are real!")
