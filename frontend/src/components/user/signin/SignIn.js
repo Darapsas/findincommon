@@ -18,7 +18,7 @@ export default props => {
   }
 
   return (
-    <div className="signin-container">
+    <div className="custom signin-container">
       <div className="signin-content">
         <h1 className="signin-title">Sign in to Find In Common</h1>
         <SocialSignIn />
@@ -29,11 +29,15 @@ export default props => {
 
 const SocialSignIn = () => (
   <div className="social-signin">
-    <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
-      <img src={googleLogo} alt="Google" /> Continue with Google
-    </a>
-    <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
-      <img src={fbLogo} alt="Facebook" /> Continue with Facebook
-    </a>
+    <button className="btn btn-block btn-light">
+      <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
+        <img src={googleLogo} alt="Google" /> Continue with Google
+      </a>
+    </button>
+    <button className="btn btn-block btn-light">
+      <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
+        <img src={fbLogo} alt="Facebook" /> Continue with Facebook
+      </a>
+    </button>
   </div>
 );

@@ -33,6 +33,12 @@ const getUserEvents = userId =>
     method: "GET"
   });
 
+const getUserCreatedEvents = userId =>
+  request({
+    url: `${API_BASE_URL}/api/users/events/${userId}`,
+    method: "GET"
+  });
+
 const deleteEvent = eventId =>
   request({
     url: `${API_BASE_URL}/api/events/${eventId}`,
@@ -97,6 +103,7 @@ export {
   getEvents,
   getCertainHobbies,
   getMembersByHobbies,
+  getUserCreatedEvents,
   getMembers,
   login,
   signup

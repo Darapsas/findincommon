@@ -1,6 +1,7 @@
 package com.findincommon.app.controllers;
 
 import com.findincommon.app.exception.ResourceNotFoundException;
+import com.findincommon.app.models.Event;
 import com.findincommon.app.models.Hobby;
 import com.findincommon.app.models.User;
 import com.findincommon.app.repository.EventRepository;
@@ -42,6 +43,12 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public List<User> getUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/events/{query}")
+    @PreAuthorize("hasRole('USER')")
+    public List<Event> getUserEvents(@PathVariable String query) {
+        return userRepository.findById(query).get().getEvents();
     }
 
     @GetMapping("/hobbies/{query}")

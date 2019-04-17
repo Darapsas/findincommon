@@ -1,11 +1,13 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { getUserEvents, deleteEvent, getEvents } from "../../helpers/requests";
+import React, { useState, useEffect } from "react";
+import { getUserEvents, getUserCreatedEvents } from "../../helpers/requests";
 import EventsList from "./events-list";
 import Loader from "../templates/loader";
 
 let _isMounted;
 export default props => {
   const [events, setEvents] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);
+  const [itemDeleted, setItemDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,7 +16,6 @@ export default props => {
       const response = await getUserEvents(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
-            console.log(data);
             setEvents(data);
           }
         })
@@ -24,11 +25,36 @@ export default props => {
       setLoading(false);
     }
     fetchData();
-    console.log(props.currentUser);
     return () => {
       _isMounted = false;
     };
-  }, [events.length]);
+  }, [itemDeleted]);
+
+  useEffect(() => {
+    _isMounted = true;
+    async function fetchData() {
+      const response = await getUserCreatedEvents(props.currentUser.id)
+        .then(data => {
+          if (_isMounted) {
+            setUserEvents(data);
+          }
+        })
+        .catch(error => {
+          console.error("Error: ", error);
+        });
+      setLoading(false);
+    }
+    fetchData();
+    // FIX double rerender, if there will be time
+    setItemDeleted(false);
+    return () => {
+      _isMounted = false;
+    };
+  }, [itemDeleted]);
+
+  const handleChange = () => {
+    setItemDeleted(true);
+  };
 
   if (loading) {
     return (
@@ -39,13 +65,17 @@ export default props => {
   }
 
   return (
-    <Fragment>
+    <div className="custom w-75">
       <h2>Your created events:</h2>
-      <EventsList events={props.currentUser.events} owned={true} />
+      <EventsList
+        events={userEvents}
+        handleDelete={handleChange}
+        owned={true}
+      />
       <br />
       <br />
       <h2>Other events:</h2>
       {events.length !== 0 && <EventsList events={events} owned={false} />}
-    </Fragment>
+    </div>
   );
 };

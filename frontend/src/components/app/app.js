@@ -6,7 +6,6 @@ import NotFound from "../templates/notFound";
 import PrivateRoute from "../templates/privateRoute";
 import RouteWithProps from "../templates/routeWithProps";
 import Loader from "../templates/loader";
-import EventInfo from "../event/event-info";
 import Home from "../home/home";
 import SignIn from "../user/signin/SignIn";
 import Profile from "../user/profile/Profile";
@@ -19,6 +18,7 @@ import Alert from "react-s-alert";
 import "react-s-alert/dist/s-alert-default.css";
 import "react-s-alert/dist/s-alert-css-effects/slide.css";
 import "./app.css";
+import EventInfo from "../event/event-info";
 import Events from "../event";
 
 let _isMounted;
@@ -132,59 +132,57 @@ export default props => {
         onLogout={handleLogout}
         hobbies={hobbies}
       />
-      <main role="main">
-        <div className="app-body">
-          <Switch>
-            <RouteWithProps
-              exact
-              path="/"
-              authenticated={authenticated}
-              currentUser={currentUser}
-              loading={homeIsLoading}
-              members={members}
-              hobbies={hobbies}
-              component={Home}
-            />
-            <PrivateRoute
-              path="/profile"
-              authenticated={authenticated}
-              currentUser={currentUser}
-              component={Profile}
-            />
-            <PrivateRoute
-              path="/user/events"
-              authenticated={authenticated}
-              currentUser={currentUser}
-              component={Events}
-            />
-            <PrivateRoute
-              path="/myConversations"
-              authenticated={authenticated}
-              currentUser={currentUser}
-              component={Profile}
-            />
-            <PrivateRoute
-              path="/myHobbies"
-              authenticated={authenticated}
-              currentUser={currentUser}
-              component={Profile}
-            />
-            <PrivateRoute
-              path="/user/events/event/info"
-              authenticated={authenticated}
-              currentUser={currentUser}
-              component={EventInfo}
-            />
-            <Route
-              path="/signin"
-              render={props => (
-                <SignIn authenticated={authenticated} {...props} />
-              )}
-            />
-            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
+      <main role="main" className="justify-content-center">
+        <Switch>
+          <RouteWithProps
+            exact
+            path="/"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            loading={homeIsLoading}
+            members={members}
+            hobbies={hobbies}
+            component={Home}
+          />
+          <PrivateRoute
+            path="/profile"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={Profile}
+          />
+          <PrivateRoute
+            path="/user/events/:event/info"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={EventInfo}
+          />
+          <PrivateRoute
+            path="/user/events"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={Events}
+          />
+          <PrivateRoute
+            path="/myConversations"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={Profile}
+          />
+          <PrivateRoute
+            path="/myHobbies"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={Profile}
+          />
+          <Route
+            path="/signin"
+            render={props => (
+              <SignIn authenticated={authenticated} {...props} />
+            )}
+          />
+          <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
+          <Route component={NotFound} />
+        </Switch>
         <Alert
           stack={{ limit: 3 }}
           timeout={3000}

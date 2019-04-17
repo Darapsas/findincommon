@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { deleteEvent } from "../../helpers/requests";
-import EventInfo from "./event-info";
 
 export default props => (
   <table className="table table-hover">
@@ -55,7 +54,11 @@ export default props => (
                   <button
                     type="button"
                     className="btn btn-danger float-right"
-                    onClick={() => deleteEvent(event.id)}
+                    onClick={() => {
+                      deleteEvent(event.id).then(response =>
+                        props.handleDelete()
+                      );
+                    }}
                   >
                     Delete
                   </button>
@@ -66,7 +69,7 @@ export default props => (
                 <th scope="col" colSpan="2">
                   <Link
                     to={{
-                      pathname: `/user/events/event/info`,
+                      pathname: `/user/events/${event.id}/info`,
                       state: {
                         event: event
                       }
