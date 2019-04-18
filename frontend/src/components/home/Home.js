@@ -17,7 +17,7 @@ export default props => {
     <Fragment>
       <div
         className="container w-50"
-        style={{ marginTop: "92px", textAlign: "center" }}
+        style={{ marginTop: "48px", textAlign: "center" }}
       >
         {props.authenticated ? (
           <Fragment>
@@ -55,7 +55,7 @@ export default props => {
         )}
       </div>
 
-      <div className="album py-5">
+      <div className="album" style={{ margin: "48px 0 86px 0" }}>
         <div className="container">
           {props.authenticated ? (
             <div className="row">

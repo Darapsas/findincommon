@@ -24,8 +24,7 @@ const Profile = props => {
           <div className="profile-name">
             <h2>{props.currentUser.name}</h2>
             <p className="profile-email">{props.currentUser.email}</p>
-            <h3 className="float-left">About you</h3>
-            <p className="profile-email">{props.currentUser.description}</p>
+            <p className="profile">{props.currentUser.description}</p>
             <br />
             <br />
             <ul className="list-group">

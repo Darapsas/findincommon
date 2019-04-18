@@ -63,6 +63,24 @@ const getMembers = () =>
     method: "GET"
   });
 
+const getUserHobbies = userId =>
+  request({
+    url: `${API_BASE_URL}/api/users/${userId}/hobbies`,
+    method: "GET"
+  });
+
+const removeUserHobby = (userId, id) =>
+  request({
+    url: `${API_BASE_URL}/api/users/${userId}/hobby/${id}`,
+    method: "DELETE"
+  });
+
+const addUserHobby = (userId, id) =>
+  request({
+    url: `${API_BASE_URL}/api/users/${userId}/hobby/${id}`,
+    method: "POST"
+  });
+
 const getEvents = () =>
   request({
     url: `${API_BASE_URL}/api/events`,
@@ -124,10 +142,13 @@ export {
   getCertainHobbies,
   getMembersByHobbies,
   getUserCreatedEvents,
+  getUserHobbies,
   getMembers,
   getReminderTypes,
   updateEvent,
   createEvent,
+  removeUserHobby,
+  addUserHobby,
   login,
   signup
 };

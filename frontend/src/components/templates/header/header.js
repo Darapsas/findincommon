@@ -38,7 +38,7 @@ export default props => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/myHobbies">
+                  <NavLink className="nav-link" to="/user/hobbies">
                     Hobbies
                   </NavLink>
                 </li>

@@ -21,26 +21,14 @@ import "./app.css";
 import EventInfo from "../event/event-info";
 import EventForm from "../event/event-form";
 import Events from "../event";
+import Hobby from "../hobby/hobby";
 
 let _isMounted;
 export default props => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [hobbiesListChanged, setHobbiesListChanged] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const loadCurrentlyLoggedInUser = () => {
-    setLoading(true);
-
-    getCurrentUser()
-      .then(response => {
-        setCurrentUser(response);
-        setAuthenticated(true);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-      });
-  };
 
   const handleLogout = () => {
     localStorage.removeItem(ACCESS_TOKEN);
@@ -50,8 +38,53 @@ export default props => {
   };
 
   useEffect(() => {
-    loadCurrentlyLoggedInUser();
+    _isMounted = true;
+    setLoading(true);
+
+    getCurrentUser()
+      .then(response => {
+        if (_isMounted) {
+          setCurrentUser(response);
+          setAuthenticated(true);
+          setLoading(false);
+        }
+      })
+      .catch(error => {
+        setLoading(false);
+      });
+
+    return () => {
+      _isMounted = false;
+    };
   }, []);
+
+  /*
+   * ---------------------------------------------------------------------------------
+   * Update user information after adding or removing hobbies from user
+   * ---------------------------------------------------------------------------------
+   */
+  useEffect(() => {
+    _isMounted = true;
+    async function fetchData() {
+      await getCurrentUser()
+        .then(data => {
+          if (_isMounted) {
+            setCurrentUser(data);
+          }
+        })
+        .catch(error => console.error("Error: ", error));
+      setHobbiesListChanged(false);
+    }
+    fetchData();
+
+    return () => {
+      _isMounted = false;
+    };
+  }, [hobbiesListChanged]);
+
+  const handleHobbiesListChange = () => {
+    setHobbiesListChanged(true);
+  };
 
   /*
    * ---------------------------------------------------------------------------------
@@ -65,7 +98,7 @@ export default props => {
     _isMounted = true;
     async function fetchData() {
       if (authenticated) {
-        const response = await getCertainHobbies(JSON.stringify(searchQuery))
+        await getCertainHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
               setHobbies(data);
@@ -97,7 +130,7 @@ export default props => {
     _isMounted = true;
     async function fetchData() {
       if (authenticated) {
-        const response = await getMembersByHobbies(JSON.stringify(searchQuery))
+        await getMembersByHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
               setMembers(data);
@@ -186,10 +219,12 @@ export default props => {
             component={Profile}
           />
           <PrivateRoute
-            path="/myHobbies"
+            path="/user/hobbies"
             authenticated={authenticated}
             currentUser={currentUser}
-            component={Profile}
+            hobbies={hobbies}
+            component={Hobby}
+            handleHobbiesListChange={handleHobbiesListChange}
           />
           <Route
             path="/signin"

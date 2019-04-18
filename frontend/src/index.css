@@ -1,11 +1,10 @@
 html,
 body {
   min-height: 100%;
-  height: 100%;
 }
 
 body {
-  padding: 0;
+  padding: 56px 0 87px 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -20,11 +19,10 @@ code {
 
 #root {
   min-height: 100%;
-  height: 100%;
 }
 .custom {
   position: relative;
   margin: auto;
   top: 50%;
-  transform: translatey(-50%);
+  /*transform: translatey(-50%);*/
 }

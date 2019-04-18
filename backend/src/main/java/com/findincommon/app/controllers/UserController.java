@@ -1,20 +1,17 @@
 package com.findincommon.app.controllers;
 
 import com.findincommon.app.exception.ResourceNotFoundException;
-import com.findincommon.app.models.Event;
 import com.findincommon.app.models.Hobby;
 import com.findincommon.app.models.User;
 import com.findincommon.app.repository.EventRepository;
 import com.findincommon.app.repository.UserRepository;
 import com.findincommon.app.security.CurrentUser;
 import com.findincommon.app.security.UserPrincipal;
+import com.findincommon.app.services.HobbyService;
 import com.findincommon.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +29,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    HobbyService hobbyService;
+
     @GetMapping("/user/info")
     @PreAuthorize("hasRole('USER')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
@@ -45,11 +45,39 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-//    @GetMapping("/events/{query}")
-//    @PreAuthorize("hasRole('USER')")
-//    public List<Event> getUserEvents(@PathVariable String query) {
-//        return userRepository.findById(query).get().getEvents();
-//    }
+    @GetMapping("/{query}/hobbies")
+    @PreAuthorize("hasRole('USER')")
+    public List<Hobby> getUserHobbies(@PathVariable String query) {
+        return userRepository.findById(query).get().getHobbies();
+    }
+
+    @PostMapping("/{userId}/hobby/{hobbyId}")
+    @PreAuthorize("hasRole('USER')")
+    public void addHobbyToUser(@PathVariable String userId, @PathVariable String hobbyId) {
+        User user = userService.getUser(userId);
+        List<Hobby> hobbies = new ArrayList<>(user.getHobbies());
+
+        boolean test = false;
+        for (Hobby hobby : hobbies) {
+            if (hobby.getId().equals(hobbyId)) {
+            }
+        }
+
+        hobbies.add(hobbyService.getHobby(hobbyId));
+
+        user.setHobbies(hobbies);
+        userService.save(user);
+    }
+
+    @DeleteMapping("/{userId}/hobby/{hobbyId}")
+    @PreAuthorize("hasRole('USER')")
+    public void removeHobbyFromUser(@PathVariable String userId, @PathVariable String hobbyId) {
+        User user = userService.getUser(userId);
+        List<Hobby> hobbies = new ArrayList<>(user.getHobbies());
+        hobbies.removeIf(hobby -> hobby.getId().equals(hobbyId));
+        user.setHobbies(hobbies);
+        userService.save(user);
+    }
 
     @GetMapping("/hobbies/{query}")
     @PreAuthorize("hasRole('USER')")

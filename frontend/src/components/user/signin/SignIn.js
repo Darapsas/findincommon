@@ -19,6 +19,7 @@ export default props => {
 
   return (
     <div className="custom signin-container">
+      <br />
       <div className="signin-content">
         <h1 className="signin-title">Sign in to Find In Common</h1>
         <SocialSignIn />

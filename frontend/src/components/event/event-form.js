@@ -30,7 +30,7 @@ export default props => {
   useEffect(() => {
     _isMounted = true;
     async function fetchData() {
-      const response = await getReminderTypes()
+      await getReminderTypes()
         .then(data => {
           if (_isMounted) {
             setReminderTypes(data);

@@ -13,7 +13,7 @@ export default props => {
   useEffect(() => {
     _isMounted = true;
     async function fetchData() {
-      const response = await getUserEvents(props.currentUser.id)
+      await getUserEvents(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
             console.log(data);
@@ -34,7 +34,7 @@ export default props => {
   useEffect(() => {
     _isMounted = true;
     async function fetchData() {
-      const response = await getUserCreatedEvents(props.currentUser.id)
+      await getUserCreatedEvents(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
             console.log(data);
@@ -54,7 +54,7 @@ export default props => {
     };
   }, [itemDeleted]);
 
-  const handleChange = () => {
+  const handleDelete = () => {
     setItemDeleted(true);
   };
 
@@ -68,10 +68,11 @@ export default props => {
 
   return (
     <div className="custom w-75">
+      <br />
       <h2>Your created events:</h2>
       <EventsList
         events={userEvents}
-        handleDelete={handleChange}
+        handleDelete={handleDelete}
         owned={true}
       />
       <br />
