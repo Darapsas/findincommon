@@ -44,12 +44,31 @@ public class EventController {
         List<Event> userEvents = new ArrayList<>();
         List<Event> events = eventService.getAllEvents();
 
+        String creator;
+
         for (Event event : events) {
+            creator = event.getCreator().getId();
             for (User participant : event.getParticipants()) {
-                if (participant.getId().equals(id)) {
+                if (participant.getId().equals(id) && !participant.getId().equals(creator)) {
                     userEvents.add(event);
                     break;
                 }
+            }
+        }
+
+        return userEvents;
+    }
+
+    @GetMapping(value = "/creator/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public List<Event> getUserCreatedEvents(@PathVariable String id) {
+        List<Event> userEvents = new ArrayList<>();
+        List<Event> events = eventService.getAllEvents();
+
+        for (Event event : events) {
+            System.out.println(event.getCreator());
+            if (event.getCreator().getId().equals(id)) {
+                userEvents.add(event);
             }
         }
 

@@ -80,7 +80,7 @@ export default props => {
           participants: props.location.state.event
             ? props.location.state.event.participants
             : [],
-          creatorId: props.currentUser.id
+          creator: props.currentUser
         }}
         validationSchema={eventSchema}
         //  validate={}
@@ -197,6 +197,11 @@ export default props => {
 
             <div className="form-group">
               <label>Participants (you can filter them with search bar):</label>
+              <br />
+              <label>
+                <input name="You" type="checkbox" disabled checked /> You
+              </label>
+
               <FieldArray
                 name="participants"
                 render={arrayHelpers =>

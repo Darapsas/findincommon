@@ -35,7 +35,7 @@ const getUserEvents = userId =>
 
 const getUserCreatedEvents = userId =>
   request({
-    url: `${API_BASE_URL}/api/users/events/${userId}`,
+    url: `${API_BASE_URL}/api/events/creator/${userId}`,
     method: "GET"
   });
 

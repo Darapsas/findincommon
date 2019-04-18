@@ -213,6 +213,7 @@ public class AppApplication {
                                             userRepository.findByEmail("darius562@gmail.com").get()
                                     ))
                             .name("Pyramids")
+                            .creator(userRepository.findByEmail("go@gmail.com").get())
                             .description("Pyramids were built by aliens. Or were they?")
                             .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
                             .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
