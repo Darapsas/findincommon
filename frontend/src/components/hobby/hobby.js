@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getUserHobbies, getHobbies } from "../../helpers/requests";
-import HobbiesList from "./hobbies-list";
+import HobbiesList from "./hobby-list";
 import Loader from "../templates/loader";
 
 let _isMounted;

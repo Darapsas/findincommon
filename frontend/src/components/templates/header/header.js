@@ -55,7 +55,7 @@ export default props => {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link"
-                    to="/signin"
+                    to="/sign-in"
                     onClick={props.onLogout}
                   >
                     Logout
@@ -87,7 +87,7 @@ export default props => {
           ) : (
             <ul className="navbar-nav ml-auto">
               <li className="flaot-right">
-                <NavLink className="nav-link" to="/signin">
+                <NavLink className="nav-link" to="/sign-in">
                   Sign in
                 </NavLink>
               </li>

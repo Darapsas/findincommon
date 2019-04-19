@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getUserEvents, getUserCreatedEvents } from "../../helpers/requests";
-import EventsList from "./events-list";
+import EventsList from "./event-list";
 import Loader from "../templates/loader";
 
 let _isMounted;

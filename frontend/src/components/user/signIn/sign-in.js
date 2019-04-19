@@ -1,5 +1,5 @@
 import React from "react";
-import "./SignIn.css";
+import "./sign-in.css";
 import { Redirect } from "react-router-dom";
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../../helpers/constants";
 import fbLogo from "../../../assets/images/fb-logo.png";

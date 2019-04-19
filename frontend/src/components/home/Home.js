@@ -47,7 +47,7 @@ export default props => {
               like you or at least have same hobbies as you.
             </p>
             <p>
-              <a href="/signin" className="btn btn-primary my-2 btn-block">
+              <a href="/sign-in" className="btn btn-primary my-2 btn-block">
                 Join us now, it's free
               </a>
             </p>

@@ -3,13 +3,13 @@ import { Route, Switch } from "react-router-dom";
 import Header from "../templates/header";
 import Footer from "../templates/footer";
 import NotFound from "../templates/notFound";
-import PrivateRoute from "../templates/privateRoute";
-import RouteWithProps from "../templates/routeWithProps";
+import PrivateRoute from "../templates/private-route";
+import RouteWithProps from "../templates/route-with-props";
 import Loader from "../templates/loader";
 import Home from "../home/home";
-import SignIn from "../user/signin/SignIn";
-import Profile from "../user/profile/Profile";
-import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler";
+import SignIn from "../user/signIn/sign-in";
+import Profile from "../user/profile/profile";
+import OAuth2RedirectHandler from "../user/oAuth2/o-auth-2-redirect-handler";
 import { getCertainHobbies } from "../../helpers/requests";
 import { getCurrentUser } from "../../helpers/requests";
 import { getMembersByHobbies } from "../../helpers/requests";
@@ -227,7 +227,7 @@ export default props => {
             handleHobbiesListChange={handleHobbiesListChange}
           />
           <Route
-            path="/signin"
+            path="/sign-in"
             render={props => (
               <SignIn authenticated={authenticated} {...props} />
             )}

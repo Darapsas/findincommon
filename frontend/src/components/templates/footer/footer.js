@@ -1,5 +1,5 @@
 import React from "react";
-import ScrollUp from "../scrollUp";
+import ScrollUp from "../scroll-up";
 import "./footer.css";
 
 export default () => (
