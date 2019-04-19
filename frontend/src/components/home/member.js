@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default props => (
   <div key={props.member.id} className="col-md-4">
@@ -25,12 +26,25 @@ export default props => (
         </p>
         <div className="d-flex justify-content-between align-items-center">
           <div className="btn-group btn-block">
-            <button type="button" className="btn btn-sm btn-outline-secondary">
+            <Link
+              role="button"
+              className="btn btn-sm btn-outline-secondary"
+              to={{
+                pathname: `/user/${props.member.id}/profile`,
+                state: {
+                  user: props.member
+                }
+              }}
+            >
               View
-            </button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">
+            </Link>
+            <Link
+              role="button"
+              className="btn btn-sm btn-outline-secondary"
+              to="/"
+            >
               Message
-            </button>
+            </Link>
           </div>
         </div>
       </div>

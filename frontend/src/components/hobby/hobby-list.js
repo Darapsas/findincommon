@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { removeUserHobby, addUserHobby } from "../../helpers/requests";
 
 export default props => {
@@ -59,26 +58,17 @@ export default props => {
                     {hobby.description}
                   </th>
                   <th scope="col">
-                    <Link
-                      to={{
-                        pathname: `/user/hobbies/${hobby.id}/info`,
-                        state: {
-                          hobby: hobby
-                        }
+                    <button
+                      type="button"
+                      className="btn btn-success float-right"
+                      onClick={() => {
+                        addUserHobby(props.currentUser.id, hobby.id).then(
+                          response => props.handleChange()
+                        );
                       }}
                     >
-                      <button
-                        type="button"
-                        className="btn btn-success float-right"
-                        onClick={() => {
-                          addUserHobby(props.currentUser.id, hobby.id).then(
-                            response => props.handleChange()
-                          );
-                        }}
-                      >
-                        Add
-                      </button>
-                    </Link>
+                      Add
+                    </button>
                   </th>
                 </tr>
               )

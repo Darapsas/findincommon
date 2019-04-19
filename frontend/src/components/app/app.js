@@ -185,6 +185,11 @@ export default props => {
             component={Profile}
           />
           <PrivateRoute
+            path="/user/:userId/profile"
+            authenticated={authenticated}
+            component={Profile}
+          />
+          <PrivateRoute
             path="/user/events/:event/info"
             authenticated={authenticated}
             currentUser={currentUser}
