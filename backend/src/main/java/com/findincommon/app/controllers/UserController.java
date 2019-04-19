@@ -3,6 +3,7 @@ package com.findincommon.app.controllers;
 import com.findincommon.app.exception.ResourceNotFoundException;
 import com.findincommon.app.models.Hobby;
 import com.findincommon.app.models.User;
+import com.findincommon.app.payload.UserUpdatePayload;
 import com.findincommon.app.repository.EventRepository;
 import com.findincommon.app.repository.UserRepository;
 import com.findincommon.app.security.CurrentUser;
@@ -31,6 +32,21 @@ public class UserController {
 
     @Autowired
     HobbyService hobbyService;
+
+    @PutMapping(value = "/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public void updateUser(@PathVariable String id, @RequestBody UserUpdatePayload data) {
+        System.out.println();
+        System.out.println();
+        System.out.println("this this shit shit doesn't work " + id);
+        System.out.println();
+        System.out.println();
+        User updatedUser = userService.getUser(id);
+        updatedUser.setImageUrl(data.getImageUrl());
+        updatedUser.setName(data.getName());
+        updatedUser.setDescription(data.getDescription());
+        userService.save(updatedUser);
+    }
 
     @GetMapping("/user/info")
     @PreAuthorize("hasRole('USER')")
@@ -128,4 +144,5 @@ public class UserController {
 
         return searchedUsers;
     }
+
 }

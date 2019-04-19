@@ -4,19 +4,17 @@ import { Link } from "react-router-dom";
 export default props => (
   <div key={props.member.id} className="col-md-4">
     <div className="card mb-4 shadow-sm">
-      <svg
+      <img
         className="bd-placeholder-img card-img-top"
-        width="100%"
-        height="225"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-        focusable="false"
-        role="img"
-        aria-label="Placeholder: Hulk"
-      >
-        <title>{props.member.id}</title>
-        <image width="100%" height="100%" href={props.member.imageUrl} />
-      </svg>
+        style={{
+          width: "100%",
+          height: "300px",
+          objectFit: "cover",
+          borderRadius: "5px"
+        }}
+        src={props.member.imageUrl}
+        alt={props.member.name}
+      />
       <div className="card-body">
         <h6>{props.member.name}</h6>
         <p className="card-text">

@@ -119,6 +119,15 @@ const updateEvent = (event, id) =>
     body: JSON.stringify(event)
   });
 
+const updateProfile = (id, user) => {
+  console.log(user);
+  return request({
+    url: `${API_BASE_URL}/api/users/${id}`,
+    method: "PUT",
+    body: JSON.stringify(user)
+  });
+};
+
 const login = loginRequest =>
   request({
     url: `${API_BASE_URL}/auth/login`,
@@ -139,6 +148,7 @@ export {
   getCurrentUser,
   getHobbies,
   getEvents,
+  updateProfile,
   getCertainHobbies,
   getMembersByHobbies,
   getUserCreatedEvents,

@@ -9,6 +9,7 @@ import Loader from "../templates/loader";
 import Home from "../home/home";
 import SignIn from "../user/signIn/sign-in";
 import Profile from "../user/profile/profile";
+import ProfileForm from "../user/profile/profile-form";
 import OAuth2RedirectHandler from "../user/oAuth2/o-auth-2-redirect-handler";
 import { getCertainHobbies } from "../../helpers/requests";
 import { getCurrentUser } from "../../helpers/requests";
@@ -179,10 +180,19 @@ export default props => {
             component={Home}
           />
           <PrivateRoute
+            exact
             path="/profile"
             authenticated={authenticated}
             currentUser={currentUser}
             component={Profile}
+          />
+          <PrivateRoute
+            exact
+            path="/profile/edit"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={ProfileForm}
+            handleHobbiesListChange={handleHobbiesListChange}
           />
           <PrivateRoute
             path="/user/:userId/profile"
