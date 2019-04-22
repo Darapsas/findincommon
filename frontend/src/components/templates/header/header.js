@@ -70,7 +70,7 @@ export default props => {
                     marginRight: "10px"
                   }}
                 >
-                  Search by hobbies:
+                  Search:
                 </label>
                 <input
                   className="form-control mr-sm-2"
@@ -82,7 +82,6 @@ export default props => {
                   value={props.searchQuery}
                 />
               </form>
-              )
             </Fragment>
           ) : (
             <ul className="navbar-nav ml-auto">
