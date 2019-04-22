@@ -1,6 +1,7 @@
 package com.findincommon.app.models;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,8 +14,7 @@ public class Message {
     private String id;
     @DBRef
     private Conversation conversation;
-    private String creatorId;
-    private String creatorFirstName;
-    private String creatorLastName;
+    @DBRef
+    private User creator;
     private String text;
 }

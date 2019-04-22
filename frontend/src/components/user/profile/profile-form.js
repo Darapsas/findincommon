@@ -39,7 +39,6 @@ export default props => {
           })
             .then(response => {
               props.handleHobbiesListChange();
-              console.log("Successfully edited", JSON.stringify(response));
               props.history.goBack();
             })
             .catch(error => console.error("Error:", error));

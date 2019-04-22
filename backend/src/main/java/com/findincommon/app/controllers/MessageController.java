@@ -25,6 +25,11 @@ public class MessageController {
         return messageService.getAllMessages();
     }
 
+    @GetMapping(value = "/conversation/{id}")
+    public List<Message> getConversationMessages(@PathVariable String id) {
+        return messageService.getConversationMessages(id);
+    }
+
     @GetMapping(value = "/{id}")
     public Message getMessage(@PathVariable String id) {
         return messageService.getMessage(id);

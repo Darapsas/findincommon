@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "./profile.css";
 
 export default props => {
-  console.log(props);
-
   let user = props.currentUser ? props.currentUser : props.location.state.user;
 
   return (

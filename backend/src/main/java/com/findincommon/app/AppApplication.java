@@ -240,6 +240,74 @@ public class AppApplication {
             );
 
 
+            conversationRepository.save(
+                    Conversation
+                            .builder()
+                            .creator(userRepository.findByEmail("darius562@gmail.com").get())
+                            .name("Nice weather")
+                            .participants(
+                                    Arrays.asList(
+                                            userRepository.findByEmail("marvel@gmail.com").get(),
+                                            userRepository.findByEmail("go@gmail.com").get()
+                                    ))
+                            .build()
+            );
+            conversationRepository.save(
+                    Conversation
+                            .builder()
+                            .creator(userRepository.findByEmail("marvel@gmail.com").get())
+                            .name("Bad weather")
+                            .participants(
+                                    Arrays.asList(
+                                            userRepository.findByEmail("darius562@gmail.com").get(),
+                                            userRepository.findByEmail("marvel@gmail.com").get(),
+                                            userRepository.findByEmail("go@gmail.com").get()
+                                    ))
+                            .build()
+            );
+
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("darius562@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("hello")
+                    .build());
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("darius562@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("How are you? :D")
+                    .build());
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("marvel@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("Hi")
+                    .build());
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("marvel@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("I'm good")
+                    .build());
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("marvel@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("And you?")
+                    .build());
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("darius562@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("Very good :D")
+                    .build());
+            messageRepository.save(Message
+                    .builder()
+                    .creator(userRepository.findByEmail("marvel@gmail.com").get())
+                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .text("Good then")
+                    .build());
        /*     User[] users = {
                     userRepository.findByEmail("darius562@gmail.com"),
                     userRepository.findByEmail("doe@gmail.com")

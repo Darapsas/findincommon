@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getUserEvents, getUserCreatedEvents } from "../../helpers/requests";
-import EventsList from "./event-list";
+import EventList from "./event-list";
 import Loader from "../templates/loader";
 
 let _isMounted;
@@ -16,7 +16,6 @@ export default props => {
       await getUserEvents(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
-            console.log(data);
             setEvents(data);
           }
         })
@@ -37,7 +36,6 @@ export default props => {
       await getUserCreatedEvents(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
-            console.log(data);
             setUserEvents(data);
           }
         })
@@ -70,15 +68,11 @@ export default props => {
     <div className="custom w-75">
       <br />
       <h2>Your created events:</h2>
-      <EventsList
-        events={userEvents}
-        handleDelete={handleDelete}
-        owned={true}
-      />
+      <EventList events={userEvents} handleDelete={handleDelete} owned={true} />
       <br />
       <br />
       <h2>Other events:</h2>
-      {events.length !== 0 && <EventsList events={events} owned={false} />}
+      {events.length !== 0 && <EventList events={events} owned={false} />}
     </div>
   );
 };

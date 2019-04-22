@@ -218,13 +218,8 @@ export default props => {
                                 .includes(participant.id)}
                               onChange={e => {
                                 if (e.target.checked) {
-                                  console.log("push " + participant);
                                   arrayHelpers.push(participant);
                                 } else {
-                                  console.log(
-                                    "delete " +
-                                      values.participants.indexOf(participant)
-                                  );
                                   arrayHelpers.remove(
                                     values.participants.findIndex(
                                       x => x.id === participant.id

@@ -22,6 +22,10 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    public List<Message> getConversationMessages(String id ) {
+        return messageRepository.findByConversation(id);
+    }
+
     public Message getMessage(String id) {
         return messageRepository.findById(id).get();
     }

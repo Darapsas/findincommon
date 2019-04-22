@@ -22,6 +22,9 @@ import "./app.css";
 import EventInfo from "../event/event-info";
 import EventForm from "../event/event-form";
 import Events from "../event";
+import ConversationInAction from "../conversation/conversation-in-action";
+import ConversationForm from "../conversation/conversation-form";
+import Conversations from "../conversation";
 import Hobby from "../hobby/hobby";
 
 let _isMounted;
@@ -228,10 +231,33 @@ export default props => {
             component={Events}
           />
           <PrivateRoute
-            path="/myConversations"
+            path="/user/conversations/:conversation/edit"
             authenticated={authenticated}
             currentUser={currentUser}
-            component={Profile}
+            members={members}
+            hobbies={hobbies}
+            component={ConversationForm}
+          />
+          <PrivateRoute
+            path="/user/conversations/conversation/create"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            members={members}
+            hobbies={hobbies}
+            component={ConversationForm}
+          />
+          <PrivateRoute
+            path="/user/conversations/:conversation/in-action"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            members={members}
+            component={ConversationInAction}
+          />
+          <PrivateRoute
+            path="/user/conversations"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={Conversations}
           />
           <PrivateRoute
             path="/user/hobbies"

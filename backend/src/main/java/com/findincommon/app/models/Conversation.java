@@ -16,6 +16,6 @@ public class Conversation {
     @DBRef
     private List<User> participants;
     @DBRef
-    private List<Message> messages;
+    private User creator;
     private String name;
 }

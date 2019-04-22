@@ -27,9 +27,27 @@ const request = options => {
   }
 };
 
+const getUserConversations = userId =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/user/${userId}`,
+    method: "GET"
+  });
+
+const getUserCreatedConversations = userId =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/creator/${userId}`,
+    method: "GET"
+  });
+
 const getUserEvents = userId =>
   request({
     url: `${API_BASE_URL}/api/events/user/${userId}`,
+    method: "GET"
+  });
+
+const getConversationMessages = id =>
+  request({
+    url: `${API_BASE_URL}/api/messages/conversation/${id}`,
     method: "GET"
   });
 
@@ -43,6 +61,12 @@ const getReminderTypes = () =>
   request({
     url: `${API_BASE_URL}/api/reminders`,
     method: "GET"
+  });
+
+const deleteConversation = eventId =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/${eventId}`,
+    method: "DELETE"
   });
 
 const deleteEvent = eventId =>
@@ -105,6 +129,20 @@ const getCertainHobbies = searchQuery =>
     method: "GET"
   });
 
+const createConversation = event =>
+  request({
+    url: `${API_BASE_URL}/api/conversations`,
+    method: "POST",
+    body: JSON.stringify(event)
+  });
+
+const updateConversation = (event, id) =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/${id}`,
+    method: "PUT",
+    body: JSON.stringify(event)
+  });
+
 const createEvent = event =>
   request({
     url: `${API_BASE_URL}/api/events`,
@@ -119,14 +157,12 @@ const updateEvent = (event, id) =>
     body: JSON.stringify(event)
   });
 
-const updateProfile = (id, user) => {
-  console.log(user);
-  return request({
+const updateProfile = (id, user) =>
+  request({
     url: `${API_BASE_URL}/api/users/${id}`,
     method: "PUT",
     body: JSON.stringify(user)
   });
-};
 
 const login = loginRequest =>
   request({
@@ -144,7 +180,9 @@ const signup = signupRequest =>
 
 export {
   deleteEvent,
+  deleteConversation,
   getUserEvents,
+  getUserConversations,
   getCurrentUser,
   getHobbies,
   getEvents,
@@ -152,13 +190,17 @@ export {
   getCertainHobbies,
   getMembersByHobbies,
   getUserCreatedEvents,
+  getUserCreatedConversations,
   getUserHobbies,
   getMembers,
   getReminderTypes,
   updateEvent,
+  updateConversation,
   createEvent,
+  createConversation,
   removeUserHobby,
   addUserHobby,
+  getConversationMessages,
   login,
   signup
 };

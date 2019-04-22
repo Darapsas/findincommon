@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConversationRepository extends MongoRepository<Conversation, String> {
     //List<Conversation> findByConversationId(String id);
+    Conversation findByName(String name);
 }

@@ -36,11 +36,6 @@ public class UserController {
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasRole('USER')")
     public void updateUser(@PathVariable String id, @RequestBody UserUpdatePayload data) {
-        System.out.println();
-        System.out.println();
-        System.out.println("this this shit shit doesn't work " + id);
-        System.out.println();
-        System.out.println();
         User updatedUser = userService.getUser(id);
         updatedUser.setImageUrl(data.getImageUrl());
         updatedUser.setName(data.getName());
