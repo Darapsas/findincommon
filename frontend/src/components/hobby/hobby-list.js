@@ -19,11 +19,12 @@ export default props => {
           props.hobbies.map((hobby, index) => {
             let test = true;
 
-            props.currentUser.hobbies.map(({ id }) => {
-              if (id === hobby.id && !props.owned) {
-                test = false;
-              }
-            });
+            props.currentUser.hobbies &&
+              props.currentUser.hobbies.map(({ id }) => {
+                if (id === hobby.id && !props.owned) {
+                  test = false;
+                }
+              });
             return props.owned ? (
               <tr key={hobby.id}>
                 <th scope="col">{index + 1}</th>

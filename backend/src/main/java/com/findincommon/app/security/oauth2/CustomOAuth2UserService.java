@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -70,6 +71,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         .providerId(oAuth2UserInfo.getId())
                         .name(oAuth2UserInfo.getName())
                         .email(oAuth2UserInfo.getEmail())
+                        .description("I am an idiot.")
+                        .hobbies(Arrays.asList())
                         .imageUrl(oAuth2UserInfo.getImageUrl())
                         .build()
         );

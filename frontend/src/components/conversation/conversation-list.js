@@ -85,7 +85,9 @@ export default props => (
                 <th scope="col" colSpan="3">
                   <Link
                     to={{
-                      pathname: `/user/conversations/${conversation.id}/info`,
+                      pathname: `/user/conversations/${
+                        conversation.id
+                      }/in-action`,
                       state: {
                         conversation: conversation
                       }
