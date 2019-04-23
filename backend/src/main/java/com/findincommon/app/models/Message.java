@@ -13,8 +13,7 @@ public class Message {
     @Id
     private String id;
     @DBRef
-    private Conversation conversation;
-    @DBRef
     private User creator;
     private String text;
+    private String conversation;
 }

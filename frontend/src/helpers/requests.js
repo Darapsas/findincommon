@@ -51,6 +51,13 @@ const getConversationMessages = id =>
     method: "GET"
   });
 
+const postMessage = message =>
+  request({
+    url: `${API_BASE_URL}/api/messages`,
+    method: "POST",
+    body: JSON.stringify(message)
+  });
+
 const getUserCreatedEvents = userId =>
   request({
     url: `${API_BASE_URL}/api/events/creator/${userId}`,
@@ -201,6 +208,7 @@ export {
   removeUserHobby,
   addUserHobby,
   getConversationMessages,
+  postMessage,
   login,
   signup
 };

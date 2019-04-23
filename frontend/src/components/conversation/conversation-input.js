@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Formik, Form, Field } from "formik";
+import { postMessage } from "../../helpers/requests";
 import * as Yup from "yup";
 
 const messageSchema = Yup.object().shape({
@@ -20,25 +21,21 @@ export default props => {
   return (
     <Formik
       initialValues={{
-        creatorId: "", //props.participant.id,
-        creatorFirstName: "", //props.participant.firstName,
-        creatorLastName: "", //props.participant.lastName,
+        conversation: props.conversation,
+        creator: props.currentUser,
         text: ""
       }}
       validationSchema={messageSchema}
       //  validate={}
-      onSubmit={(values, actions) => {
-        fetch(`http://192.168.99.100:8080/api/messages`, {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json"
-          }
+      onSubmit={(values, { resetForm }) => {
+        postMessage({
+          conversation: values.conversation.id,
+          creator: values.creator,
+          text: values.text
         })
           .then(response => {
+            resetForm();
             console.log("Successfully created", JSON.stringify(response));
-            //props.history.goBack();
-            values.isSubmitting = false;
           })
           .catch(error => console.error("Error:", error));
       }}

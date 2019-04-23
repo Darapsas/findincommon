@@ -1,4 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react";
+// interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import ConversationInput from "./conversation-input";
 import { getConversationMessages } from "../../helpers/requests";
 import Message from "../message/message";
@@ -8,6 +10,7 @@ let _isMounted;
 export default props => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [interval, setInterval] = useState(0);
 
   useEffect(() => {
     _isMounted = true;
@@ -27,11 +30,11 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, []);
+  }, [interval]);
 
-  //const handleDelete = () => {
-  //  setItemDeleted(true);
-  //};
+  useInterval(() => {
+    setInterval(interval + 1);
+  }, 1000);
 
   if (loading) {
     return (
@@ -47,7 +50,7 @@ export default props => {
         messages.map(message => {
           if (message.creator.id === props.currentUser.id) {
             return (
-              <div className="row">
+              <div key={message.id} className="row">
                 <div className="ml-auto">
                   <small>You</small>
                   <br />
@@ -59,7 +62,7 @@ export default props => {
             );
           } else {
             return (
-              <div className="row">
+              <div key={message.id} className="row">
                 <div className="mr-auto">
                   <small>{message.creator.name}</small>
                   <br />
@@ -71,7 +74,30 @@ export default props => {
             );
           }
         })}
-      <ConversationInput />
+      <ConversationInput
+        currentUser={props.currentUser}
+        conversation={props.location.state.conversation}
+      />
     </div>
   );
 };
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}

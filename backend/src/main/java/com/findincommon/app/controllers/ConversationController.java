@@ -73,7 +73,6 @@ public class ConversationController {
         List<Conversation> conversations = conversationService.getAllConversations();
 
         for (Conversation conversation : conversations) {
-            System.out.println(conversation.getCreator());
             if (conversation.getCreator().getId().equals(id)) {
                 userConversations.add(conversation);
             }

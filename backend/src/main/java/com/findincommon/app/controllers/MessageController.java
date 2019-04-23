@@ -17,7 +17,13 @@ public class MessageController {
 
     @PostMapping
     public void createMessage(@RequestBody Message message) {
-        messageService.save(message);
+        messageService.save(
+                Message
+                        .builder()
+                        .conversation(message.getConversation())
+                        .creator(message.getCreator())
+                        .text(message.getText())
+                        .build());
     }
 
     @GetMapping

@@ -269,43 +269,43 @@ public class AppApplication {
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("darius562@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("hello")
                     .build());
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("darius562@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("How are you? :D")
                     .build());
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("marvel@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("Hi")
                     .build());
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("marvel@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("I'm good")
                     .build());
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("marvel@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("And you?")
                     .build());
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("darius562@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("Very good :D")
                     .build());
             messageRepository.save(Message
                     .builder()
                     .creator(userRepository.findByEmail("marvel@gmail.com").get())
-                    .conversation(conversationRepository.findByName("Nice weather"))
+                    .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("Good then")
                     .build());
        /*     User[] users = {

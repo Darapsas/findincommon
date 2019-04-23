@@ -66,7 +66,6 @@ public class EventController {
         List<Event> events = eventService.getAllEvents();
 
         for (Event event : events) {
-            System.out.println(event.getCreator());
             if (event.getCreator().getId().equals(id)) {
                 userEvents.add(event);
             }
