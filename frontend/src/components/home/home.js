@@ -63,7 +63,11 @@ export default props => {
                 props.members.map(
                   member =>
                     props.currentUser.id !== member.id && (
-                      <Member key={member.id} member={member} />
+                      <Member
+                        key={member.id}
+                        member={member}
+                        currentUser={props.currentUser}
+                      />
                     )
                 )}
             </div>

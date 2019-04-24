@@ -3,7 +3,6 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import ConversationInput from "./conversation-input";
 import { getConversationMessages } from "../../helpers/requests";
-import Message from "../message/message";
 import Loader from "../templates/loader";
 
 let _isMounted;

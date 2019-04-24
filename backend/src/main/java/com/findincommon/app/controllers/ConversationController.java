@@ -1,7 +1,6 @@
 package com.findincommon.app.controllers;
 
 import com.findincommon.app.models.Conversation;
-import com.findincommon.app.models.ConversationHelper;
 import com.findincommon.app.models.User;
 import com.findincommon.app.services.ConversationService;
 import com.findincommon.app.services.MessageService;
@@ -11,8 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -85,6 +84,38 @@ public class ConversationController {
     @GetMapping(value = "/{id}")
     public Conversation getConversation(@PathVariable String id) {
         return conversationService.getConversation(id);
+    }
+
+    @GetMapping(value = "/between/{from}/{to}")
+    public Conversation getConversationBetweenTwoPersons(@PathVariable User from, @PathVariable User to) {
+        List<Conversation> conversations = conversationService.getAllConversations();
+
+        for (Conversation conversation : conversations) {
+            if (conversation.getCreator().getId().equals(from.getId())) {
+                if (conversation.getParticipants().size() == 1) {
+                    if (conversation.getParticipants().get(0).getId().equals(to.getId())) {
+                        return conversation;
+                    }
+                }
+            }
+            if (conversation.getCreator().getId().equals(to.getId())) {
+                if (conversation.getParticipants().size() == 1) {
+                    if (conversation.getParticipants().get(0).getId().equals(from.getId())) {
+                        return conversation;
+                    }
+                }
+            }
+        }
+
+        conversationService.save(
+                Conversation
+                        .builder()
+                        .creator(from)
+                        .participants(Arrays.asList(to))
+                        .name(to.getName())
+                        .build());
+
+        return Conversation.builder().id("fail").build();
     }
 
     @PutMapping(value = "/{id}")

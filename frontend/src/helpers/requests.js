@@ -130,6 +130,12 @@ const getHobbies = () =>
     method: "GET"
   });
 
+const getConversation = (from, to) =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/between/${from}/${to}`,
+    method: "GET"
+  });
+
 const getCertainHobbies = searchQuery =>
   request({
     url: `${API_BASE_URL}/api/hobbies/search/${searchQuery}`,
@@ -209,6 +215,7 @@ export {
   addUserHobby,
   getConversationMessages,
   postMessage,
+  getConversation,
   login,
   signup
 };
