@@ -4,17 +4,9 @@ import { postMessage } from "../../helpers/requests";
 import * as Yup from "yup";
 
 const messageSchema = Yup.object().shape({
-  /*name: Yup.string().required("This is a required field"),
-  description: Yup.string().max(
-    250,
-    "Description must be at most 250 characters long."
-  ),
-  startDate: Yup.date()
-    .min(new Date(), "You cannot create an message for the past.")
-    .required("Start date and time are required"),
-  endDate: Yup.date()
-    .min(new Date(), "You cannot create an message for the past.")
-    .required("End date and time are required")*/
+  text: Yup.string()
+    .required("Empty messages are not allowed")
+    .max(2500, "Messages longer than 2500 characters are not allowed.")
 });
 
 export default props => {
