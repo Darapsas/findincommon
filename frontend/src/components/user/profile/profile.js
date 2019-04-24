@@ -45,12 +45,17 @@ export default props => {
           <li className="list-group-item list-group-item-dark">
             These are your hobbies:
           </li>
-          {user.hobbies.length !== 0 &&
+          {user.hobbies.length !== 0 ? (
             user.hobbies.map(hobby => (
               <li className="list-group-item" key={hobby.id}>
                 {hobby.name}
               </li>
-            ))}
+            ))
+          ) : (
+            <li className="list-group-item list-group-item-warning">
+              Add at least one hobby if you want to be seen by other members!
+            </li>
+          )}
         </ul>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Route, Switch } from "react-router-dom";
 import Header from "../templates/header";
 import Footer from "../templates/footer";
@@ -27,12 +27,38 @@ import ConversationForm from "../conversation/conversation-form";
 import Conversations from "../conversation";
 import Hobby from "../hobby/hobby";
 
+// interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+};
+
 let _isMounted;
 export default props => {
   const [authenticated, setAuthenticated] = useState(false);
   const [hobbiesListChanged, setHobbiesListChanged] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
+
+  useInterval(() => {
+    setCount(count + 1);
+  }, 3000);
 
   const handleLogout = () => {
     localStorage.removeItem(ACCESS_TOKEN);
@@ -84,7 +110,7 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, [hobbiesListChanged]);
+  }, [hobbiesListChanged, count]);
 
   const handleHobbiesListChange = () => {
     setHobbiesListChanged(true);
@@ -150,7 +176,7 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, [authenticated, searchQuery]);
+  }, [authenticated, searchQuery, count]);
 
   if (loading) {
     return (

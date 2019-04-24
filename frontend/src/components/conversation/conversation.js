@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   getUserConversations,
   getUserCreatedConversations
@@ -6,12 +6,38 @@ import {
 import ConversationList from "./conversation-list";
 import Loader from "../templates/loader";
 
+// interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+};
+
 let _isMounted;
 export default props => {
   const [conversations, setConversations] = useState([]);
   const [userConversations, setUserConversations] = useState([]);
   const [itemDeleted, setItemDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
+
+  useInterval(() => {
+    setCount(count + 1);
+  }, 3000);
 
   useEffect(() => {
     _isMounted = true;
@@ -31,7 +57,7 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, [itemDeleted]);
+  }, [itemDeleted, count]);
 
   useEffect(() => {
     _isMounted = true;

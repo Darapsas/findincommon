@@ -1,15 +1,34 @@
-// interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import ConversationInput from "./conversation-input";
 import { getConversationMessages } from "../../helpers/requests";
 import Loader from "../templates/loader";
 
+// interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+};
+
 let _isMounted;
 export default props => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [interval, setInterval] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     _isMounted = true;
@@ -29,10 +48,10 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, [interval]);
+  }, [count]);
 
   useInterval(() => {
-    setInterval(interval + 1);
+    setCount(count + 1);
   }, 1000);
 
   if (loading) {
@@ -80,23 +99,3 @@ export default props => {
     </div>
   );
 };
-
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
