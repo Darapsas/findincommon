@@ -7,6 +7,9 @@ import {
 } from "../../helpers/requests";
 import * as Yup from "yup";
 import Loader from "../templates/loader";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./event.scss";
 
 const eventSchema = Yup.object().shape({
   name: Yup.string().required("This is a required field"),
@@ -69,11 +72,11 @@ export default props => {
             ? props.location.state.event.description
             : "",
           startDate: props.location.state.event
-            ? props.location.state.event.startDate.slice(0, 16)
-            : "",
+            ? new Date(props.location.state.event.startDate.slice(0, 16))
+            : new Date(),
           endDate: props.location.state.event
-            ? props.location.state.event.endDate.slice(0, 16)
-            : "",
+            ? new Date(props.location.state.event.endDate.slice(0, 16))
+            : new Date(),
           reminders: props.location.state.event
             ? props.location.state.event.reminders
             : [],
@@ -99,7 +102,7 @@ export default props => {
                 })
                 .catch(error => console.error("Error:", error));
         }}
-        render={({ errors, touched, isSubmitting, values }) => (
+        render={({ errors, touched, isSubmitting, values, setFieldValue }) => (
           <Form>
             <h2>{props.location.state.formName || "Event form"}</h2>
             <div className="form-group">
@@ -135,10 +138,17 @@ export default props => {
 
             <div className="form-group">
               <label>When does the event start?</label>
-              <Field
+              <br />
+              <DatePicker
                 className="form-control"
-                name="startDate"
-                type="datetime-local"
+                selected={values.startDate}
+                onChange={e => setFieldValue("startDate", e)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeCaption="time"
+                name={"startDate"}
               />
               {touched.startDate && errors.startDate && (
                 <small className="form-text text-muted alert alert-danger">
@@ -149,10 +159,16 @@ export default props => {
 
             <div className="form-group">
               <label>When does the event end?</label>
-              <Field
+              <DatePicker
                 className="form-control"
-                name="endDate"
-                type="datetime-local"
+                selected={values.endDate}
+                onChange={e => setFieldValue("endDate", e)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeCaption="time"
+                name={"endDate"}
               />
               {touched.endDate && errors.endDate && (
                 <small className="form-text text-muted alert alert-danger">

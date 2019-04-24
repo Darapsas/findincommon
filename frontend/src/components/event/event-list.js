@@ -23,10 +23,10 @@ export default props => (
               {event.name}
             </th>
             <th className="font-weight-normal" scope="col">
-              {new Date(event.startDate).toUTCString()}
+              {new Date(event.startDate).toLocaleString()}
             </th>
             <th className="font-weight-normal" scope="col">
-              {new Date(event.endDate).toUTCString()}
+              {new Date(event.endDate).toLocaleString()}
             </th>
 
             {props.owned ? (

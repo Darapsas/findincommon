@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ConversationInput from "./conversation-input";
 import { getConversationMessages } from "../../helpers/requests";
 import Loader from "../templates/loader";

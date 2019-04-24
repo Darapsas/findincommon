@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import React from "react";
+import { Formik, Form, Field } from "formik";
 import { updateProfile } from "../../../helpers/requests";
 import * as Yup from "yup";
 
@@ -17,7 +17,6 @@ const profileSchema = Yup.object().shape({
     .required("End date and time are required")*/
 });
 
-let _isMounted;
 export default props => {
   return (
     <div className="w-75 custom">

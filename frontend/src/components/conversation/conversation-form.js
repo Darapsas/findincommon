@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { updateConversation, createConversation } from "../../helpers/requests";
 import * as Yup from "yup";
-import Loader from "../templates/loader";
 
 const conversationSchema = Yup.object().shape({
   /*  name: Yup.string().required("This is a required field"),
@@ -12,7 +11,6 @@ const conversationSchema = Yup.object().shape({
   ),*/
 });
 
-let _isMounted;
 export default props => {
   return (
     <div className="w-75 custom">

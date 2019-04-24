@@ -4,7 +4,6 @@ import { getConversation } from "../../helpers/requests";
 
 export default props => {
   const [conversation, setConversation] = useState();
-  const [redirectUrl, setRedirectUrl] = useState();
   const handleConversation = to => {
     getConversation(props.currentUser.id, to)
       .then(data => {

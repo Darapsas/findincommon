@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import { postMessage } from "../../helpers/requests";
 import * as Yup from "yup";
