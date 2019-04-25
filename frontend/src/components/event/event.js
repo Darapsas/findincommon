@@ -77,7 +77,7 @@ export default props => {
     return () => {
       _isMounted = false;
     };
-  }, [itemDeleted]);
+  }, [itemDeleted, count]);
 
   const handleDelete = () => {
     setItemDeleted(true);

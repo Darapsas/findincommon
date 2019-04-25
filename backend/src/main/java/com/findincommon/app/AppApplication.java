@@ -3,18 +3,26 @@ package com.findincommon.app;
 import com.findincommon.app.config.AppProperties;
 import com.findincommon.app.models.*;
 import com.findincommon.app.repository.*;
+import com.findincommon.app.services.EmailReminderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.Executor;
 
+@EnableAsync
 @SpringBootApplication
 @EnableConfigurationProperties(AppProperties.class)
 public class AppApplication {
@@ -24,6 +32,9 @@ public class AppApplication {
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
     }
+
+    @Autowired
+    private EmailReminderService emailReminderService;
 
     @Bean
     public CommandLineRunner necessary(
@@ -35,7 +46,6 @@ public class AppApplication {
             ConversationRepository conversationRepository
     ) {
         return (args) -> {
-
 
             String[][] hobbies = {
                     {"astronomy", "Astronomy (from Greek: ἀστρονομία) is a natural science that studies celestial objects and phenomena."},
@@ -144,19 +154,19 @@ public class AppApplication {
                     Reminder
                             .builder()
                             .name("15 min. before")
-                            .timeInSeconds(60 * 60 * 15)
+                            .timeInSeconds(60 * 15)
                             .build());
             reminderRepository.save(
                     Reminder
                             .builder()
                             .name("1 hour before")
-                            .timeInSeconds(60 * 60 * 60)
+                            .timeInSeconds(60 * 60)
                             .build());
             reminderRepository.save(
                     Reminder
                             .builder()
                             .name("1 day before")
-                            .timeInSeconds(60 * 60 * 60 * 24)
+                            .timeInSeconds(60 * 60 * 24)
                             .build());
 
 
@@ -176,8 +186,8 @@ public class AppApplication {
                             .name("Flat earth is the truth")
                             .creator(userRepository.findByEmail("darius562@gmail.com").get())
                             .description("With this disuccion we will try to get different opinions about flat earth.")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 24))))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 25))))
                             .build()
             );
             eventRepository.save(
@@ -194,8 +204,8 @@ public class AppApplication {
                             .name("Lizard people con")
                             .creator(userRepository.findByEmail("darius562@gmail.com").get())
                             .description("Is trump a lizard? Find out here.")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 24))))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 25))))
                             .build()
             );
 
@@ -215,8 +225,8 @@ public class AppApplication {
                             .name("Pyramids")
                             .creator(userRepository.findByEmail("go@gmail.com").get())
                             .description("Pyramids were built by aliens. Or were they?")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 24))))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 25))))
                             .build()
             );
             eventRepository.save(
@@ -234,8 +244,8 @@ public class AppApplication {
                             .creator(userRepository.findByEmail("darius562@gmail.com").get())
                             .name("Chemtrails")
                             .description("Why you are stupid and you believe in chemtrails... Because they are real!")
-                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
-                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date())))
+                            .startDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 24))))
+                            .endDate(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date().getTime() + (1000 * 60 * 60 * 25))))
                             .build()
             );
 
@@ -308,73 +318,66 @@ public class AppApplication {
                     .conversation(conversationRepository.findByName("Nice weather").getId())
                     .text("Good then")
                     .build());
-       /*     User[] users = {
-                    userRepository.findByEmail("darius562@gmail.com"),
-                    userRepository.findByEmail("doe@gmail.com")
-            };
 
-            Message[] messages = {
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[0].getId())
-                            .creatorFirstName(users[0].getFirstName())
-                            .creatorLastName(users[0].getLastName())
-                            .text("hello")
-                            .build()),
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[0].getId())
-                            .creatorFirstName(users[0].getFirstName())
-                            .creatorLastName(users[0].getLastName())
-                            .text("How are you? :D")
-                            .build()),
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[1].getId())
-                            .creatorFirstName(users[1].getFirstName())
-                            .creatorLastName(users[1].getLastName())
-                            .text("Hi")
-                            .build()),
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[1].getId())
-                            .creatorFirstName(users[1].getFirstName())
-                            .creatorLastName(users[1].getLastName())
-                            .text("I'm good")
-                            .build()),
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[1].getId())
-                            .creatorFirstName(users[1].getFirstName())
-                            .creatorLastName(users[1].getLastName())
-                            .text("And you?")
-                            .build()),
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[0].getId())
-                            .creatorFirstName(users[0].getFirstName())
-                            .creatorLastName(users[0].getLastName())
-                            .text("Very good :D")
-                            .build()),
-                    messageRepository.save(Message
-                            .builder()
-                            .creatorId(users[1].getId())
-                            .creatorFirstName(users[1].getFirstName())
-                            .creatorLastName(users[1].getLastName())
-                            .text("Good then")
-                            .build())
-            };
-
-            conversationRepository.save(
-                    Conversation
-                            .builder()
-                            .name("First one")
-                            .participants(Arrays.asList(users))
-                            .messages(Arrays.asList(messages
-                            ))
-                            .build());
-*/
         };
     }
 
+    @Bean
+    public CommandLineRunner emailReminderSender(EventRepository eventRepository) {
+        return args -> {
+
+            while (true) {
+                List<Event> events = eventRepository.findAll();
+                System.out.println("EmailSender: sleeping");
+                Thread.sleep(5000);
+                System.out.println("EmailSender: checking events");
+                for (Event event : events) {
+                    System.out.println("EmailSender: checking event: " + event.getName());
+                    List<Reminder> reminders = new ArrayList<>(event.getReminders());
+                    for (Reminder reminder : event.getReminders()) {
+                        long now = System.currentTimeMillis() / 1000;
+                        long eventStartDate = event.getStartDate().toInstant().toEpochMilli() / 1000;
+                        System.out.println((eventStartDate - now));
+                        if ((eventStartDate - now) <= (long)reminder.getTimeInSeconds()) {
+                            System.out.println("removing reminder");
+                            reminders.remove(reminder);
+                            event.setReminders(reminders);
+                            System.out.println("EmailSender: sending reminders (" + reminder.getName() + ") for event: " + event.getName());
+
+                            User creator = event.getCreator();
+                            try {
+                                emailReminderService.sendEmailReminder(creator.getEmail(), creator.getName(), reminder.getName(), event.getName());
+                            } catch (Exception e) {
+                                System.out.println("Error Sending email: " + e.getMessage());
+                            }
+                            System.out.println("EmailSender: email sent");
+
+                            for (User participant : event.getParticipants()) {
+                                try {
+                                    emailReminderService.sendEmailReminder(participant.getEmail(), participant.getName(), reminder.getName(), event.getName());
+                                } catch (Exception e) {
+                                    System.out.println("Error Sending email: " + e.getMessage());
+                                }
+                                System.out.println("EmailSender: email sent");
+                            }
+                        }
+                    }
+                    eventRepository.save(event);
+                }
+            }
+        };
+
+    }
+
+    @Bean(name = "threadPoolTaskExecutor")
+    public Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(20);
+        executor.setMaxPoolSize(1000);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        executor.setQueueCapacity(500);
+        executor.setThreadNamePrefix("EmailReminder-");
+        executor.initialize();
+        return executor;
+    }
 }
