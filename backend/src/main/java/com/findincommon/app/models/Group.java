@@ -14,7 +14,10 @@ public class Group {
     @Id
     private String id;
     @DBRef
-    private List<User> users;
-    private String creatorId;
+    private User creator;
+    @DBRef
+    private List<User> members;
     private String name;
+    private String description;
+    private String conversationId;
 }

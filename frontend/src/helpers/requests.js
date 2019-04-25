@@ -170,6 +170,38 @@ const updateEvent = (event, id) =>
     body: JSON.stringify(event)
   });
 
+const createGroup = group =>
+  request({
+    url: `${API_BASE_URL}/api/groups`,
+    method: "POST",
+    body: JSON.stringify(group)
+  });
+
+const updateGroup = (group, id) =>
+  request({
+    url: `${API_BASE_URL}/api/groups/${id}`,
+    method: "PUT",
+    body: JSON.stringify(group)
+  });
+
+const deleteGroup = groupId =>
+  request({
+    url: `${API_BASE_URL}/api/groups/${groupId}`,
+    method: "DELETE"
+  });
+
+const getUserCreatedGroups = userId =>
+  request({
+    url: `${API_BASE_URL}/api/groups/creator/${userId}`,
+    method: "GET"
+  });
+
+const getUserGroups = userId =>
+  request({
+    url: `${API_BASE_URL}/api/groups/user/${userId}`,
+    method: "GET"
+  });
+
 const updateProfile = (id, user) =>
   request({
     url: `${API_BASE_URL}/api/users/${id}`,
@@ -192,6 +224,11 @@ const signup = signupRequest =>
   });
 
 export {
+  updateGroup,
+  createGroup,
+  deleteGroup,
+  getUserGroups,
+  getUserCreatedGroups,
   deleteEvent,
   deleteConversation,
   getUserEvents,

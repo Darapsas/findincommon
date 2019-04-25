@@ -19,6 +19,9 @@ import Alert from "react-s-alert";
 import "react-s-alert/dist/s-alert-default.css";
 import "react-s-alert/dist/s-alert-css-effects/slide.css";
 import "./app.css";
+import GroupInfo from "../group/group-info";
+import GroupForm from "../group/group-form";
+import Groups from "../group";
 import EventInfo from "../event/event-info";
 import EventForm from "../event/event-form";
 import Events from "../event";
@@ -228,6 +231,38 @@ export default props => {
             authenticated={authenticated}
             component={Profile}
           />
+
+          <PrivateRoute
+            path="/user/groups/:group/info"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={GroupInfo}
+          />
+          <PrivateRoute
+            path="/user/groups/:group/edit"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            searchQuery={searchQuery}
+            members={members}
+            hobbies={hobbies}
+            component={GroupForm}
+          />
+          <PrivateRoute
+            path="/user/groups/group/create"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            searchQuery={searchQuery}
+            members={members}
+            hobbies={hobbies}
+            component={GroupForm}
+          />
+          <PrivateRoute
+            path="/user/groups"
+            authenticated={authenticated}
+            currentUser={currentUser}
+            component={Groups}
+          />
+
           <PrivateRoute
             path="/user/events/:event/info"
             authenticated={authenticated}
