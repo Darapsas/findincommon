@@ -4,11 +4,9 @@ import { updateConversation, createConversation } from "../../helpers/requests";
 import * as Yup from "yup";
 
 const conversationSchema = Yup.object().shape({
-  /*  name: Yup.string().required("This is a required field"),
-  description: Yup.string().max(
-    250,
-    "Description must be at most 250 characters long."
-  ),*/
+  name: Yup.string()
+    .required("This is a required field")
+    .max(250, "Description must be at most 250 characters long.")
 });
 
 export default props => {
@@ -27,7 +25,7 @@ export default props => {
             : [],
           creator: props.currentUser
         }}
-        //validationSchema={conversationSchema}
+        validationSchema={conversationSchema}
         //  validate={}
         onSubmit={(values, actions) => {
           props.location.state.conversation

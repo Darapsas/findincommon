@@ -327,9 +327,9 @@ public class AppApplication {
         return args -> {
 
             while (true) {
-                List<Event> events = eventRepository.findAll();
                 System.out.println("EmailSender: sleeping");
-                Thread.sleep(5000);
+                Thread.sleep(10000);
+                List<Event> events = eventRepository.findAll();
                 System.out.println("EmailSender: checking events");
                 for (Event event : events) {
                     System.out.println("EmailSender: checking event: " + event.getName());
