@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import {
   getReminderTypes,
@@ -217,7 +217,24 @@ export default props => {
               <label>
                 <input name="You" type="checkbox" disabled checked /> You
               </label>
-
+              <br />
+              {props.searchQuery !== "" && (
+                <Fragment>
+                  <label>
+                    Members are currently filtered by these hobbies:
+                  </label>
+                  <br />
+                </Fragment>
+              )}
+              {props.hobbies.map(hobby => (
+                <button
+                  type="button"
+                  className="btn btn-outline-success"
+                  key={hobby.id}
+                >
+                  {hobby.name}
+                </button>
+              ))}
               <FieldArray
                 name="participants"
                 render={arrayHelpers =>

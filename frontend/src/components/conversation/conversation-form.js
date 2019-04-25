@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { updateConversation, createConversation } from "../../helpers/requests";
 import * as Yup from "yup";
@@ -67,6 +67,24 @@ export default props => {
                 <input name="You" type="checkbox" disabled checked /> You
               </label>
 
+              <br />
+              {props.searchQuery && props.searchQuery !== "" && (
+                <Fragment>
+                  <label>
+                    Members are currently filtered by these hobbies:
+                  </label>
+                  <br />
+                </Fragment>
+              )}
+              {props.hobbies.map(hobby => (
+                <button
+                  type="button"
+                  className="btn btn-outline-success"
+                  key={hobby.id}
+                >
+                  {hobby.name}
+                </button>
+              ))}
               <FieldArray
                 name="participants"
                 render={arrayHelpers =>
