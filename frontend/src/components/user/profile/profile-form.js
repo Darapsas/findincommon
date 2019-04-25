@@ -4,17 +4,20 @@ import { updateProfile } from "../../../helpers/requests";
 import * as Yup from "yup";
 
 const profileSchema = Yup.object().shape({
-  /*  name: Yup.string().required("This is a required field"),
+  name: Yup.string()
+    .required("This is a required field")
+    .max(250, "Field has to be at maximum 250 characters long"),
+  email: Yup.string()
+    .email()
+    .required("This is a required field")
+    .max(250, "Field has to be at maximum 250 characters long"),
+  imageUrl: Yup.string()
+    .required("This is a required field")
+    .url(),
   description: Yup.string().max(
-    250,
+    5000,
     "Description must be at most 250 characters long."
-  ),
-  startDate: Yup.date()
-    .min(new Date(), "You cannot create an profile for the past.")
-    .required("Start date and time are required"),
-  endDate: Yup.date()
-    .min(new Date(), "You cannot create an profile for the past.")
-    .required("End date and time are required")*/
+  )
 });
 
 export default props => {
@@ -28,7 +31,7 @@ export default props => {
           imageUrl: props.currentUser ? props.currentUser.imageUrl : "",
           description: props.currentUser ? props.currentUser.description : ""
         }}
-        //validationSchema={profileSchema}
+        validationSchema={profileSchema}
         //  validate={}
         onSubmit={(values, actions) => {
           updateProfile(props.currentUser.id, {
@@ -63,9 +66,9 @@ export default props => {
             <div className="form-group">
               <label>Email</label>
               <Field className="form-control" rows="3" name="email" disabled />
-              {touched.description && errors.description && (
+              {touched.email && errors.email && (
                 <small className="form-text text-muted alert alert-danger">
-                  {errors.description}
+                  {errors.email}
                 </small>
               )}
             </div>
@@ -73,9 +76,9 @@ export default props => {
             <div className="form-group">
               <label>Image url</label>
               <Field className="form-control" rows="3" name="imageUrl" />
-              {touched.description && errors.description && (
+              {touched.imageUrl && errors.imageUrl && (
                 <small className="form-text text-muted alert alert-danger">
-                  {errors.description}
+                  {errors.imageUrl}
                 </small>
               )}
             </div>

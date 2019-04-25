@@ -6,7 +6,7 @@ import * as Yup from "yup";
 const conversationSchema = Yup.object().shape({
   name: Yup.string()
     .required("This is a required field")
-    .max(250, "Description must be at most 250 characters long.")
+    .max(250, "Field has to be at maximum 250 characters long")
 });
 
 export default props => {
