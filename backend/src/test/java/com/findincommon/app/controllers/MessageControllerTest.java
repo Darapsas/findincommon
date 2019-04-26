@@ -6,7 +6,6 @@ import com.findincommon.app.services.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -14,10 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
-import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -32,7 +31,17 @@ public class MessageControllerTest {
 
     @Test
     public void createMessage() {
-        assertEquals(7, 7);
+        Message message = Message
+                .builder()
+                .id("123")
+                .creator(null)
+                .conversation(null)
+                .text("some text")
+                .build();
+
+        messageRepository.save(message);
+
+        verify(messageRepository, times(1)).save(message);
     }
 
     @Test
@@ -85,7 +94,21 @@ public class MessageControllerTest {
 
     @Test
     public void getConversationMessages() {
-        assertEquals(7, 7);
+        String conversationId = "123asdfasdfa2134sdfasdf214";
+        when(messageRepository.findByConversation(conversationId)).thenReturn(Arrays.asList(
+                Message
+                        .builder()
+                        .creator(null)
+                        .conversation(null)
+                        .text("hello")
+                        .build(),
+                Message
+                        .builder()
+                        .creator(null)
+                        .conversation(null)
+                        .text("How are you? 😀")
+                        .build()));
+        assertEquals(2, messageService.getConversationMessages(conversationId).size());
     }
 
     @Test
@@ -100,6 +123,14 @@ public class MessageControllerTest {
 
     @Test
     public void deleteMessage() {
-        assertEquals(7, 7);
+        Message message = Message
+                .builder()
+                .id("123")
+                .creator(null)
+                .conversation(null)
+                .text("some text")
+                .build();
+        messageService.deleteMessage(message.getId());
+        verify(messageRepository, times(1)).deleteById(message.getId());
     }
 }
