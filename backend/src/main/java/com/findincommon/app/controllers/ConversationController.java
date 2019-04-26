@@ -85,6 +85,10 @@ public class ConversationController {
     public Conversation getConversation(@PathVariable String id) {
         return conversationService.getConversation(id);
     }
+    @GetMapping(value = "/conversation/{name}")
+    public Conversation getConversationByName(@PathVariable String name) {
+        return conversationService.getConversationByName(name);
+    }
 
     @GetMapping(value = "/between/{from}/{to}")
     public Conversation getConversationBetweenTwoPersons(@PathVariable User from, @PathVariable User to) {
@@ -120,7 +124,15 @@ public class ConversationController {
 
     @PutMapping(value = "/{id}")
     public void updateConversation(@PathVariable String id, @RequestBody Conversation conversation) {
-        conversationService.save(conversation);
+        conversationService.save(
+                Conversation
+                        .builder()
+                        .id(id)
+                        .name(conversation.getName())
+                        .participants(conversation.getParticipants())
+                        .creator(conversation.getCreator())
+                        .build()
+        );
     }
 
     @DeleteMapping(value = "/{id}")

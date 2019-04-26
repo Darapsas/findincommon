@@ -136,6 +136,18 @@ const getConversation = (from, to) =>
     method: "GET"
   });
 
+const getConversationById = id =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/${id}`,
+    method: "GET"
+  });
+
+const getConversationByName = name =>
+  request({
+    url: `${API_BASE_URL}/api/conversations/conversation/${name}`,
+    method: "GET"
+  });
+
 const getCertainHobbies = searchQuery =>
   request({
     url: `${API_BASE_URL}/api/hobbies/search/${searchQuery}`,
@@ -227,6 +239,7 @@ export {
   updateGroup,
   createGroup,
   deleteGroup,
+  getConversationById,
   getUserGroups,
   getUserCreatedGroups,
   deleteEvent,
@@ -253,6 +266,7 @@ export {
   getConversationMessages,
   postMessage,
   getConversation,
+  getConversationByName,
   login,
   signup
 };

@@ -25,6 +25,10 @@ public class ConversationService {
         return conversationRepository.findById(id).get();
     }
 
+    public Conversation getConversationByName(String name) {
+        return conversationRepository.findByName(name);
+    }
+
     public void deleteConversation(String id) {
         conversationRepository.deleteById(id);
     }

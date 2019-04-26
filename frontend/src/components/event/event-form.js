@@ -64,22 +64,32 @@ export default props => {
     <div className="w-75 custom">
       <Formik
         initialValues={{
-          id: props.location.state.event ? props.location.state.event.id : "",
+          id:
+            props.location.state.event &&
+            typeof props.location.state.event.id !== "undefined"
+              ? props.location.state.event.id
+              : "",
           name: props.location.state.event
             ? props.location.state.event.name
             : "",
           description: props.location.state.event
             ? props.location.state.event.description
             : "",
-          startDate: props.location.state.event
-            ? new Date(props.location.state.event.startDate.slice(0, 16))
-            : new Date(),
-          endDate: props.location.state.event
-            ? new Date(props.location.state.event.endDate.slice(0, 16))
-            : new Date(),
-          reminders: props.location.state.event
-            ? props.location.state.event.reminders
-            : [],
+          startDate:
+            props.location.state.event &&
+            typeof props.location.state.event.startDate !== "undefined"
+              ? new Date(props.location.state.event.startDate.slice(0, 16))
+              : new Date(),
+          endDate:
+            props.location.state.event &&
+            typeof props.location.state.event.endDate !== "undefined"
+              ? new Date(props.location.state.event.endDate.slice(0, 16))
+              : new Date(),
+          reminders:
+            props.location.state.event &&
+            typeof props.location.state.event.reminders !== "undefined"
+              ? props.location.state.event.reminders
+              : [],
           participants: props.location.state.event
             ? props.location.state.event.participants
             : [],

@@ -1,6 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
-import { updateGroup, createGroup } from "../../helpers/requests";
+import {
+  updateGroup,
+  updateConversation,
+  createGroup,
+  createConversation,
+  getConversationByName,
+  getConversationById
+} from "../../helpers/requests";
 import * as Yup from "yup";
 import Loader from "../templates/loader";
 import DatePicker from "react-datepicker";
@@ -31,22 +38,68 @@ export default props => {
             ? props.location.state.group.members
             : [],
           creator: props.currentUser,
-          conversationId: ""
+          conversationId: props.location.state.group
+            ? props.location.state.group.conversationId
+            : ""
         }}
         validationSchema={groupSchema}
         //  validate={}
         onSubmit={(values, actions) => {
           props.location.state.group
-            ? updateGroup(values, props.location.state.group.id)
-                .then(response => {
-                  console.log("Successfully edited", JSON.stringify(response));
-                  props.history.goBack();
+            ? getConversationById(values.conversationId)
+                .then(data => {
+                  console.log(JSON.stringify(data.participants));
+                  console.log("anything");
+                  updateConversation(
+                    {
+                      id: values.conversationId,
+                      participants: values.members,
+                      creator: data.creator,
+                      name: `Group conversation: ${values.name}`
+                    },
+                    values.conversationId
+                  )
+                    .then(response => {
+                      updateGroup(values, values.id)
+                        .then(response => {
+                          console.log(
+                            "Successfully edited",
+                            JSON.stringify(response)
+                          );
+                          props.history.goBack();
+                        })
+                        .catch(error => console.error("Error:", error));
+                    })
+                    .catch(error => console.error("Error:", error));
                 })
-                .catch(error => console.error("Error:", error))
-            : createGroup(values)
+                .catch(error => {
+                  console.error("Error: ", error);
+                })
+            : createConversation({
+                participants: values.members,
+                creator: values.creator,
+                name: `Group conversation: ${values.name}`
+              })
                 .then(response => {
                   console.log("Successfully created", JSON.stringify(response));
-                  props.history.goBack();
+
+                  getConversationByName(`Group conversation: ${values.name}`)
+                    .then(data => {
+                      values.conversationId = data.id;
+
+                      createGroup(values)
+                        .then(response => {
+                          console.log(
+                            "Successfully created",
+                            JSON.stringify(response)
+                          );
+                          props.history.goBack();
+                        })
+                        .catch(error => console.error("Error:", error));
+                    })
+                    .catch(error => {
+                      console.error("Error: ", error);
+                    });
                 })
                 .catch(error => console.error("Error:", error));
         }}
