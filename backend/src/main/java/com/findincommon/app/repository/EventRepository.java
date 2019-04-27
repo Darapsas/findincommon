@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface EventRepository extends MongoRepository<Event, String> {
     Event findByName(String name);
+
+    List<Event> findByCreatorId(String id);
 }

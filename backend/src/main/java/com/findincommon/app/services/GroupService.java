@@ -22,6 +22,10 @@ public class GroupService {
         return groupRepository.findAll();
     }
 
+    public List<Group> getUserGroups(String id) {
+        return groupRepository.findByCreatorId(id);
+    }
+
     public Group getGroup(String id) {
         return groupRepository.findById(id).get();
     }

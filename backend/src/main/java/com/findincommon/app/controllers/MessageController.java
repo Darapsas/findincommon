@@ -48,7 +48,9 @@ public class MessageController {
 
     @DeleteMapping(value = "/{id}")
     public void deleteMessage(@PathVariable String id) {
-        messageService.deleteMessage(id);
+        Message message = messageService.getMessage(id);
+        message.setText("Message was removed");
+        messageService.save(message);
     }
 
 }

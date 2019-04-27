@@ -92,6 +92,7 @@ export default props => {
 
   return (
     <div className="custom w-75">
+      <br />
       <h2>Your created groups:</h2>
       <GroupList groups={userGroups} handleDelete={handleDelete} owned={true} />
       <br />

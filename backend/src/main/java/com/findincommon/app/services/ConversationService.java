@@ -20,6 +20,9 @@ public class ConversationService {
     public List<Conversation> getAllConversations() {
         return conversationRepository.findAll();
     }
+    public List<Conversation> getUserConversations(String id) {
+        return conversationRepository.findByCreatorId(id);
+    }
 
     public Conversation getConversation(String id) {
         return conversationRepository.findById(id).get();

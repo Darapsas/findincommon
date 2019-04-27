@@ -1,20 +1,18 @@
 package com.findincommon.app.controllers;
 
 import com.findincommon.app.exception.ResourceNotFoundException;
-import com.findincommon.app.models.Hobby;
-import com.findincommon.app.models.User;
+import com.findincommon.app.models.*;
 import com.findincommon.app.payload.UserUpdatePayload;
-import com.findincommon.app.repository.EventRepository;
 import com.findincommon.app.repository.UserRepository;
 import com.findincommon.app.security.CurrentUser;
 import com.findincommon.app.security.UserPrincipal;
-import com.findincommon.app.services.HobbyService;
-import com.findincommon.app.services.UserService;
+import com.findincommon.app.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -25,7 +23,16 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
-    EventRepository eventRepository;
+    ConversationService conversationService;
+
+    @Autowired
+    GroupService groupService;
+
+    @Autowired
+    EventService eventService;
+
+    @Autowired
+    MessageService messageService;
 
     @Autowired
     UserService userService;
@@ -139,5 +146,43 @@ public class UserController {
 
         return searchedUsers;
     }
+
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public void deleteEvent(@PathVariable String id) {
+        User user = userService.getUser(id);
+        List<Conversation> conversations = conversationService.getUserConversations(id);
+        List<Message> messages = new ArrayList<>(messageService.getUserMessages(id));
+        List<Event> events = eventService.getUserEvents(id);
+        List<Group> groups = groupService.getUserGroups(id);
+
+        for (Message message : messages) {
+            message.setText("Message was removed");
+            message.setCreator(null);
+            messageService.save(message);
+        }
+
+        for (Conversation conversation : conversations) {
+            conversationService.deleteConversation(conversation.getId());
+        }
+
+        for (Event event : events) {
+            eventService.deleteEvent(event.getId());
+        }
+
+        for (Group group : groups) {
+            groupService.deleteGroup(group.getId());
+        }
+
+        user.setDescription("delted");
+        user.setName("deleted");
+        user.setHobbies(Arrays.asList());
+        user.setEmail("deleted");
+        user.setImageUrl("https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Fe%2Fe1%2FRemoved.svg%2F861px-Removed.svg.png&f=1");
+
+        userService.save(user);
+    }
+
 
 }

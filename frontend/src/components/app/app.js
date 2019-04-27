@@ -70,6 +70,13 @@ export default props => {
     Alert.success("You're safely logged out!");
   };
 
+  const handleAccountDeletion = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    setAuthenticated(false);
+    setCurrentUser(null);
+    Alert.success("Your account was deleted!");
+  };
+
   useEffect(() => {
     _isMounted = true;
     setLoading(true);
@@ -215,6 +222,7 @@ export default props => {
             exact
             path="/profile"
             authenticated={authenticated}
+            handleAccountDeletion={handleAccountDeletion}
             currentUser={currentUser}
             component={Profile}
           />

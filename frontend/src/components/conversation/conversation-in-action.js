@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ConversationInput from "./conversation-input";
-import { getConversationMessages } from "../../helpers/requests";
+import { getConversationMessages, deleteMessage } from "../../helpers/requests";
 import Loader from "../templates/loader";
 
 // interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
@@ -66,13 +66,58 @@ export default props => {
       <h2 className="row">{props.location.state.conversation.name}</h2>
       {messages.length !== 0 &&
         messages.map(message => {
-          if (message.creator.id === props.currentUser.id) {
+          if (!message.creator) {
+            let user = { id: "deleted" };
+            message.creator = user;
+          }
+          if (
+            message.creator.id === props.currentUser.id &&
+            message.text !== "Message was removed"
+          ) {
+            return (
+              <div key={message.id} className="row">
+                <div className="ml-auto">
+                  <small>You</small>
+                  <small
+                    className="float-right"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      deleteMessage(message.id).then(response =>
+                        console.log("Message deleted: " + response)
+                      );
+                    }}
+                  >
+                    &#10006;
+                  </small>
+                  <br />
+                  <span className="btn shadow p-3 mb-2 rounded bg-primary text-light">
+                    {message.text}
+                  </span>
+                </div>
+              </div>
+            );
+          } else if (
+            message.creator.id === props.currentUser.id &&
+            message.text === "Message was removed"
+          ) {
             return (
               <div key={message.id} className="row">
                 <div className="ml-auto">
                   <small>You</small>
                   <br />
-                  <span className="btn shadow p-3 mb-2 rounded bg-primary text-light">
+                  <span className="btn shadow p-3 mb-2 rounded bg-danger text-light">
+                    {message.text}
+                  </span>
+                </div>
+              </div>
+            );
+          } else if (message.text === "Message was removed") {
+            return (
+              <div key={message.id} className="row">
+                <div className="mr-auto">
+                  <small>{message.creator.name}</small>
+                  <br />
+                  <span className="btn shadow p-3 mb-2 rounded bg-danger text-light">
                     {message.text}
                   </span>
                 </div>

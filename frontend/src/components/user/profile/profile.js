@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { deleteAccount } from "../../../helpers/requests";
 import "./profile.css";
 
 export default props => {
@@ -35,6 +36,17 @@ export default props => {
             >
               Manage hobbies
             </Link>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-danger btn-block"
+              onClick={() => {
+                deleteAccount(user.id).then(response =>
+                  props.handleAccountDeletion()
+                );
+              }}
+            >
+              Delete account
+            </button>
           </Fragment>
         )}
       </div>

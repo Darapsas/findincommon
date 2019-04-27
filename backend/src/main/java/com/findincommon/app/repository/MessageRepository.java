@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends MongoRepository<Message, String> {
     List<Message> findByConversation(String id);
+    List<Message> findByCreatorId(String id);
 }

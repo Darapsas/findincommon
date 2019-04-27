@@ -94,6 +94,7 @@ export default props => {
   return (
     <div className="custom w-75">
       <br />
+      <br />
       <MyCalendar userEvents={userEvents} events={events} />
       <br />
       <br />

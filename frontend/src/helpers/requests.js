@@ -76,9 +76,20 @@ const deleteConversation = eventId =>
     method: "DELETE"
   });
 
+const deleteAccount = id =>
+  request({
+    url: `${API_BASE_URL}/api/users/${id}`,
+    method: "DELETE"
+  });
+
 const deleteEvent = eventId =>
   request({
     url: `${API_BASE_URL}/api/events/${eventId}`,
+    method: "DELETE"
+  });
+const deleteMessage = id =>
+  request({
+    url: `${API_BASE_URL}/api/messages/${id}`,
     method: "DELETE"
   });
 
@@ -239,10 +250,12 @@ export {
   updateGroup,
   createGroup,
   deleteGroup,
+  deleteMessage,
   getConversationById,
   getUserGroups,
   getUserCreatedGroups,
   deleteEvent,
+  deleteAccount,
   deleteConversation,
   getUserEvents,
   getUserConversations,
