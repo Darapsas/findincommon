@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -28,6 +29,20 @@ public class MessageControllerTest {
 
     @MockBean
     private MessageRepository messageRepository;
+
+    @Test
+    public void getMessage() {
+        String id = "1234";
+        when(messageRepository.findById(id)).thenReturn(Optional.of(
+                Message
+                        .builder()
+                        .id("1234")
+                        .creator(null)
+                        .conversation(null)
+                        .text("hello")
+                        .build()));
+        assertEquals("1234", messageService.getMessage(id).getId());
+    }
 
     @Test
     public void createMessage() {
@@ -112,13 +127,18 @@ public class MessageControllerTest {
     }
 
     @Test
-    public void getMessage() {
-        assertEquals(7, 7);
-    }
-
-    @Test
     public void updateMessage() {
-        assertEquals(7, 7);
+        Message message = Message
+                .builder()
+                .id("123")
+                .creator(null)
+                .conversation(null)
+                .text("some text")
+                .build();
+
+        messageRepository.save(message);
+
+        verify(messageRepository, times(1)).save(message);
     }
 
     @Test
