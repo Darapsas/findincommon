@@ -17,6 +17,7 @@
     "react-router-dom": "^5.0.0",
     "react-s-alert": "^1.4.1",
     "react-scripts": "2.1.8",
+    "react-test-renderer": "^16.8.6",
     "yup": "^0.27.0"
   },
   "scripts": {
@@ -35,6 +36,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^1.6.0"
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "enzyme-to-json": "^3.3.5",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "jest-enzyme": "^7.0.2"
   }
 }
