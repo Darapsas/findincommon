@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { getConversation } from "../../helpers/requests";
+import React, { useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
+import { getConversation } from '../../helpers/requests'
 
 export default props => {
-  const [conversation, setConversation] = useState();
+  const [conversation, setConversation] = useState()
   const handleConversation = to => {
     getConversation(props.currentUser.id, to)
       .then(data => {
-        if (data.id !== "fail") {
-          setConversation(data);
+        if (data.id !== 'fail') {
+          setConversation(data)
         } else {
           getConversation(props.currentUser.id, to)
             .then(data => {
-              setConversation(data);
+              setConversation(data)
             })
             .catch(error => {
-              console.error("Error: ", error);
-            });
+              console.error('Error: ', error)
+            })
         }
       })
       .catch(error => {
-        console.error("Error: ", error);
-      });
-  };
+        console.error('Error: ', error)
+      })
+  }
 
   return (
     <div key={props.member.id} className="col-md-4">
@@ -30,10 +30,10 @@ export default props => {
         <img
           className="bd-placeholder-img card-img-top"
           style={{
-            width: "100%",
-            height: "300px",
-            objectFit: "cover",
-            borderRadius: "5px"
+            width: '100%',
+            height: '300px',
+            objectFit: 'cover',
+            borderRadius: '5px'
           }}
           src={props.member.imageUrl}
           alt={props.member.name}
@@ -42,7 +42,7 @@ export default props => {
           <h6>{props.member.name}</h6>
           <p className="card-text">
             {props.member.description && props.member.description.length > 150
-              ? props.member.description.substring(0, 150) + "..."
+              ? props.member.description.substring(0, 150) + '...'
               : props.member.description}
           </p>
           <div className="d-flex justify-content-between align-items-center">
@@ -83,5 +83,5 @@ export default props => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

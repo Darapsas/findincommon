@@ -1,68 +1,68 @@
-import React, { useState, useEffect } from "react";
-import { getUserHobbies, getHobbies } from "../../helpers/requests";
-import HobbiesList from "./hobby-list";
-import Loader from "../templates/loader";
+import React, { useState, useEffect } from 'react'
+import { getUserHobbies, getHobbies } from '../../helpers/requests'
+import HobbiesList from './hobby-list'
+import Loader from '../templates/loader'
 
-let _isMounted;
+let _isMounted
 export default props => {
-  const [hobbies, setHobbies] = useState([]);
-  const [availableHobbies, setAvailableHobbies] = useState([]);
-  const [itemsChanged, setItemsChanged] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [hobbies, setHobbies] = useState([])
+  const [availableHobbies, setAvailableHobbies] = useState([])
+  const [itemsChanged, setItemsChanged] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       await getUserHobbies(props.currentUser.id)
         .then(data => {
           if (_isMounted) {
-            setHobbies(data);
+            setHobbies(data)
           }
         })
         .catch(error => {
-          console.error("Error: ", error);
-        });
-      setLoading(false);
+          console.error('Error: ', error)
+        })
+      setLoading(false)
     }
-    fetchData();
+    fetchData()
     return () => {
-      _isMounted = false;
-    };
-  }, [itemsChanged]);
+      _isMounted = false
+    }
+  }, [itemsChanged])
 
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       await getHobbies()
         .then(data => {
           if (_isMounted) {
-            setAvailableHobbies(data);
+            setAvailableHobbies(data)
           }
         })
         .catch(error => {
-          console.error("Error: ", error);
-        });
-      setLoading(false);
+          console.error('Error: ', error)
+        })
+      setLoading(false)
     }
-    setItemsChanged(false);
-    fetchData();
+    setItemsChanged(false)
+    fetchData()
     return () => {
-      _isMounted = false;
-    };
-  }, [itemsChanged]);
+      _isMounted = false
+    }
+  }, [itemsChanged])
 
   if (loading) {
     return (
-      <main role="main" style={{ textAlign: "center" }}>
+      <main role="main" style={{ textAlign: 'center' }}>
         <Loader />
       </main>
-    );
+    )
   }
 
   const handleChange = () => {
-    props.handleHobbiesListChange();
-    setItemsChanged(true);
-  };
+    props.handleHobbiesListChange()
+    setItemsChanged(true)
+  }
 
   return (
     <div className="custom w-75">
@@ -85,5 +85,5 @@ export default props => {
         currentUser={props.currentUser}
       />
     </div>
-  );
-};
+  )
+}

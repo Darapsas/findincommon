@@ -1,6 +1,6 @@
-import React from "react";
-import ScrollUp from "../scroll-up";
-import "./footer.css";
+import React from 'react'
+import ScrollUp from '../scroll-up'
+import './footer.css'
 
 export default () => (
   <footer className="text-muted fixed-bottom">
@@ -13,4 +13,4 @@ export default () => (
       </span>
     </div>
   </footer>
-);
+)

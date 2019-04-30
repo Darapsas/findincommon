@@ -1,15 +1,15 @@
-import React, { Fragment } from "react";
-import { Link, NavLink } from "react-router-dom";
-import "./header.css";
-import Loader from "../../templates/loader";
+import React, { Fragment } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import './header.css'
+import Loader from '../../templates/loader'
 
 export default props => {
   if (props.loading) {
     return (
-      <main role="main" style={{ textAlign: "center" }}>
+      <main role="main" style={{ textAlign: 'center' }}>
         <Loader />
       </main>
-    );
+    )
   }
   return (
     <header>
@@ -71,8 +71,8 @@ export default props => {
                 <label
                   className="app-title"
                   style={{
-                    color: "white",
-                    marginRight: "10px"
+                    color: 'white',
+                    marginRight: '10px'
                   }}
                 >
                   Search:
@@ -100,5 +100,5 @@ export default props => {
         </div>
       </nav>
     </header>
-  );
-};
+  )
+}

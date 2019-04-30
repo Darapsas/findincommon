@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> matches the snapshot 1`] = `
+<header>
+  <nav
+    className="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+  >
+    <a
+      className="navbar-brand app-title"
+      href="/"
+      onClick={[Function]}
+    >
+      Find In Common
+    </a>
+    <button
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      className="navbar-toggler"
+      data-target="#navbarCollapse"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse"
+      id="navbarCollapse"
+    >
+      <ul
+        className="navbar-nav ml-auto"
+      >
+        <li
+          className="flaot-right"
+        >
+          <a
+            aria-current={null}
+            className="nav-link"
+            href="/sign-in"
+            onClick={[Function]}
+          >
+            Sign in
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+`;

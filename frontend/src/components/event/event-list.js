@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { deleteEvent } from "../../helpers/requests";
+import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
+import { deleteEvent } from '../../helpers/requests'
 
 export default props => (
   <table className="table table-hover">
@@ -36,8 +36,8 @@ export default props => (
                     to={{
                       pathname: `/user/events/${event.id}/edit/`,
                       state: {
-                        action: "Save Changes",
-                        formName: "Edit an Event",
+                        action: 'Save Changes',
+                        formName: 'Edit an Event',
                         event: event
                       }
                     }}
@@ -57,7 +57,7 @@ export default props => (
                     onClick={() => {
                       deleteEvent(event.id).then(response =>
                         props.handleDelete()
-                      );
+                      )
                     }}
                   >
                     Delete
@@ -94,8 +94,8 @@ export default props => (
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/user/events/event/create",
-                state: { action: "Create", formName: "Create new Event" }
+                pathname: '/user/events/event/create',
+                state: { action: 'Create', formName: 'Create new Event' }
               }}
             >
               <button className="btn btn-success float-right" type="button">
@@ -107,4 +107,4 @@ export default props => (
       )}
     </tbody>
   </table>
-);
+)

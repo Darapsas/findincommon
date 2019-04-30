@@ -1,8 +1,8 @@
-import React from "react";
-import { removeUserHobby, addUserHobby } from "../../helpers/requests";
+import React from 'react'
+import { removeUserHobby, addUserHobby } from '../../helpers/requests'
 
 export default props => {
-  let counter = 1;
+  let counter = 1
   return (
     <table className="table table-hover">
       <thead>
@@ -17,14 +17,14 @@ export default props => {
         {props.hobbies.length !== 0 &&
           props.currentUser &&
           props.hobbies.map((hobby, index) => {
-            let test = true;
+            let test = true
 
             props.currentUser.hobbies &&
               props.currentUser.hobbies.map(({ id }) => {
                 if (id === hobby.id && !props.owned) {
-                  test = false;
+                  test = false
                 }
-              });
+              })
             return props.owned ? (
               <tr key={hobby.id}>
                 <th scope="col">{index + 1}</th>
@@ -41,7 +41,7 @@ export default props => {
                     onClick={() => {
                       removeUserHobby(props.currentUser.id, hobby.id).then(
                         response => props.handleChange()
-                      );
+                      )
                     }}
                   >
                     Remove
@@ -65,7 +65,7 @@ export default props => {
                       onClick={() => {
                         addUserHobby(props.currentUser.id, hobby.id).then(
                           response => props.handleChange()
-                        );
+                        )
                       }}
                     >
                       Add
@@ -73,11 +73,11 @@ export default props => {
                   </th>
                 </tr>
               )
-            );
+            )
           })}
       </tbody>
     </table>
-  );
-};
+  )
+}
 //let test;
 //props.currentUser.hobbies.forEach(({ id }) => {});

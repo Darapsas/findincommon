@@ -1,35 +1,35 @@
-import React from "react";
-import { Formik, Form, Field } from "formik";
-import { updateProfile } from "../../../helpers/requests";
-import * as Yup from "yup";
+import React from 'react'
+import { Formik, Form, Field } from 'formik'
+import { updateProfile } from '../../../helpers/requests'
+import * as Yup from 'yup'
 
 const profileSchema = Yup.object().shape({
   name: Yup.string()
-    .required("This is a required field")
-    .max(250, "Field has to be at maximum 250 characters long"),
+    .required('This is a required field')
+    .max(250, 'Field has to be at maximum 250 characters long'),
   email: Yup.string()
     .email()
-    .required("This is a required field")
-    .max(250, "Field has to be at maximum 250 characters long"),
+    .required('This is a required field')
+    .max(250, 'Field has to be at maximum 250 characters long'),
   imageUrl: Yup.string()
-    .required("This is a required field")
+    .required('This is a required field')
     .url(),
   description: Yup.string().max(
     5000,
-    "Description must be at most 250 characters long."
+    'Description must be at most 250 characters long.'
   )
-});
+})
 
 export default props => {
   return (
     <div className="w-75 custom">
       <Formik
         initialValues={{
-          id: props.currentUser ? props.currentUser.id : "",
-          name: props.currentUser ? props.currentUser.name : "",
-          email: props.currentUser ? props.currentUser.email : "",
-          imageUrl: props.currentUser ? props.currentUser.imageUrl : "",
-          description: props.currentUser ? props.currentUser.description : ""
+          id: props.currentUser ? props.currentUser.id : '',
+          name: props.currentUser ? props.currentUser.name : '',
+          email: props.currentUser ? props.currentUser.email : '',
+          imageUrl: props.currentUser ? props.currentUser.imageUrl : '',
+          description: props.currentUser ? props.currentUser.description : ''
         }}
         validationSchema={profileSchema}
         //  validate={}
@@ -40,10 +40,10 @@ export default props => {
             description: values.description
           })
             .then(response => {
-              props.handleHobbiesListChange();
-              props.history.goBack();
+              props.handleHobbiesListChange()
+              props.history.goBack()
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => console.error('Error:', error))
         }}
         render={({ errors, touched, isSubmitting, values }) => (
           <Form>
@@ -118,5 +118,5 @@ export default props => {
         )}
       />
     </div>
-  );
-};
+  )
+}

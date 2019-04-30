@@ -1,23 +1,23 @@
-import React, { Fragment } from "react";
-import "./home.css";
-import Fake from "./fake";
-import Member from "./member";
-import Loader from "../templates/loader";
+import React, { Fragment } from 'react'
+import './home.css'
+import Fake from './fake'
+import Member from './member'
+import Loader from '../templates/loader'
 
 export default props => {
   if (props.loading) {
     return (
-      <main role="main" style={{ textAlign: "center" }}>
+      <main role="main" style={{ textAlign: 'center' }}>
         <Loader />
       </main>
-    );
+    )
   }
 
   return (
     <Fragment>
       <div
         className="container w-50"
-        style={{ marginTop: "48px", textAlign: "center" }}
+        style={{ marginTop: '48px', textAlign: 'center' }}
       >
         {props.authenticated ? (
           <Fragment>
@@ -55,7 +55,7 @@ export default props => {
         )}
       </div>
 
-      <div className="album" style={{ margin: "48px 0 86px 0" }}>
+      <div className="album" style={{ margin: '48px 0 86px 0' }}>
         <div className="container">
           {props.authenticated ? (
             <div className="row">
@@ -79,5 +79,5 @@ export default props => {
         </div>
       </div>
     </Fragment>
-  );
-};
+  )
+}

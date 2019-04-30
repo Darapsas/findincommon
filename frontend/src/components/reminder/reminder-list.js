@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-let _isMounted;
+let _isMounted
 export default props => {
-  const [reminders, setReminders] = useState([]);
+  const [reminders, setReminders] = useState([])
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
 
     fetch(`http://192.168.99.100:8080/api/reminders`, {
-      method: "GET"
+      method: 'GET'
     })
       .then(response => response.json())
       .then(data => {
         if (_isMounted) {
-          setReminders(data);
+          setReminders(data)
         }
-      });
+      })
     return () => {
-      _isMounted = false;
-    };
-  }, [reminders]);
+      _isMounted = false
+    }
+  }, [reminders])
 
   const deleteReminder = id => {
     fetch(`http://192.168.99.100:8080/api/reminders/${id}`, {
-      method: "DELETE"
+      method: 'DELETE'
     })
-      .then(response => console.log("Success", JSON.stringify(response)))
-      .catch(error => console.error("Error:", error));
-  };
+      .then(response => console.log('Success', JSON.stringify(response)))
+      .catch(error => console.error('Error:', error))
+  }
 
   return (
     <table className="table table-hover">
@@ -55,8 +55,8 @@ export default props => {
                 to={{
                   pathname: `/reminder_edit/${reminder.id}`,
                   state: {
-                    action: "Save Changes",
-                    formName: "Edit a Reminder",
+                    action: 'Save Changes',
+                    formName: 'Edit a Reminder',
                     reminder: reminder
                   }
                 }}
@@ -82,8 +82,8 @@ export default props => {
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/reminder_create/",
-                state: { action: "Create", formName: "Create new Reminder" }
+                pathname: '/reminder_create/',
+                state: { action: 'Create', formName: 'Create new Reminder' }
               }}
             >
               <button className="btn btn-success float-right" type="button">
@@ -94,5 +94,5 @@ export default props => {
         </tr>
       </tbody>
     </table>
-  );
-};
+  )
+}

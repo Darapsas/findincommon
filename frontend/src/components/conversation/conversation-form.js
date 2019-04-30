@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
-import { updateConversation, createConversation } from "../../helpers/requests";
-import * as Yup from "yup";
+import React, { Fragment } from 'react'
+import { Formik, Form, Field, FieldArray } from 'formik'
+import { updateConversation, createConversation } from '../../helpers/requests'
+import * as Yup from 'yup'
 
 const conversationSchema = Yup.object().shape({
   name: Yup.string()
-    .required("This is a required field")
-    .max(250, "Field has to be at maximum 250 characters long")
-});
+    .required('This is a required field')
+    .max(250, 'Field has to be at maximum 250 characters long')
+})
 
 export default props => {
   return (
@@ -16,10 +16,10 @@ export default props => {
         initialValues={{
           id: props.location.state.conversation
             ? props.location.state.conversation.id
-            : "",
+            : '',
           name: props.location.state.conversation
             ? props.location.state.conversation.name
-            : "",
+            : '',
           participants: props.location.state.conversation
             ? props.location.state.conversation.participants
             : [],
@@ -31,20 +31,20 @@ export default props => {
           props.location.state.conversation
             ? updateConversation(values, props.location.state.conversation.id)
                 .then(response => {
-                  console.log("Successfully edited", JSON.stringify(response));
-                  props.history.goBack();
+                  console.log('Successfully edited', JSON.stringify(response))
+                  props.history.goBack()
                 })
-                .catch(error => console.error("Error:", error))
+                .catch(error => console.error('Error:', error))
             : createConversation(values)
                 .then(response => {
-                  console.log("Successfully created", JSON.stringify(response));
-                  props.history.goBack();
+                  console.log('Successfully created', JSON.stringify(response))
+                  props.history.goBack()
                 })
-                .catch(error => console.error("Error:", error));
+                .catch(error => console.error('Error:', error))
         }}
         render={({ errors, touched, isSubmitting, values }) => (
           <Form>
-            <h2>{props.location.state.formName || "Conversation form"}</h2>
+            <h2>{props.location.state.formName || 'Conversation form'}</h2>
             <div className="form-group">
               <label>Name</label>
               <Field
@@ -68,7 +68,7 @@ export default props => {
               </label>
 
               <br />
-              {props.searchQuery && props.searchQuery !== "" && (
+              {props.searchQuery && props.searchQuery !== '' && (
                 <Fragment>
                   <label>
                     Members are currently filtered by these hobbies:
@@ -101,16 +101,16 @@ export default props => {
                                 .includes(participant.id)}
                               onChange={e => {
                                 if (e.target.checked) {
-                                  arrayHelpers.push(participant);
+                                  arrayHelpers.push(participant)
                                 } else {
                                   arrayHelpers.remove(
                                     values.participants.findIndex(
                                       x => x.id === participant.id
                                     )
-                                  );
+                                  )
                                 }
                               }}
-                            />{" "}
+                            />{' '}
                             {participant.name}
                           </label>
                         </div>
@@ -125,7 +125,7 @@ export default props => {
               type="submit"
               disabled={isSubmitting}
             >
-              {props.location.state.action || "Submit"}
+              {props.location.state.action || 'Submit'}
             </button>
             <button
               className="btn btn-danger"
@@ -139,5 +139,5 @@ export default props => {
         )}
       />
     </div>
-  );
-};
+  )
+}

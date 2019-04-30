@@ -1,13 +1,13 @@
-import React from "react";
-import { Formik, Form, Field } from "formik";
-import { postMessage } from "../../helpers/requests";
-import * as Yup from "yup";
+import React from 'react'
+import { Formik, Form, Field } from 'formik'
+import { postMessage } from '../../helpers/requests'
+import * as Yup from 'yup'
 
 const messageSchema = Yup.object().shape({
   text: Yup.string()
-    .required("Empty messages are not allowed")
-    .max(2500, "Messages longer than 2500 characters are not allowed.")
-});
+    .required('Empty messages are not allowed')
+    .max(2500, 'Messages longer than 2500 characters are not allowed.')
+})
 
 export default props => {
   return (
@@ -15,7 +15,7 @@ export default props => {
       initialValues={{
         conversation: props.conversation,
         creator: props.currentUser,
-        text: ""
+        text: ''
       }}
       validationSchema={messageSchema}
       //  validate={}
@@ -26,10 +26,10 @@ export default props => {
           text: values.text
         })
           .then(response => {
-            resetForm();
-            console.log("Successfully created", JSON.stringify(response));
+            resetForm()
+            console.log('Successfully created', JSON.stringify(response))
           })
-          .catch(error => console.error("Error:", error));
+          .catch(error => console.error('Error:', error))
       }}
       render={({ errors, touched, isSubmitting, values }) => (
         <Form>
@@ -61,5 +61,5 @@ export default props => {
         </Form>
       )}
     />
-  );
-};
+  )
+}

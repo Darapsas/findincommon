@@ -1,65 +1,65 @@
-import React, { useState, useEffect, useRef } from "react";
-import ConversationInput from "./conversation-input";
-import { getConversationMessages, deleteMessage } from "../../helpers/requests";
-import Loader from "../templates/loader";
+import React, { useState, useEffect, useRef } from 'react'
+import ConversationInput from './conversation-input'
+import { getConversationMessages, deleteMessage } from '../../helpers/requests'
+import Loader from '../templates/loader'
 
 // interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 const useInterval = (callback, delay) => {
-  const savedCallback = useRef();
+  const savedCallback = useRef()
 
   // Remember the latest callback.
   useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
+    savedCallback.current = callback
+  }, [callback])
 
   // Set up the interval.
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      savedCallback.current()
     }
     if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      let id = setInterval(tick, delay)
+      return () => clearInterval(id)
     }
-  }, [delay]);
-};
+  }, [delay])
+}
 
-let _isMounted;
+let _isMounted
 export default props => {
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(0);
+  const [messages, setMessages] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       await getConversationMessages(props.location.state.conversation.id)
         .then(data => {
           if (_isMounted) {
-            setMessages(data);
+            setMessages(data)
           }
         })
         .catch(error => {
-          console.error("Error: ", error);
-        });
-      setLoading(false);
+          console.error('Error: ', error)
+        })
+      setLoading(false)
     }
-    fetchData();
+    fetchData()
     return () => {
-      _isMounted = false;
-    };
-  }, [count]);
+      _isMounted = false
+    }
+  }, [count])
 
   useInterval(() => {
-    setCount(count + 1);
-  }, 1000);
+    setCount(count + 1)
+  }, 1000)
 
   if (loading) {
     return (
-      <main role="main" style={{ textAlign: "center" }}>
+      <main role="main" style={{ textAlign: 'center' }}>
         <Loader />
       </main>
-    );
+    )
   }
   return (
     <div className="container conversation-in-action custom w-75">
@@ -67,12 +67,12 @@ export default props => {
       {messages.length !== 0 &&
         messages.map(message => {
           if (!message.creator) {
-            let user = { id: "deleted" };
-            message.creator = user;
+            let user = { id: 'deleted' }
+            message.creator = user
           }
           if (
             message.creator.id === props.currentUser.id &&
-            message.text !== "Message was removed"
+            message.text !== 'Message was removed'
           ) {
             return (
               <div key={message.id} className="row">
@@ -80,11 +80,11 @@ export default props => {
                   <small>You</small>
                   <small
                     className="float-right"
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
                       deleteMessage(message.id).then(response =>
-                        console.log("Message deleted: " + response)
-                      );
+                        console.log('Message deleted: ' + response)
+                      )
                     }}
                   >
                     &#10006;
@@ -95,10 +95,10 @@ export default props => {
                   </span>
                 </div>
               </div>
-            );
+            )
           } else if (
             message.creator.id === props.currentUser.id &&
-            message.text === "Message was removed"
+            message.text === 'Message was removed'
           ) {
             return (
               <div key={message.id} className="row">
@@ -110,8 +110,8 @@ export default props => {
                   </span>
                 </div>
               </div>
-            );
-          } else if (message.text === "Message was removed") {
+            )
+          } else if (message.text === 'Message was removed') {
             return (
               <div key={message.id} className="row">
                 <div className="mr-auto">
@@ -122,7 +122,7 @@ export default props => {
                   </span>
                 </div>
               </div>
-            );
+            )
           } else {
             return (
               <div key={message.id} className="row">
@@ -134,7 +134,7 @@ export default props => {
                   </span>
                 </div>
               </div>
-            );
+            )
           }
         })}
       <ConversationInput
@@ -142,5 +142,5 @@ export default props => {
         conversation={props.location.state.conversation}
       />
     </div>
-  );
-};
+  )
+}

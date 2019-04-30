@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default props => (
   <div className="w-75 custom">
@@ -60,7 +60,7 @@ export default props => (
               type="checkbox"
               checked={true}
               disabled
-            />{" "}
+            />{' '}
             {reminder.name}
           </label>
         </div>
@@ -89,4 +89,4 @@ export default props => (
       Go back
     </button>
   </div>
-);
+)

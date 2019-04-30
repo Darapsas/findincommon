@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { deleteAccount } from "../../../helpers/requests";
-import "./profile.css";
+import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
+import { deleteAccount } from '../../../helpers/requests'
+import './profile.css'
 
 export default props => {
-  let user = props.currentUser ? props.currentUser : props.location.state.user;
+  let user = props.currentUser ? props.currentUser : props.location.state.user
 
   return (
     <div className="profile-container custom w-75">
@@ -42,7 +42,7 @@ export default props => {
               onClick={() => {
                 deleteAccount(user.id).then(response =>
                   props.handleAccountDeletion()
-                );
+                )
               }}
             >
               Delete account
@@ -51,7 +51,7 @@ export default props => {
         )}
       </div>
       <div className="profile-info">
-        <h3>About {props.currentUser ? "you" : user.name}</h3>
+        <h3>About {props.currentUser ? 'you' : user.name}</h3>
         <p>{user.description}</p>
         <ul className="list-group">
           <li className="list-group-item list-group-item-dark">
@@ -71,5 +71,5 @@ export default props => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}

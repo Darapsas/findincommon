@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { deleteConversation } from "../../helpers/requests";
+import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
+import { deleteConversation } from '../../helpers/requests'
 
 export default props => (
   <table className="table table-hover">
@@ -15,7 +15,8 @@ export default props => (
       </tr>
     </thead>
     <tbody>
-      {props.conversations.length !== 0 &&
+      {props.conversation &&
+        props.conversations.length !== 0 &&
         props.conversations.map((conversation, index) => (
           <tr key={conversation.id}>
             <th scope="col">{index + 1}</th>
@@ -52,8 +53,8 @@ export default props => (
                     to={{
                       pathname: `/user/conversations/${conversation.id}/edit/`,
                       state: {
-                        action: "Save Changes",
-                        formName: "Edit an Conversation",
+                        action: 'Save Changes',
+                        formName: 'Edit an Conversation',
                         conversation: conversation
                       }
                     }}
@@ -73,7 +74,7 @@ export default props => (
                     onClick={() => {
                       deleteConversation(conversation.id).then(response =>
                         props.handleDelete()
-                      );
+                      )
                     }}
                   >
                     Delete
@@ -112,8 +113,8 @@ export default props => (
           <td colSpan="2">
             <Link
               to={{
-                pathname: "/user/conversations/conversation/create",
-                state: { action: "Create", formName: "Create new Conversation" }
+                pathname: '/user/conversations/conversation/create',
+                state: { action: 'Create', formName: 'Create new Conversation' }
               }}
             >
               <button className="btn btn-success float-right" type="button">
@@ -125,4 +126,4 @@ export default props => (
       )}
     </tbody>
   </table>
-);
+)

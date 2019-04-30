@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ConversationInput /> matches the snapshot 1`] = `
+<form
+  onReset={[Function]}
+  onSubmit={[Function]}
+>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-sm-10"
+    >
+      <input
+        className="form-control"
+        name="text"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Write your message here"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group col-sm-2"
+    >
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        type="submit"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+</form>
+`;

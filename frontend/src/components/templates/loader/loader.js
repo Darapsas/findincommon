@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function LoadingIndicator(props) {
   return (
@@ -13,5 +13,5 @@ export default function LoadingIndicator(props) {
         <span className="sr-only">Loading...</span>
       </div>
     </div>
-  );
+  )
 }

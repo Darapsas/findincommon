@@ -1,102 +1,102 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
-import { Route, Switch } from "react-router-dom";
-import Header from "../templates/header";
-import Footer from "../templates/footer";
-import NotFound from "../templates/notFound";
-import PrivateRoute from "../templates/private-route";
-import RouteWithProps from "../templates/route-with-props";
-import Loader from "../templates/loader";
-import Home from "../home/home";
-import SignIn from "../user/signIn/sign-in";
-import Profile from "../user/profile/profile";
-import ProfileForm from "../user/profile/profile-form";
-import OAuth2RedirectHandler from "../user/oAuth2/o-auth-2-redirect-handler";
-import { getCertainHobbies } from "../../helpers/requests";
-import { getCurrentUser } from "../../helpers/requests";
-import { getMembersByHobbies } from "../../helpers/requests";
-import { ACCESS_TOKEN } from "../../helpers/constants";
-import Alert from "react-s-alert";
-import "react-s-alert/dist/s-alert-default.css";
-import "react-s-alert/dist/s-alert-css-effects/slide.css";
-import "./app.css";
-import GroupInfo from "../group/group-info";
-import GroupForm from "../group/group-form";
-import Groups from "../group";
-import EventInfo from "../event/event-info";
-import EventForm from "../event/event-form";
-import Events from "../event";
-import ConversationInAction from "../conversation/conversation-in-action";
-import ConversationForm from "../conversation/conversation-form";
-import Conversations from "../conversation";
-import Hobby from "../hobby/hobby";
+import React, { Fragment, useState, useEffect, useRef } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import Header from '../templates/header'
+import Footer from '../templates/footer'
+import NotFound from '../templates/notFound'
+import PrivateRoute from '../templates/private-route'
+import RouteWithProps from '../templates/route-with-props'
+import Loader from '../templates/loader'
+import Home from '../home/home'
+import SignIn from '../user/signIn/sign-in'
+import Profile from '../user/profile/profile'
+import ProfileForm from '../user/profile/profile-form'
+import OAuth2RedirectHandler from '../user/oAuth2/o-auth-2-redirect-handler'
+import { getCertainHobbies } from '../../helpers/requests'
+import { getCurrentUser } from '../../helpers/requests'
+import { getMembersByHobbies } from '../../helpers/requests'
+import { ACCESS_TOKEN } from '../../helpers/constants'
+import Alert from 'react-s-alert'
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/slide.css'
+import './app.css'
+import GroupInfo from '../group/group-info'
+import GroupForm from '../group/group-form'
+import Groups from '../group'
+import EventInfo from '../event/event-info'
+import EventForm from '../event/event-form'
+import Events from '../event'
+import ConversationInAction from '../conversation/conversation-in-action'
+import ConversationForm from '../conversation/conversation-form'
+import Conversations from '../conversation'
+import Hobby from '../hobby/hobby'
 
 // interval hook was borrowed from: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 const useInterval = (callback, delay) => {
-  const savedCallback = useRef();
+  const savedCallback = useRef()
 
   // Remember the latest callback.
   useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
+    savedCallback.current = callback
+  }, [callback])
 
   // Set up the interval.
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      savedCallback.current()
     }
     if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      let id = setInterval(tick, delay)
+      return () => clearInterval(id)
     }
-  }, [delay]);
-};
+  }, [delay])
+}
 
-let _isMounted;
+let _isMounted
 export default props => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [hobbiesListChanged, setHobbiesListChanged] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(0);
+  const [authenticated, setAuthenticated] = useState(false)
+  const [hobbiesListChanged, setHobbiesListChanged] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [count, setCount] = useState(0)
 
   useInterval(() => {
-    setCount(count + 1);
-  }, 3000);
+    setCount(count + 1)
+  }, 3000)
 
   const handleLogout = () => {
-    localStorage.removeItem(ACCESS_TOKEN);
-    setAuthenticated(false);
-    setCurrentUser(null);
-    Alert.success("You're safely logged out!");
-  };
+    localStorage.removeItem(ACCESS_TOKEN)
+    setAuthenticated(false)
+    setCurrentUser(null)
+    Alert.success("You're safely logged out!")
+  }
 
   const handleAccountDeletion = () => {
-    localStorage.removeItem(ACCESS_TOKEN);
-    setAuthenticated(false);
-    setCurrentUser(null);
-    Alert.success("Your account was deleted!");
-  };
+    localStorage.removeItem(ACCESS_TOKEN)
+    setAuthenticated(false)
+    setCurrentUser(null)
+    Alert.success('Your account was deleted!')
+  }
 
   useEffect(() => {
-    _isMounted = true;
-    setLoading(true);
+    _isMounted = true
+    setLoading(true)
 
     getCurrentUser()
       .then(response => {
         if (_isMounted) {
-          setCurrentUser(response);
-          setAuthenticated(true);
-          setLoading(false);
+          setCurrentUser(response)
+          setAuthenticated(true)
+          setLoading(false)
         }
       })
       .catch(error => {
-        setLoading(false);
-      });
+        setLoading(false)
+      })
 
     return () => {
-      _isMounted = false;
-    };
-  }, []);
+      _isMounted = false
+    }
+  }, [])
 
   /*
    * ---------------------------------------------------------------------------------
@@ -104,96 +104,96 @@ export default props => {
    * ---------------------------------------------------------------------------------
    */
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       await getCurrentUser()
         .then(data => {
           if (_isMounted) {
-            setCurrentUser(data);
+            setCurrentUser(data)
           }
         })
-        .catch(error => console.error("Error: ", error));
-      setHobbiesListChanged(false);
+        .catch(error => console.error('Error: ', error))
+      setHobbiesListChanged(false)
     }
-    fetchData();
+    fetchData()
 
     return () => {
-      _isMounted = false;
-    };
-  }, [hobbiesListChanged, count]);
+      _isMounted = false
+    }
+  }, [hobbiesListChanged, count])
 
   const handleHobbiesListChange = () => {
-    setHobbiesListChanged(true);
-  };
+    setHobbiesListChanged(true)
+  }
 
   /*
    * ---------------------------------------------------------------------------------
    * Lifted state from header
    * ---------------------------------------------------------------------------------
    */
-  const [headingIsLoading, setHeadingIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [hobbies, setHobbies] = useState([]);
+  const [headingIsLoading, setHeadingIsLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [hobbies, setHobbies] = useState([])
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       if (authenticated) {
         await getCertainHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
-              setHobbies(data);
+              setHobbies(data)
             }
           })
-          .catch(error => console.error("Error: ", error));
+          .catch(error => console.error('Error: ', error))
       }
-      setHeadingIsLoading(false);
+      setHeadingIsLoading(false)
     }
-    fetchData();
+    fetchData()
 
     return () => {
-      _isMounted = false;
-    };
-  }, [searchQuery]);
+      _isMounted = false
+    }
+  }, [searchQuery])
 
   const handleChange = event => {
-    setSearchQuery(event.target.value.replace(/[^a-zA-Z ,]/g, ""));
-  };
+    setSearchQuery(event.target.value.replace(/[^a-zA-Z ,]/g, ''))
+  }
 
   /*
    * ---------------------------------------------------------------------------------
    * Lifted state from home page
    * ---------------------------------------------------------------------------------
    */
-  const [homeIsLoading, setHomeIsLoading] = useState(true);
-  const [members, setMembers] = useState([]);
+  const [homeIsLoading, setHomeIsLoading] = useState(true)
+  const [members, setMembers] = useState([])
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       if (authenticated) {
         await getMembersByHobbies(JSON.stringify(searchQuery))
           .then(data => {
             if (_isMounted) {
-              setMembers(data);
+              setMembers(data)
             }
           })
           .catch(error => {
-            console.error("Error: ", error);
-          });
+            console.error('Error: ', error)
+          })
       }
-      setHomeIsLoading(false);
+      setHomeIsLoading(false)
     }
-    fetchData();
+    fetchData()
     return () => {
-      _isMounted = false;
-    };
-  }, [authenticated, searchQuery, count]);
+      _isMounted = false
+    }
+  }, [authenticated, searchQuery, count])
 
   if (loading) {
     return (
-      <main role="main" style={{ textAlign: "center" }}>
+      <main role="main" style={{ textAlign: 'center' }}>
         <Loader />
       </main>
-    );
+    )
   }
 
   return (
@@ -359,5 +359,5 @@ export default props => {
       </main>
       <Footer />
     </Fragment>
-  );
-};
+  )
+}

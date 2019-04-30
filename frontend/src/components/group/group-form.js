@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import React, { useState, useEffect, Fragment } from 'react'
+import { Formik, Form, Field, FieldArray } from 'formik'
 import {
   updateGroup,
   updateConversation,
@@ -7,40 +7,40 @@ import {
   createConversation,
   getConversationByName,
   getConversationById
-} from "../../helpers/requests";
-import * as Yup from "yup";
-import Loader from "../templates/loader";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./group.scss";
+} from '../../helpers/requests'
+import * as Yup from 'yup'
+import Loader from '../templates/loader'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import './group.scss'
 
 const groupSchema = Yup.object().shape({
-  name: Yup.string().required("This is a required field"),
+  name: Yup.string().required('This is a required field'),
   description: Yup.string().max(
     250,
-    "Description must be at most 250 characters long."
+    'Description must be at most 250 characters long.'
   )
-});
+})
 
 export default props => {
   return (
     <div className="w-75 custom">
       <Formik
         initialValues={{
-          id: props.location.state.group ? props.location.state.group.id : "",
+          id: props.location.state.group ? props.location.state.group.id : '',
           name: props.location.state.group
             ? props.location.state.group.name
-            : "",
+            : '',
           description: props.location.state.group
             ? props.location.state.group.description
-            : "",
+            : '',
           members: props.location.state.group
             ? props.location.state.group.members
             : [],
           creator: props.currentUser,
           conversationId: props.location.state.group
             ? props.location.state.group.conversationId
-            : ""
+            : ''
         }}
         validationSchema={groupSchema}
         //  validate={}
@@ -48,8 +48,8 @@ export default props => {
           props.location.state.group
             ? getConversationById(values.conversationId)
                 .then(data => {
-                  console.log(JSON.stringify(data.participants));
-                  console.log("anything");
+                  console.log(JSON.stringify(data.participants))
+                  console.log('anything')
                   updateConversation(
                     {
                       id: values.conversationId,
@@ -63,17 +63,17 @@ export default props => {
                       updateGroup(values, values.id)
                         .then(response => {
                           console.log(
-                            "Successfully edited",
+                            'Successfully edited',
                             JSON.stringify(response)
-                          );
-                          props.history.goBack();
+                          )
+                          props.history.goBack()
                         })
-                        .catch(error => console.error("Error:", error));
+                        .catch(error => console.error('Error:', error))
                     })
-                    .catch(error => console.error("Error:", error));
+                    .catch(error => console.error('Error:', error))
                 })
                 .catch(error => {
-                  console.error("Error: ", error);
+                  console.error('Error: ', error)
                 })
             : createConversation({
                 participants: values.members,
@@ -81,31 +81,31 @@ export default props => {
                 name: `Group conversation: ${values.name}`
               })
                 .then(response => {
-                  console.log("Successfully created", JSON.stringify(response));
+                  console.log('Successfully created', JSON.stringify(response))
 
                   getConversationByName(`Group conversation: ${values.name}`)
                     .then(data => {
-                      values.conversationId = data.id;
+                      values.conversationId = data.id
 
                       createGroup(values)
                         .then(response => {
                           console.log(
-                            "Successfully created",
+                            'Successfully created',
                             JSON.stringify(response)
-                          );
-                          props.history.goBack();
+                          )
+                          props.history.goBack()
                         })
-                        .catch(error => console.error("Error:", error));
+                        .catch(error => console.error('Error:', error))
                     })
                     .catch(error => {
-                      console.error("Error: ", error);
-                    });
+                      console.error('Error: ', error)
+                    })
                 })
-                .catch(error => console.error("Error:", error));
+                .catch(error => console.error('Error:', error))
         }}
         render={({ errors, touched, isSubmitting, values, setFieldValue }) => (
           <Form>
-            <h2>{props.location.state.formName || "Group form"}</h2>
+            <h2>{props.location.state.formName || 'Group form'}</h2>
             <div className="form-group">
               <label>Name</label>
               <Field
@@ -144,7 +144,7 @@ export default props => {
                 <input name="You" type="checkbox" disabled checked /> You
               </label>
               <br />
-              {props.searchQuery !== "" && (
+              {props.searchQuery !== '' && (
                 <Fragment>
                   <label>
                     Members are currently filtered by these hobbies:
@@ -177,16 +177,16 @@ export default props => {
                                 .includes(member.id)}
                               onChange={e => {
                                 if (e.target.checked) {
-                                  arrayHelpers.push(member);
+                                  arrayHelpers.push(member)
                                 } else {
                                   arrayHelpers.remove(
                                     values.members.findIndex(
                                       x => x.id === member.id
                                     )
-                                  );
+                                  )
                                 }
                               }}
-                            />{" "}
+                            />{' '}
                             {member.name}
                           </label>
                         </div>
@@ -201,7 +201,7 @@ export default props => {
               type="submit"
               disabled={isSubmitting}
             >
-              {props.location.state.action || "Submit"}
+              {props.location.state.action || 'Submit'}
             </button>
             <button
               className="btn btn-danger"
@@ -215,5 +215,5 @@ export default props => {
         )}
       />
     </div>
-  );
-};
+  )
+}

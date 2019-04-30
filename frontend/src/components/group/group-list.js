@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { getConversationById } from "../../helpers/requests";
-import { deleteGroup } from "../../helpers/requests";
+import React, { Fragment, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
+import { getConversationById } from '../../helpers/requests'
+import { deleteGroup } from '../../helpers/requests'
 
 export default props => {
-  const [conversation, setConversation] = useState({});
+  const [conversation, setConversation] = useState({})
   return (
     <table className="table table-hover">
       <thead>
@@ -36,11 +36,11 @@ export default props => {
                   onClick={() => {
                     getConversationById(group.conversationId)
                       .then(data => {
-                        setConversation(data);
+                        setConversation(data)
                       })
                       .catch(error => {
-                        console.error("Error: ", error);
-                      });
+                        console.error('Error: ', error)
+                      })
                   }}
                 >
                   Message
@@ -52,8 +52,8 @@ export default props => {
                         group.conversationId
                       }/in-action`,
                       state: {
-                        action: "Save Changes",
-                        formName: "Edit an Group",
+                        action: 'Save Changes',
+                        formName: 'Edit an Group',
                         conversation: conversation
                       }
                     }}
@@ -65,8 +65,8 @@ export default props => {
                   to={{
                     pathname: `/user/events/event/create/`,
                     state: {
-                      action: "Create",
-                      formName: "Create new Event",
+                      action: 'Create',
+                      formName: 'Create new Event',
                       event: {
                         name: `Group event: ${group.name}`,
                         description: `This event is created for ${
@@ -90,8 +90,8 @@ export default props => {
                       to={{
                         pathname: `/user/groups/${group.id}/edit/`,
                         state: {
-                          action: "Save Changes",
-                          formName: "Edit an Group",
+                          action: 'Save Changes',
+                          formName: 'Edit an Group',
                           group: group
                         }
                       }}
@@ -111,7 +111,7 @@ export default props => {
                       onClick={() => {
                         deleteGroup(group.id).then(response =>
                           props.handleDelete()
-                        );
+                        )
                       }}
                     >
                       Delete
@@ -148,8 +148,8 @@ export default props => {
             <td colSpan="2">
               <Link
                 to={{
-                  pathname: "/user/groups/group/create",
-                  state: { action: "Create", formName: "Create new Group" }
+                  pathname: '/user/groups/group/create',
+                  state: { action: 'Create', formName: 'Create new Group' }
                 }}
               >
                 <button className="btn btn-success float-right" type="button">
@@ -161,5 +161,5 @@ export default props => {
         )}
       </tbody>
     </table>
-  );
-};
+  )
+}

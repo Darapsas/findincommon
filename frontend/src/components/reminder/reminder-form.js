@@ -1,6 +1,6 @@
-import React from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import React from 'react'
+import { Formik, Form, Field } from 'formik'
+import * as Yup from 'yup'
 
 const reminderSchema = Yup.object().shape({
   /*name: Yup.string().required("This is a required field"),
@@ -14,7 +14,7 @@ const reminderSchema = Yup.object().shape({
   endDate: Yup.date()
     .min(new Date(), "You cannot create an reminder for the past.")
     .required("End date and time are required")*/
-});
+})
 
 export default props => {
   return (
@@ -22,13 +22,13 @@ export default props => {
       initialValues={{
         id: props.location.state.reminder
           ? props.location.state.reminder.id
-          : "",
+          : '',
         name: props.location.state.reminder
           ? props.location.state.reminder.name
-          : "",
+          : '',
         timeInSeconds: props.location.state.reminder
           ? props.location.state.reminder.timeInSeconds
-          : ""
+          : ''
       }}
       validationSchema={reminderSchema}
       //  validate={}
@@ -39,34 +39,34 @@ export default props => {
                 props.location.state.reminder.id
               }`,
               {
-                method: "PUT",
+                method: 'PUT',
                 body: JSON.stringify(values),
                 headers: {
-                  "Content-Type": "application/json"
+                  'Content-Type': 'application/json'
                 }
               }
             )
               .then(response => {
-                console.log("Successfully edited", JSON.stringify(response));
-                props.history.goBack();
+                console.log('Successfully edited', JSON.stringify(response))
+                props.history.goBack()
               })
-              .catch(error => console.error("Error:", error))
+              .catch(error => console.error('Error:', error))
           : fetch(`http://192.168.99.100:8080/api/reminders`, {
-              method: "POST",
+              method: 'POST',
               body: JSON.stringify(values),
               headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
               }
             })
               .then(response => {
-                console.log("Successfully created", JSON.stringify(response));
-                props.history.goBack();
+                console.log('Successfully created', JSON.stringify(response))
+                props.history.goBack()
               })
-              .catch(error => console.error("Error:", error));
+              .catch(error => console.error('Error:', error))
       }}
       render={({ errors, touched, isSubmitting, values }) => (
         <Form>
-          <h2>{props.location.state.formName || "Reminder form"}</h2>
+          <h2>{props.location.state.formName || 'Reminder form'}</h2>
           <div className="form-group">
             <label>Name</label>
             <Field
@@ -103,7 +103,7 @@ export default props => {
             type="submit"
             disabled={isSubmitting}
           >
-            {props.location.state.action || "Submit"}
+            {props.location.state.action || 'Submit'}
           </button>
           <button
             className="btn btn-danger"
@@ -116,5 +116,5 @@ export default props => {
         </Form>
       )}
     />
-  );
-};
+  )
+}

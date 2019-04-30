@@ -1,63 +1,63 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import React, { useState, useEffect, Fragment } from 'react'
+import { Formik, Form, Field, FieldArray } from 'formik'
 import {
   getReminderTypes,
   updateEvent,
   createEvent
-} from "../../helpers/requests";
-import * as Yup from "yup";
-import Loader from "../templates/loader";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./event.scss";
+} from '../../helpers/requests'
+import * as Yup from 'yup'
+import Loader from '../templates/loader'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import './event.scss'
 
 const eventSchema = Yup.object().shape({
-  name: Yup.string().required("This is a required field"),
+  name: Yup.string().required('This is a required field'),
   description: Yup.string().max(
     250,
-    "Description must be at most 250 characters long."
+    'Description must be at most 250 characters long.'
   ),
   startDate: Yup.date()
-    .min(new Date(), "You cannot create an event for the past.")
-    .required("Start date and time are required"),
+    .min(new Date(), 'You cannot create an event for the past.')
+    .required('Start date and time are required'),
   endDate: Yup.date()
-    .min(new Date(), "You cannot create an event for the past.")
-    .required("End date and time are required")
-});
+    .min(new Date(), 'You cannot create an event for the past.')
+    .required('End date and time are required')
+})
 
-let _isMounted;
+let _isMounted
 export default props => {
-  const [reminderTypes, setReminderTypes] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [reminderTypes, setReminderTypes] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    _isMounted = true;
+    _isMounted = true
     async function fetchData() {
       await getReminderTypes()
         .then(data => {
           if (_isMounted) {
-            setReminderTypes(data);
+            setReminderTypes(data)
           }
         })
         .catch(error => {
-          console.error("Error: ", error);
-        });
-      setLoading(false);
+          console.error('Error: ', error)
+        })
+      setLoading(false)
     }
-    fetchData();
+    fetchData()
     return () => {
-      _isMounted = false;
-    };
-  }, []);
+      _isMounted = false
+    }
+  }, [])
 
-  useEffect(prevProps => {});
+  useEffect(prevProps => {})
 
   if (loading) {
     return (
-      <main role="main" style={{ textAlign: "center" }}>
+      <main role="main" style={{ textAlign: 'center' }}>
         <Loader />
       </main>
-    );
+    )
   }
 
   return (
@@ -66,28 +66,28 @@ export default props => {
         initialValues={{
           id:
             props.location.state.event &&
-            typeof props.location.state.event.id !== "undefined"
+            typeof props.location.state.event.id !== 'undefined'
               ? props.location.state.event.id
-              : "",
+              : '',
           name: props.location.state.event
             ? props.location.state.event.name
-            : "",
+            : '',
           description: props.location.state.event
             ? props.location.state.event.description
-            : "",
+            : '',
           startDate:
             props.location.state.event &&
-            typeof props.location.state.event.startDate !== "undefined"
+            typeof props.location.state.event.startDate !== 'undefined'
               ? new Date(props.location.state.event.startDate.slice(0, 16))
               : new Date(),
           endDate:
             props.location.state.event &&
-            typeof props.location.state.event.endDate !== "undefined"
+            typeof props.location.state.event.endDate !== 'undefined'
               ? new Date(props.location.state.event.endDate.slice(0, 16))
               : new Date(),
           reminders:
             props.location.state.event &&
-            typeof props.location.state.event.reminders !== "undefined"
+            typeof props.location.state.event.reminders !== 'undefined'
               ? props.location.state.event.reminders
               : [],
           participants: props.location.state.event
@@ -101,20 +101,20 @@ export default props => {
           props.location.state.event
             ? updateEvent(values, props.location.state.event.id)
                 .then(response => {
-                  console.log("Successfully edited", JSON.stringify(response));
-                  props.history.goBack();
+                  console.log('Successfully edited', JSON.stringify(response))
+                  props.history.goBack()
                 })
-                .catch(error => console.error("Error:", error))
+                .catch(error => console.error('Error:', error))
             : createEvent(values)
                 .then(response => {
-                  console.log("Successfully created", JSON.stringify(response));
-                  props.history.goBack();
+                  console.log('Successfully created', JSON.stringify(response))
+                  props.history.goBack()
                 })
-                .catch(error => console.error("Error:", error));
+                .catch(error => console.error('Error:', error))
         }}
         render={({ errors, touched, isSubmitting, values, setFieldValue }) => (
           <Form>
-            <h2>{props.location.state.formName || "Event form"}</h2>
+            <h2>{props.location.state.formName || 'Event form'}</h2>
             <div className="form-group">
               <label>Name</label>
               <Field
@@ -152,13 +152,13 @@ export default props => {
               <DatePicker
                 className="form-control"
                 selected={values.startDate}
-                onChange={e => setFieldValue("startDate", e)}
+                onChange={e => setFieldValue('startDate', e)}
                 showTimeSelect
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 dateFormat="MMMM d, yyyy h:mm aa"
                 timeCaption="time"
-                name={"startDate"}
+                name={'startDate'}
               />
               {touched.startDate && errors.startDate && (
                 <small className="form-text text-muted alert alert-danger">
@@ -172,13 +172,13 @@ export default props => {
               <DatePicker
                 className="form-control"
                 selected={values.endDate}
-                onChange={e => setFieldValue("endDate", e)}
+                onChange={e => setFieldValue('endDate', e)}
                 showTimeSelect
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 dateFormat="MMMM d, yyyy h:mm aa"
                 timeCaption="time"
-                name={"endDate"}
+                name={'endDate'}
               />
               {touched.endDate && errors.endDate && (
                 <small className="form-text text-muted alert alert-danger">
@@ -203,16 +203,16 @@ export default props => {
                             .includes(reminder.id)}
                           onChange={e => {
                             if (e.target.checked) {
-                              arrayHelpers.push(reminder);
+                              arrayHelpers.push(reminder)
                             } else {
                               arrayHelpers.remove(
                                 values.reminders.findIndex(
                                   x => x.id === reminder.id
                                 )
-                              );
+                              )
                             }
                           }}
-                        />{" "}
+                        />{' '}
                         {reminder.name}
                       </label>
                     </div>
@@ -228,7 +228,7 @@ export default props => {
                 <input name="You" type="checkbox" disabled checked /> You
               </label>
               <br />
-              {props.searchQuery !== "" && (
+              {props.searchQuery !== '' && (
                 <Fragment>
                   <label>
                     Members are currently filtered by these hobbies:
@@ -261,16 +261,16 @@ export default props => {
                                 .includes(participant.id)}
                               onChange={e => {
                                 if (e.target.checked) {
-                                  arrayHelpers.push(participant);
+                                  arrayHelpers.push(participant)
                                 } else {
                                   arrayHelpers.remove(
                                     values.participants.findIndex(
                                       x => x.id === participant.id
                                     )
-                                  );
+                                  )
                                 }
                               }}
-                            />{" "}
+                            />{' '}
                             {participant.name}
                           </label>
                         </div>
@@ -285,7 +285,7 @@ export default props => {
               type="submit"
               disabled={isSubmitting}
             >
-              {props.location.state.action || "Submit"}
+              {props.location.state.action || 'Submit'}
             </button>
             <button
               className="btn btn-danger"
@@ -299,5 +299,5 @@ export default props => {
         )}
       />
     </div>
-  );
-};
+  )
+}

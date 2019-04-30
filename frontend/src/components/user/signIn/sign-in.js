@@ -1,20 +1,20 @@
-import React from "react";
-import "./sign-in.css";
-import { Redirect } from "react-router-dom";
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../../helpers/constants";
-import fbLogo from "../../../assets/images/fb-logo.png";
-import googleLogo from "../../../assets/images/google-logo.png";
+import React from 'react'
+import './sign-in.css'
+import { Redirect } from 'react-router-dom'
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from '../../../helpers/constants'
+import fbLogo from '../../../assets/images/fb-logo.png'
+import googleLogo from '../../../assets/images/google-logo.png'
 
 export default props => {
   if (props.authenticated) {
     return (
       <Redirect
         to={{
-          pathname: "/",
+          pathname: '/',
           state: { from: props.location }
         }}
       />
-    );
+    )
   }
 
   return (
@@ -25,8 +25,8 @@ export default props => {
         <SocialSignIn />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const SocialSignIn = () => (
   <div className="social-signin">
@@ -41,4 +41,4 @@ const SocialSignIn = () => (
       </a>
     </button>
   </div>
-);
+)
