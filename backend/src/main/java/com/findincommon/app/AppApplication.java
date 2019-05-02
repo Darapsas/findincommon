@@ -48,8 +48,8 @@ public class AppApplication {
     ) {
         return (args) -> {
             // Change when testing
-//            if (reminderRepository.findAll().size() == 0) {
-           if (false) {
+            if (reminderRepository.findAll().size() == 0) {
+//           if (false) {
                 String[][] hobbies = {
                         {"astronomy", "Astronomy (from Greek: ἀστρονομία) is a natural science that studies celestial objects and phenomena."},
                         {"baseball", "Baseball is a bat-and-ball game played between two opposing teams who take turns batting and fielding. "},

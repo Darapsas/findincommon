@@ -12,18 +12,18 @@ services:
       - mongodb
     networks:
       - webnet
-#  react:
-#    build: ./frontend
-#    image: findincommon_frontend
-#    environment:
-#      - NODE_ENV=development
-#    ports:
-#      - "3000:80"
-#    depends_on:
-#      - mongodb
-#      - springboot
-#    networks:
-#      - webnet
+  react:
+    build: ./frontend
+    image: findincommon_frontend
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:80"
+    depends_on:
+      - mongodb
+      - springboot
+    networks:
+      - webnet
   mongodb:
     image: mongo:4.0.6
     environment:
