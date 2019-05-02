@@ -79,7 +79,7 @@ export default props => {
     return () => {
       _isMounted = false
     }
-  }, [itemDeleted])
+  }, [itemDeleted, count])
 
   const handleDelete = () => {
     setItemDeleted(true)
@@ -97,13 +97,11 @@ export default props => {
     <div className="custom w-75">
       <br />
       <h2>Your created conversations:</h2>
-      {
-        <ConversationList
-          conversations={userConversations}
-          handleDelete={handleDelete}
-          owned={true}
-        />
-      }
+      <ConversationList
+        conversations={userConversations}
+        handleDelete={handleDelete}
+        owned={true}
+      />
       <br />
       <br />
       <h2>Other conversations:</h2>

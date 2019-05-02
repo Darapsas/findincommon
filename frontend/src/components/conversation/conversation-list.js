@@ -15,7 +15,7 @@ export default props => (
       </tr>
     </thead>
     <tbody>
-      {props.conversation &&
+      {props.conversations &&
         props.conversations.length !== 0 &&
         props.conversations.map((conversation, index) => (
           <tr key={conversation.id}>
